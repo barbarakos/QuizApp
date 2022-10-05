@@ -119,13 +119,10 @@ class LoginViewController: UIViewController {
     }
 
     @objc func textFieldDidChange() {
-        if let text1 = emailTextField.text, let text2 = passwordTextField.text, !text1.isEmpty, !text2.isEmpty {
-            logInButton.isUserInteractionEnabled = true
-            logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        } else {
-            logInButton.isUserInteractionEnabled = false
-            logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
-        }
+        let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
+        logInButton.isUserInteractionEnabled = inputFieldsValid
+        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
+        logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
     }
 
 }
@@ -139,14 +136,10 @@ extension LoginViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
-        if let text1 = emailTextField.text, let text2 = passwordTextField.text, !text1.isEmpty, !text2.isEmpty {
-            logInButton.isUserInteractionEnabled = true
-            logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        } else {
-            logInButton.isUserInteractionEnabled = false
-            logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.6)
-        }
-
+        let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
+        logInButton.isUserInteractionEnabled = inputFieldsValid
+        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
+        logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
     }
 
 }
