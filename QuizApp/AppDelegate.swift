@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  QuizApp
-//
-//  Created by Barbara Kos on 04.10.2022..
-//
-
 import UIKit
 
 @main
