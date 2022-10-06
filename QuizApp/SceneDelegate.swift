@@ -1,10 +1,3 @@
-//
-//  SceneDelegate.swift
-//  QuizApp
-//
-//  Created by Barbara Kos on 04.10.2022..
-//
-
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -16,8 +9,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        window!.rootViewController = LoginViewController()
-        window?.makeKeyAndVisible()
+        let router = AppRouter(navigationController: UINavigationController())
+        router.showLogIn(in: window)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
