@@ -4,6 +4,7 @@ import SnapKit
 class LoginViewController: UIViewController {
 
     private var router: AppRouterProtocol!
+    private var loginViewModel: LoginViewModel!
 
     var gradientBg: CAGradientLayer!
     var titleLabel: UILabel!
@@ -16,6 +17,7 @@ class LoginViewController: UIViewController {
         self.init()
 
         self.router = router
+        loginViewModel = LoginViewModel(router: router)
     }
 
     override func viewDidLoad() {
@@ -30,6 +32,7 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
+        loginViewModel.login(username: emailTextField.text!, password: passwordTextField.text!)
     }
 
     @objc func textFieldDidChange() {

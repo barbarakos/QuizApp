@@ -10,6 +10,10 @@
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
 		FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245828EEB8540027EFC7 /* AppRouter.swift */; };
+		FB47245C28EECFD80027EFC7 /* LoginClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245B28EECFD80027EFC7 /* LoginClient.swift */; };
+		FB47246828EF35B70027EFC7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246728EF35B70027EFC7 /* LoginViewModel.swift */; };
+		FB47246A28F0204A0027EFC7 /* LoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246928F0204A0027EFC7 /* LoginDatasource.swift */; };
+		FB47246C28F020C50027EFC7 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246B28F020C50027EFC7 /* LoginUseCase.swift */; };
 		FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5228EC0EA200842EF0 /* AppDelegate.swift */; };
 		FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */; };
 		FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* LoginViewController.swift */; };
@@ -23,6 +27,10 @@
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
 		FB47245828EEB8540027EFC7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
+		FB47245B28EECFD80027EFC7 /* LoginClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginClient.swift; sourceTree = "<group>"; };
+		FB47246728EF35B70027EFC7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		FB47246928F0204A0027EFC7 /* LoginDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDatasource.swift; sourceTree = "<group>"; };
+		FB47246B28F020C50027EFC7 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
 		FB567F4F28EC0EA200842EF0 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB567F5228EC0EA200842EF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +70,18 @@
 			path = AppRouter;
 			sourceTree = "<group>";
 		};
+		FB47245A28EECFAD0027EFC7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				FB567F5628EC0EA200842EF0 /* LoginViewController.swift */,
+				FB47245B28EECFD80027EFC7 /* LoginClient.swift */,
+				FB47246728EF35B70027EFC7 /* LoginViewModel.swift */,
+				FB47246928F0204A0027EFC7 /* LoginDatasource.swift */,
+				FB47246B28F020C50027EFC7 /* LoginUseCase.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		FB567F4628EC0EA200842EF0 = {
 			isa = PBXGroup;
 			children = (
@@ -81,11 +101,11 @@
 		FB567F5128EC0EA200842EF0 /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
+				FB47245A28EECFAD0027EFC7 /* Login */,
 				FB47245528EEB7EA0027EFC7 /* AppRouter */,
 				FB47245228EEB6190027EFC7 /* Extensions */,
 				FB567F5228EC0EA200842EF0 /* AppDelegate.swift */,
 				FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */,
-				FB567F5628EC0EA200842EF0 /* LoginViewController.swift */,
 				FB567F5B28EC0EA400842EF0 /* Assets.xcassets */,
 				FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */,
 				FB567F6028EC0EA400842EF0 /* Info.plist */,
@@ -196,8 +216,12 @@
 				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
 				FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */,
 				FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */,
+				FB47245C28EECFD80027EFC7 /* LoginClient.swift in Sources */,
 				FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */,
+				FB47246A28F0204A0027EFC7 /* LoginDatasource.swift in Sources */,
 				FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */,
+				FB47246828EF35B70027EFC7 /* LoginViewModel.swift in Sources */,
+				FB47246C28F020C50027EFC7 /* LoginUseCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
