@@ -4,10 +4,9 @@ class LoginViewModel {
 
     private var useCase = LoginUseCase()
     private var router: AppRouterProtocol!
-    
+
     convenience init(router: AppRouterProtocol) {
         self.init()
-        
         self.router = router
     }
 
