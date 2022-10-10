@@ -42,7 +42,6 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ConstructViewsProtocol {
-
     func createViews() {
         gradientBg = CAGradientLayer()
         gradientBg.type = .axial
@@ -57,6 +56,7 @@ extension LoginViewController: ConstructViewsProtocol {
         emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
         logInButton = UIButton(type: .system)
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
 
