@@ -7,23 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB47245028EEB0F80027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5228EC0EA200842EF0 /* AppDelegate.swift */; };
 		FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */; };
-		FB567F5728EC0EA200842EF0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* ViewController.swift */; };
-		FB567F5A28EC0EA200842EF0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5828EC0EA200842EF0 /* Main.storyboard */; };
+		FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* LoginViewController.swift */; };
 		FB567F5C28EC0EA400842EF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5B28EC0EA400842EF0 /* Assets.xcassets */; };
 		FB567F5F28EC0EA400842EF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */; };
+		FB567F6828EC29FA00842EF0 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FB567F6728EC29FA00842EF0 /* .swiftlint.yml */; };
+		FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FBC5AB1228EC3D5800CBC98A /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB567F4F28EC0EA200842EF0 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB567F5228EC0EA200842EF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FB567F5628EC0EA200842EF0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		FB567F5928EC0EA200842EF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FB567F5628EC0EA200842EF0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FB567F5B28EC0EA400842EF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB567F5E28EC0EA400842EF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB567F6028EC0EA400842EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB567F6728EC29FA00842EF0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,12 +34,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB47245128EEB10D0027EFC7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		FB567F4628EC0EA200842EF0 = {
 			isa = PBXGroup;
 			children = (
@@ -56,13 +68,14 @@
 		FB567F5128EC0EA200842EF0 /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
+				FB47245128EEB10D0027EFC7 /* Extensions */,
 				FB567F5228EC0EA200842EF0 /* AppDelegate.swift */,
 				FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */,
-				FB567F5628EC0EA200842EF0 /* ViewController.swift */,
-				FB567F5828EC0EA200842EF0 /* Main.storyboard */,
+				FB567F5628EC0EA200842EF0 /* LoginViewController.swift */,
 				FB567F5B28EC0EA400842EF0 /* Assets.xcassets */,
 				FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */,
 				FB567F6028EC0EA400842EF0 /* Info.plist */,
+				FB567F6728EC29FA00842EF0 /* .swiftlint.yml */,
 			);
 			path = QuizApp;
 			sourceTree = "<group>";
@@ -77,12 +90,16 @@
 				FB567F4B28EC0EA200842EF0 /* Sources */,
 				FB567F4C28EC0EA200842EF0 /* Frameworks */,
 				FB567F4D28EC0EA200842EF0 /* Resources */,
+				FB567F6628EC265300842EF0 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = QuizApp;
+			packageProductDependencies = (
+				FBC5AB1228EC3D5800CBC98A /* SnapKit */,
+			);
 			productName = QuizApp;
 			productReference = FB567F4F28EC0EA200842EF0 /* QuizApp.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +128,9 @@
 				Base,
 			);
 			mainGroup = FB567F4628EC0EA200842EF0;
+			packageReferences = (
+				FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = FB567F5028EC0EA200842EF0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -125,20 +145,41 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB567F6828EC29FA00842EF0 /* .swiftlint.yml in Resources */,
 				FB567F5F28EC0EA400842EF0 /* LaunchScreen.storyboard in Resources */,
 				FB567F5C28EC0EA400842EF0 /* Assets.xcassets in Resources */,
-				FB567F5A28EC0EA200842EF0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FB567F6628EC265300842EF0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		FB567F4B28EC0EA200842EF0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB567F5728EC0EA200842EF0 /* ViewController.swift in Sources */,
+				FB47245028EEB0F80027EFC7 /* ConstructViewsProtocol.swift in Sources */,
+				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
 				FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */,
 				FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */,
 			);
@@ -147,14 +188,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		FB567F5828EC0EA200842EF0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FB567F5928EC0EA200842EF0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -291,7 +324,6 @@
 				INFOPLIST_FILE = QuizApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -299,7 +331,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kos.barbara.QuizApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kosbarbara.QuizApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -318,7 +350,6 @@
 				INFOPLIST_FILE = QuizApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -326,7 +357,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kos.barbara.QuizApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.kosbarbara.QuizApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -356,6 +387,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FBC5AB1228EC3D5800CBC98A /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FB567F4728EC0EA200842EF0 /* Project object */;
 }
