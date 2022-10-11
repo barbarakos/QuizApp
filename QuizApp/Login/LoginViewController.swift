@@ -3,7 +3,6 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    private var router: AppRouterProtocol!
     private var loginViewModel: LoginViewModel!
 
     var gradientBg: CAGradientLayer!
@@ -13,11 +12,9 @@ class LoginViewController: UIViewController {
     var logInButton: UIButton!
     var stackView: UIStackView!
 
-    convenience init(router: AppRouterProtocol) {
+    convenience init(viewModel: LoginViewModel) {
         self.init()
-
-        self.router = router
-        loginViewModel = LoginViewModel(router: router)
+        self.loginViewModel = viewModel
     }
 
     override func viewDidLoad() {
