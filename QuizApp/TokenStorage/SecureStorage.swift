@@ -6,7 +6,7 @@ class SecureStorage {
     private let keychain = Keychain()
 
     var accessToken: String? {
-        keychain.value(forKey: "accessToken") as? String ?? ""
+        keychain.value(forKey: "accessToken") as? String
     }
 
     func save(accessToken: String) {

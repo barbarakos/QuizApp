@@ -3,18 +3,17 @@ import Foundation
 class LoginClient {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
-    let loginPath = "v1/login"
+    let loginPath = "api/v1/login"
 
     func login(password: String, username: String) async throws -> LoginResponseModel {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
             throw RequestError.invalidURL
         }
+
         var URLrequest = URLRequest(url: URL)
         URLrequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         URLrequest.httpMethod =  "POST"
-        let reqBody = LoginRequestModel(password: password, username: username)
-        let reqBodyJSON = try? JSONEncoder().encode(reqBody)
-        URLrequest.httpBody = reqBodyJSON
+        URLrequest.httpBody = try? JSONEncoder().encode(LoginRequestModel(password: password, username: username))
 
         let response: LoginResponseModel = try await executeURLRequest(URLrequest: URLrequest)
         return response
@@ -24,9 +23,12 @@ class LoginClient {
         guard let (data, response) = try? await URLSession.shared.data(for: URLrequest) else {
             throw RequestError.serverError
         }
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw RequestError.dataError
         }
+
+        print(httpResponse.statusCode)
         if !(200...299).contains(httpResponse.statusCode) {
             switch httpResponse.statusCode {
             case 400...499:
@@ -40,14 +42,14 @@ class LoginClient {
             guard let value = try? JSONDecoder().decode(LoginResponseModel.self, from: data) else {
                 throw RequestError.dataError
             }
+
             return value
         }
-
     }
 
 }
 
-struct LoginRequestModel: Encodable {
+struct LoginRequestModel: Codable {
 
     let password: String
     let username: String
@@ -56,7 +58,7 @@ struct LoginRequestModel: Encodable {
 
 struct LoginResponseModel: Decodable {
 
-    let accesToken: String
+    let accessToken: String
 
 }
 

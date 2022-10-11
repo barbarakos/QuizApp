@@ -7,7 +7,8 @@ class LoginUseCase {
 
     func login(username: String, password: String) async throws {
         let response = try await datasource.login(username: username, password: password)
-        tokenStorage.save(accessToken: response.accesToken)
+        print(response.accessToken)
+        tokenStorage.save(accessToken: response.accessToken)
     }
 
 }
