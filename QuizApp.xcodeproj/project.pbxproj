@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FB47245028EEB0F80027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */; };
+		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
+		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
+		FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245828EEB8540027EFC7 /* AppRouter.swift */; };
 		FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5228EC0EA200842EF0 /* AppDelegate.swift */; };
 		FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */; };
 		FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* LoginViewController.swift */; };
@@ -18,7 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
+		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
+		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
+		FB47245828EEB8540027EFC7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
 		FB567F4F28EC0EA200842EF0 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB567F5228EC0EA200842EF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,12 +45,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FB47245128EEB10D0027EFC7 /* Extensions */ = {
+		FB47245228EEB6190027EFC7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FB47244F28EEB0F80027EFC7 /* ConstructViewsProtocol.swift */,
+				FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		FB47245528EEB7EA0027EFC7 /* AppRouter */ = {
+			isa = PBXGroup;
+			children = (
+				FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */,
+				FB47245828EEB8540027EFC7 /* AppRouter.swift */,
+			);
+			path = AppRouter;
 			sourceTree = "<group>";
 		};
 		FB567F4628EC0EA200842EF0 = {
@@ -68,7 +81,8 @@
 		FB567F5128EC0EA200842EF0 /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
-				FB47245128EEB10D0027EFC7 /* Extensions */,
+				FB47245528EEB7EA0027EFC7 /* AppRouter */,
+				FB47245228EEB6190027EFC7 /* Extensions */,
 				FB567F5228EC0EA200842EF0 /* AppDelegate.swift */,
 				FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */,
 				FB567F5628EC0EA200842EF0 /* LoginViewController.swift */,
@@ -178,10 +192,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB47245028EEB0F80027EFC7 /* ConstructViewsProtocol.swift in Sources */,
+				FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */,
 				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
+				FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */,
 				FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */,
 				FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */,
+				FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

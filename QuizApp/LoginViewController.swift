@@ -3,12 +3,20 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
+    private var router: AppRouterProtocol!
+
     var gradientBg: CAGradientLayer!
     var titleLabel: UILabel!
     var emailTextField: UITextField!
     var passwordTextField: UITextField!
     var logInButton: UIButton!
     var stackView: UIStackView!
+
+    convenience init(router: AppRouterProtocol) {
+        self.init()
+
+        self.router = router
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,8 +103,8 @@ extension LoginViewController: ConstructViewsProtocol {
         logInButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.bold)
         logInButton.layer.cornerRadius = 15
         let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
-        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
         logInButton.isUserInteractionEnabled = inputFieldsValid
+        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
         logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
         logInButton.addTarget(self, action: #selector(handleLogIn), for: .touchUpInside)
         stackView.axis = .vertical
