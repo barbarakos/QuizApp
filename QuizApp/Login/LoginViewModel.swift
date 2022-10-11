@@ -7,7 +7,6 @@ class LoginViewModel {
     
     convenience init(router: AppRouterProtocol) {
         self.init()
-        
         self.router = router
     }
 

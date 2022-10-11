@@ -1,5 +1,11 @@
 import Foundation
 
+protocol LoginUseCaseProtocol {
+
+    func login(username: String, password: String) async throws
+    
+}
+
 class LoginUseCase {
 
     private var datasource = LoginDatasource()
