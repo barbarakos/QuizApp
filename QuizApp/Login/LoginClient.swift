@@ -1,5 +1,13 @@
 import Foundation
 
+protocol LoginClientProtocol {
+
+    func login(password: String, username: String) async throws -> LoginResponseModel
+
+    func executeURLRequest(URLrequest: URLRequest) async throws -> LoginResponseModel
+
+}
+
 class LoginClient {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
@@ -9,6 +17,7 @@ class LoginClient {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
             throw RequestError.invalidURL
         }
+
         var URLrequest = URLRequest(url: URL)
         URLrequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         URLrequest.httpMethod =  "POST"
@@ -24,9 +33,11 @@ class LoginClient {
         guard let (data, response) = try? await URLSession.shared.data(for: URLrequest) else {
             throw RequestError.serverError
         }
+
         guard let httpResponse = response as? HTTPURLResponse else {
             throw RequestError.dataError
         }
+        
         if !(200...299).contains(httpResponse.statusCode) {
             switch httpResponse.statusCode {
             case 400...499:
@@ -44,28 +55,5 @@ class LoginClient {
         }
 
     }
-
-}
-
-struct LoginRequestModel: Encodable {
-
-    let password: String
-    let username: String
-
-}
-
-struct LoginResponseModel: Decodable {
-
-    let accesToken: String
-
-}
-
-enum RequestError: Error {
-
-    case clientError
-    case serverError
-    case dataError
-    case invalidURL
-    case unknown
 
 }

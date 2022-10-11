@@ -29,7 +29,10 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
-        loginViewModel.login(username: emailTextField.text!, password: passwordTextField.text!)
+        guard let password = passwordTextField.text, let username = emailTextField.text else {
+            return
+        }
+        loginViewModel.login(username: username, password: password)
     }
 
     @objc func textFieldDidChange() {
@@ -42,7 +45,6 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ConstructViewsProtocol {
-
     func createViews() {
         gradientBg = CAGradientLayer()
         gradientBg.type = .axial
@@ -57,6 +59,7 @@ extension LoginViewController: ConstructViewsProtocol {
         emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         passwordTextField.delegate = self
         passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
         logInButton = UIButton(type: .system)
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
 
