@@ -1,5 +1,13 @@
 import Foundation
 
+protocol LoginClientProtocol {
+
+    func login(password: String, username: String) async throws -> LoginResponseModel
+
+    func executeURLRequest(URLrequest: URLRequest) async throws -> LoginResponseModel
+
+}
+
 class LoginClient {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
@@ -27,8 +35,7 @@ class LoginClient {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw RequestError.dataError
         }
-
-        print(httpResponse.statusCode)
+        
         if !(200...299).contains(httpResponse.statusCode) {
             switch httpResponse.statusCode {
             case 400...499:
@@ -46,28 +53,5 @@ class LoginClient {
             return value
         }
     }
-
-}
-
-struct LoginRequestModel: Codable {
-
-    let password: String
-    let username: String
-
-}
-
-struct LoginResponseModel: Decodable {
-
-    let accessToken: String
-
-}
-
-enum RequestError: Error {
-
-    case clientError
-    case serverError
-    case dataError
-    case invalidURL
-    case unknown
 
 }

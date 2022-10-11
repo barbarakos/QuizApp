@@ -3,6 +3,7 @@ import UIKit
 class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController!
+    let tokenStorage = SecureStorage()
 
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
