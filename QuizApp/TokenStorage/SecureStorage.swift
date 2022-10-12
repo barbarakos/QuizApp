@@ -4,18 +4,17 @@ import Keychain
 class SecureStorage {
 
     private let keychain = Keychain()
-    private let accessTokenKey = "accessToken"
 
     var accessToken: String? {
-        keychain.value(forKey: accessTokenKey) as? String
+        keychain.value(forKey: "accessToken") as? String
     }
 
     func save(accessToken: String) {
-        _ = keychain.save(accessToken, forKey: accessTokenKey)
+        _ = keychain.save(accessToken, forKey: "accessToken")
     }
 
     func deleteToken() {
-        _ = keychain.remove(forKey: accessTokenKey)
+        _ = keychain.remove(forKey: "accessToken")
     }
 
 }
