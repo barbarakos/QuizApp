@@ -9,4 +9,3 @@ enum RequestError: Error {
     case unknown
 
 }
-

@@ -15,20 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         Task {
             do {
-                let checkClient = CheckClient()
-                try await checkClient.checkAccessToken()
-                DispatchQueue.main.async {
-                    router.showUserVC()
-                }
+                let loginDatasource = LoginDatasource(storage: SecureStorage())
+                try await loginDatasource.checkAccessToken()
+                router.showTabBarControllers()
             } catch {
-                DispatchQueue.main.async {
-                    router.showLogIn()
-                }
+                router.showLogIn()
             }
+            window?.rootViewController = navigationController
+            window?.makeKeyAndVisible()
         }
-
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

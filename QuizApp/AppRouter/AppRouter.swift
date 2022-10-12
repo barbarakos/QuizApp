@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController!
@@ -10,15 +11,23 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showLogIn() {
-        let vc = LoginViewController(router: self)
+        let viewModel = LoginViewModel(router: self, tokenStorage: tokenStorage)
+        let vc = LoginViewController(viewModel: viewModel)
+
         navigationController.setViewControllers([vc], animated: true)
-//        navigationController.pushViewController(vc, animated: false)
     }
 
-    func showUserVC() {
-        let vc = UserViewController(router: self)
-        navigationController.setViewControllers([vc], animated: true)
-//        navigationController.pushViewController(vc, animated: true)
+    func showTabBarControllers() {
+        let userVM = UserViewModel(router: self, tokenStorage: tokenStorage)
+        let userVC = UserViewController(viewModel: userVM)
+
+        let searchVC = SearchViewController()
+        let quizVC = QuizViewController()
+
+        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
+        let tabBarController = TabBarController(viewControllers)
+
+        navigationController.setViewControllers([tabBarController], animated: true)
     }
 
 }

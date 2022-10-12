@@ -4,14 +4,17 @@ protocol LoginClientProtocol {
 
     func login(password: String, username: String) async throws -> LoginResponseModel
 
-    func executeURLRequest(URLrequest: URLRequest) async throws -> LoginResponseModel
+    func checkAccessToken(accessToken: String) async throws
 
 }
 
-class LoginClient {
+class LoginClient: LoginClientProtocol {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
     let loginPath = "api/v1/login"
+    let checkPath = "api/v1/check"
+
+    private let apiClient = ApiClient()
 
     func login(password: String, username: String) async throws -> LoginResponseModel {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
@@ -23,35 +26,19 @@ class LoginClient {
         URLrequest.httpMethod =  "POST"
         URLrequest.httpBody = try? JSONEncoder().encode(LoginRequestModel(password: password, username: username))
 
-        let response: LoginResponseModel = try await executeURLRequest(URLrequest: URLrequest)
-        return response
+        return try await apiClient.executeURLRequest(URLrequest: URLrequest)
     }
 
-    func executeURLRequest(URLrequest: URLRequest) async throws -> LoginResponseModel {
-        guard let (data, response) = try? await URLSession.shared.data(for: URLrequest) else {
-            throw RequestError.serverError
+    func checkAccessToken(accessToken: String) async throws {
+        guard let URL = URL(string: "\(baseURL)\(checkPath)") else {
+            throw RequestError.invalidURL
         }
 
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw RequestError.dataError
-        }
-        
-        if !(200...299).contains(httpResponse.statusCode) {
-            switch httpResponse.statusCode {
-            case 400...499:
-                throw RequestError.clientError
-            case 500...599:
-                throw RequestError.serverError
-            default:
-                throw RequestError.unknown
-            }
-        } else {
-            guard let value = try? JSONDecoder().decode(LoginResponseModel.self, from: data) else {
-                throw RequestError.dataError
-            }
+        var URLrequest = URLRequest(url: URL)
+        URLrequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        URLrequest.httpMethod = "GET"
 
-            return value
-        }
+        try await apiClient.executeURLRequest(URLrequest: URLrequest)
     }
 
 }
