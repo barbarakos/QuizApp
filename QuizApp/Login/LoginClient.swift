@@ -8,7 +8,7 @@ protocol LoginClientProtocol {
 
 }
 
-class LoginClient {
+class LoginClient: LoginClientProtocol {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
     let loginPath = "v1/login"
@@ -51,6 +51,7 @@ class LoginClient {
             guard let value = try? JSONDecoder().decode(LoginResponseModel.self, from: data) else {
                 throw RequestError.dataError
             }
+            
             return value
         }
 

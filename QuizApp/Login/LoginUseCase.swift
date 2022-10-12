@@ -6,7 +6,7 @@ protocol LoginUseCaseProtocol {
     
 }
 
-class LoginUseCase {
+class LoginUseCase: LoginUseCaseProtocol {
 
     private var datasource = LoginDatasource()
 
