@@ -2,6 +2,7 @@ import Foundation
 
 struct LoginResponseModel: Decodable {
 
-    let accessToken: String
+    let accesToken: String
 
 }
+
