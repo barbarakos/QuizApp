@@ -70,6 +70,12 @@ extension UserViewController: ConstructViewsProtocol {
         usernameLabel = UILabel()
         view.addSubview(usernameLabel)
 
+        nameTitleLabel = UILabel()
+        view.addSubview(nameTitleLabel)
+
+        nameLabel = UILabel()
+        view.addSubview(nameLabel)
+
         logOutButton = UIButton(type: .system)
         view.addSubview(logOutButton)
     }

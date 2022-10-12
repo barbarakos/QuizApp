@@ -1,6 +1,5 @@
 import UIKit
 
-@MainActor
 class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController!
@@ -10,6 +9,7 @@ class AppRouter: AppRouterProtocol {
         self.navigationController = navigationController
     }
 
+    @MainActor
     func showLogIn() {
         let viewModel = LoginViewModel(router: self, tokenStorage: tokenStorage)
         let vc = LoginViewController(viewModel: viewModel)
@@ -17,6 +17,8 @@ class AppRouter: AppRouterProtocol {
         navigationController.setViewControllers([vc], animated: true)
     }
 
+
+    @MainActor
     func showTabBarControllers() {
         let userVM = UserViewModel(router: self, tokenStorage: tokenStorage)
         let userVC = UserViewController(viewModel: userVM)
