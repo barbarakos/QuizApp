@@ -12,9 +12,13 @@ class LoginViewController: UIViewController {
     var logInButton: UIButton!
     var stackView: UIStackView!
 
-    convenience init(viewModel: LoginViewModel) {
-        self.init()
+    init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -29,9 +33,8 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
-        guard let password = passwordTextField.text, let username = emailTextField.text else {
-            return
-        }
+        guard let username = emailTextField.text, let password = passwordTextField.text else { return }
+
         loginViewModel.login(username: username, password: password)
     }
 

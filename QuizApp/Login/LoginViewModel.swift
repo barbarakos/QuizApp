@@ -6,7 +6,7 @@ class LoginViewModel {
     private var router: AppRouterProtocol!
     private var tokenStorage: SecureStorage!
 
-    convenience init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = LoginUseCase(tokenStorage: tokenStorage)
@@ -18,7 +18,7 @@ class LoginViewModel {
                 try await useCase.login(username: username, password: password)
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.router.showUserVC()
+                    self.router.showTabBarControllers()
                 }
 
             } catch {
