@@ -17,7 +17,6 @@ class AppRouter: AppRouterProtocol {
         navigationController.setViewControllers([vc], animated: true)
     }
 
-
     @MainActor
     func showTabBarControllers() {
         let userVM = UserViewModel(router: self, tokenStorage: tokenStorage)
