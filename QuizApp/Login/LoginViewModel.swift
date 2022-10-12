@@ -6,7 +6,7 @@ class LoginViewModel {
     private var router: AppRouterProtocol!
     private var tokenStorage: SecureStorage!
 
-    convenience init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = LoginUseCase(tokenStorage: tokenStorage)

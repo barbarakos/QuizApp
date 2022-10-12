@@ -10,15 +10,15 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showLogIn() {
-        let vc = LoginViewController(router: self)
+        let viewModel = LoginViewModel(router: self, tokenStorage: tokenStorage)
+        let vc = LoginViewController(viewModel: viewModel)
+
         navigationController.setViewControllers([vc], animated: true)
-//        navigationController.pushViewController(vc, animated: false)
     }
 
     func showUserVC() {
-        let vc = UserViewController(router: self)
+        let vc = UserViewController()
         navigationController.setViewControllers([vc], animated: true)
-//        navigationController.pushViewController(vc, animated: true)
     }
 
 }
