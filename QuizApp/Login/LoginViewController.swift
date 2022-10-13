@@ -32,6 +32,7 @@ class LoginViewController: UIViewController {
         guard let password = passwordTextField.text, let username = emailTextField.text else {
             return
         }
+
         loginViewModel.login(username: username, password: password)
     }
 
@@ -45,6 +46,7 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ConstructViewsProtocol {
+
     func createViews() {
         gradientBg = CAGradientLayer()
         gradientBg.type = .axial
