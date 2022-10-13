@@ -3,7 +3,7 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    private var router: AppRouterProtocol!
+    private var loginViewModel: LoginViewModel!
 
     var gradientBg: CAGradientLayer!
     var titleLabel: UILabel!
@@ -12,10 +12,9 @@ class LoginViewController: UIViewController {
     var logInButton: UIButton!
     var stackView: UIStackView!
 
-    convenience init(router: AppRouterProtocol) {
+    convenience init(viewModel: LoginViewModel) {
         self.init()
-
-        self.router = router
+        self.loginViewModel = viewModel
     }
 
     override func viewDidLoad() {
@@ -30,6 +29,11 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
+        guard let password = passwordTextField.text, let username = emailTextField.text else {
+            return
+        }
+
+        loginViewModel.login(username: username, password: password)
     }
 
     @objc func textFieldDidChange() {
@@ -42,6 +46,7 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ConstructViewsProtocol {
+
     func createViews() {
         gradientBg = CAGradientLayer()
         gradientBg.type = .axial
