@@ -2,12 +2,14 @@ import Foundation
 
 class LoginViewModel {
 
-    private var useCase = LoginUseCase()
+    private var useCase: LoginUseCase!
     private var router: AppRouterProtocol!
-    
-    convenience init(router: AppRouterProtocol) {
-        self.init()
+    private var tokenStorage: SecureStorage!
+
+    convenience init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
         self.router = router
+        self.tokenStorage = tokenStorage
+        self.useCase = LoginUseCase(tokenStorage: tokenStorage)
     }
 
     func login(username: String, password: String) {

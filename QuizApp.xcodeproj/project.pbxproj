@@ -14,6 +14,8 @@
 		FB47246828EF35B70027EFC7 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246728EF35B70027EFC7 /* LoginViewModel.swift */; };
 		FB47246A28F0204A0027EFC7 /* LoginDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246928F0204A0027EFC7 /* LoginDatasource.swift */; };
 		FB47246C28F020C50027EFC7 /* LoginUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246B28F020C50027EFC7 /* LoginUseCase.swift */; };
+		FB47246E28F034C90027EFC7 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47246D28F034C90027EFC7 /* SecureStorage.swift */; };
+		FB47247128F0350A0027EFC7 /* Keychain in Frameworks */ = {isa = PBXBuildFile; productRef = FB47247028F0350A0027EFC7 /* Keychain */; };
 		FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5228EC0EA200842EF0 /* AppDelegate.swift */; };
 		FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */; };
 		FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* LoginViewController.swift */; };
@@ -34,6 +36,7 @@
 		FB47246728EF35B70027EFC7 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		FB47246928F0204A0027EFC7 /* LoginDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDatasource.swift; sourceTree = "<group>"; };
 		FB47246B28F020C50027EFC7 /* LoginUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUseCase.swift; sourceTree = "<group>"; };
+		FB47246D28F034C90027EFC7 /* SecureStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
 		FB567F4F28EC0EA200842EF0 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB567F5228EC0EA200842EF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB47247128F0350A0027EFC7 /* Keychain in Frameworks */,
 				FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +92,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		FB47247228F0385E0027EFC7 /* TokenStorage */ = {
+			isa = PBXGroup;
+			children = (
+				FB47246D28F034C90027EFC7 /* SecureStorage.swift */,
+			);
+			path = TokenStorage;
+			sourceTree = "<group>";
+		};
 		FB567F4628EC0EA200842EF0 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +119,7 @@
 		FB567F5128EC0EA200842EF0 /* QuizApp */ = {
 			isa = PBXGroup;
 			children = (
+				FB47247228F0385E0027EFC7 /* TokenStorage */,
 				FBC65C1B28F542930045F87B /* Models */,
 				FB47245A28EECFAD0027EFC7 /* Login */,
 				FB47245528EEB7EA0027EFC7 /* AppRouter */,
@@ -150,6 +163,7 @@
 			name = QuizApp;
 			packageProductDependencies = (
 				FBC5AB1228EC3D5800CBC98A /* SnapKit */,
+				FB47247028F0350A0027EFC7 /* Keychain */,
 			);
 			productName = QuizApp;
 			productReference = FB567F4F28EC0EA200842EF0 /* QuizApp.app */;
@@ -181,6 +195,7 @@
 			mainGroup = FB567F4628EC0EA200842EF0;
 			packageReferences = (
 				FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */,
+				FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */,
 			);
 			productRefGroup = FB567F5028EC0EA200842EF0 /* Products */;
 			projectDirPath = "";
@@ -229,6 +244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB47246E28F034C90027EFC7 /* SecureStorage.swift in Sources */,
 				FBC65C1F28F542DB0045F87B /* LoginResponseModel.swift in Sources */,
 				FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */,
 				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
@@ -449,6 +465,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/GroupeMINASTE/Keychain.swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -460,6 +484,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FB47247028F0350A0027EFC7 /* Keychain */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */;
+			productName = Keychain;
+		};
 		FBC5AB1228EC3D5800CBC98A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */;
