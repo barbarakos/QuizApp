@@ -18,6 +18,7 @@ class LoginViewModel {
                 try await useCase.login(username: username, password: password)
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
+
                     self.router.showTabBarControllers()
                 }
 

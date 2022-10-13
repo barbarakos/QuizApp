@@ -48,6 +48,7 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: ConstructViewsProtocol {
+
     func createViews() {
         gradientBg = CAGradientLayer()
         gradientBg.type = .axial
