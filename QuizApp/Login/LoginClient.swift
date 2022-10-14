@@ -11,7 +11,7 @@ protocol LoginClientProtocol {
 class LoginClient: LoginClientProtocol {
 
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
-    let loginPath = "v1/login"
+    let loginPath = "api/v1/login"
 
     func login(password: String, username: String) async throws -> LoginResponseModel {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
@@ -21,9 +21,7 @@ class LoginClient: LoginClientProtocol {
         var URLrequest = URLRequest(url: URL)
         URLrequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         URLrequest.httpMethod =  "POST"
-        let reqBody = LoginRequestModel(password: password, username: username)
-        let reqBodyJSON = try? JSONEncoder().encode(reqBody)
-        URLrequest.httpBody = reqBodyJSON
+        URLrequest.httpBody = try? JSONEncoder().encode(LoginRequestModel(password: password, username: username))
 
         let response: LoginResponseModel = try await executeURLRequest(URLrequest: URLrequest)
         return response
@@ -54,7 +52,6 @@ class LoginClient: LoginClientProtocol {
             
             return value
         }
-
     }
 
 }

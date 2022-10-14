@@ -6,7 +6,7 @@ class LoginViewModel {
     private var router: AppRouterProtocol!
     private var tokenStorage: SecureStorage!
 
-    convenience init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = LoginUseCase(tokenStorage: tokenStorage)
@@ -16,9 +16,13 @@ class LoginViewModel {
         Task {
             do {
                 try await useCase.login(username: username, password: password)
-                // show home screen
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.router.showUserVC()
+                }
+
             } catch {
-                print(error.localizedDescription)
+                print(error)
             }
         }
     }
