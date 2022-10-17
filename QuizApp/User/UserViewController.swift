@@ -34,7 +34,7 @@ class UserViewController: UIViewController {
         createViews()
         styleViews()
         defineLayoutForViews()
-        bind()
+        bindViewModel()
         userViewModel.getUser()
     }
 
@@ -42,17 +42,20 @@ class UserViewController: UIViewController {
         userViewModel.logout()
     }
 
-    func bind() {
+    func bindViewModel() {
         userViewModel
             .$username
-            .sink { username in
-                self.usernameLabel.text = username
-            }.store(in: &cancellables)
+            .sink { [weak self] username in
+                self?.usernameLabel.text = username
+            }
+            .store(in: &cancellables)
+
         userViewModel
             .$name
-            .sink { name in
-                self.nameLabel.text = name
-            }.store(in: &cancellables)
+            .sink { [weak self] name in
+                self?.nameLabel.text = name
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -113,21 +116,21 @@ extension UserViewController: ConstructViewsProtocol {
         gradientBg.locations = [0, 1]
 
         usernameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(40)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(40)
             $0.height.equalTo(20)
         }
 
         usernameLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.top.equalTo(usernameTitleLabel.snp.bottom).offset(10)
             $0.height.equalTo(30)
         }
 
         logOutButton.snp.makeConstraints {
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(30)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).inset(30)
-            $0.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(30)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(30)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.height.equalTo(40)
         }
     }

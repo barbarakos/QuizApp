@@ -8,10 +8,10 @@ protocol UserDatasourceProtocol {
 
 class UserDatasource: UserDatasourceProtocol {
 
-    private var userClient: UserClient!
+    internal var userClient: UserClientProtocol!
 
-    init() {
-        self.userClient = UserClient()
+    init(userClient: UserClientProtocol) {
+        self.userClient = userClient
     }
 
     func getUser(accessToken: String) async throws -> UserResponseModel {

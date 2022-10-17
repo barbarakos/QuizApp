@@ -14,7 +14,11 @@ class LoginClient: LoginClientProtocol {
     let loginPath = "api/v1/login"
     let checkPath = "api/v1/check"
 
-    private let apiClient = ApiClient()
+    private let apiClient: ApiClientProtocol!
+
+    init(apiClient: ApiClientProtocol) {
+        self.apiClient = apiClient
+    }
 
     func login(password: String, username: String) async throws -> LoginResponseModel {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
@@ -26,7 +30,7 @@ class LoginClient: LoginClientProtocol {
         URLrequest.httpMethod =  "POST"
         URLrequest.httpBody = try? JSONEncoder().encode(LoginRequestModel(password: password, username: username))
 
-        return try await apiClient.executeURLRequest(URLrequest: URLrequest)
+        return try await apiClient.executeURLRequest(URLRequest: URLrequest)
     }
 
     func checkAccessToken(accessToken: String) async throws {
@@ -38,7 +42,7 @@ class LoginClient: LoginClientProtocol {
         URLrequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         URLrequest.httpMethod = "GET"
 
-        try await apiClient.executeURLRequest(URLrequest: URLrequest)
+        try await apiClient.executeURLRequest(URLRequest: URLrequest)
     }
 
 }

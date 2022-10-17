@@ -9,12 +9,12 @@ protocol LoginDatasourceProtocol {
 
 class LoginDatasource: LoginDatasourceProtocol {
 
-    private var loginClient: LoginClient!
-    private var storage: SecureStorage!
+    internal var loginClient: LoginClientProtocol!
+    internal var storage: SecureStorage!
 
-    init(storage: SecureStorage) {
+    init(storage: SecureStorage, loginClient: LoginClientProtocol) {
         self.storage = storage
-        self.loginClient = LoginClient()
+        self.loginClient = loginClient
     }
 
     func login(username: String, password: String) async throws -> LoginResponseModel {
