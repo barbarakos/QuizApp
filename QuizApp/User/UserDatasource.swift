@@ -2,9 +2,9 @@ import Foundation
 
 protocol UserDatasourceProtocol {
 
-    func getUser() async throws -> UserResponseModel
-    
-    func changeName(name: String) async throws
+    func getUser(accessToken: String) async throws -> UserResponseModel
+
+    func changeName(name: String, accessToken: String) async throws
 
 }
 

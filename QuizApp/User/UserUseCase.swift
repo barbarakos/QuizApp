@@ -3,7 +3,7 @@ import Foundation
 protocol UserUseCaseProtocol {
 
     func getUser() async throws -> UserResponseModel
-    
+
     func changeName(name: String) async throws
 
 }
@@ -22,7 +22,7 @@ class UserUseCase: UserUseCaseProtocol {
         guard let accessToken = tokenStorage.accessToken else {
             throw RequestError.dataError
         }
-        
+
         return try await datasource.getUser(accessToken: accessToken)
     }
 
@@ -30,7 +30,7 @@ class UserUseCase: UserUseCaseProtocol {
         guard let accessToken = tokenStorage.accessToken else {
             throw RequestError.dataError
         }
-        
+
         try await datasource.changeName(name: name, accessToken: accessToken)
     }
 

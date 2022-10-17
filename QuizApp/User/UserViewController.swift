@@ -47,7 +47,7 @@ class UserViewController: UIViewController {
 
         userViewModel.changeName(name: name)
     }
-    
+
     func bindViewModel() {
         userViewModel
             .$username
@@ -59,7 +59,7 @@ class UserViewController: UIViewController {
         userViewModel
             .$name
             .sink { [weak self] name in
-                self?.nameLabel.text = name
+                self?.nameTextField.text = name
             }
             .store(in: &cancellables)
     }
@@ -136,13 +136,13 @@ extension UserViewController: ConstructViewsProtocol {
         }
 
         nameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.top.equalTo(usernameLabel.snp.bottom).offset(20)
             $0.height.equalTo(20)
         }
 
         nameTextField.snp.makeConstraints {
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
             $0.top.equalTo(nameTitleLabel.snp.bottom).offset(10)
             $0.height.equalTo(30)
         }

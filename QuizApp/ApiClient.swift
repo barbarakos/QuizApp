@@ -2,9 +2,9 @@ import Foundation
 
 protocol ApiClientProtocol {
 
-    func executeURLRequest<T: Decodable>(URLrequest: URLRequest) async throws -> T
-    
-    func executeURLRequest(URLrequest: URLRequest) async throws
+    func executeURLRequest<T: Decodable>(URLRequest: URLRequest) async throws -> T
+
+    func executeURLRequest(URLRequest: URLRequest) async throws
 
 }
 

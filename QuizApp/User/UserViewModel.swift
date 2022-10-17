@@ -35,7 +35,7 @@ class UserViewModel {
     func changeName(name: String) {
         Task {
             do {
-                try await userUseCase.changeName(name: name)
+                try await useCase.changeName(name: name)
             } catch {
                 print(error)
             }
