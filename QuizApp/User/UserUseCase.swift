@@ -3,6 +3,7 @@ import Foundation
 protocol UserUseCaseProtocol {
 
     func getUser() async throws -> UserResponseModel
+    
     func changeName(name: String) async throws
 
 }
