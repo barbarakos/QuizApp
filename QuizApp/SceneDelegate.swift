@@ -3,7 +3,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+               options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
@@ -11,11 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let navigationController = UINavigationController()
-        let router = AppRouter(navigationController: navigationController)
+        let appDependencies = AppDependencies()
+        let router = AppRouter(navigationController: navigationController, appDependencies: appDependencies)
 
         Task {
             do {
-                let loginDatasource = LoginDatasource(storage: SecureStorage())
+                let loginDatasource = appDependencies.loginDatasource
                 try await loginDatasource.checkAccessToken()
                 router.showTabBarControllers()
             } catch {

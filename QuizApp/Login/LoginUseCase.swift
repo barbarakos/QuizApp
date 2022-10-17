@@ -8,12 +8,12 @@ protocol LoginUseCaseProtocol {
 
 class LoginUseCase: LoginUseCaseProtocol {
 
-    private var datasource: LoginDatasource!
-    private var tokenStorage: SecureStorage!
+    internal var datasource: LoginDatasourceProtocol!
+    internal var tokenStorage: SecureStorage!
 
-    init(tokenStorage: SecureStorage) {
+    init(tokenStorage: SecureStorage, datasource: LoginDatasourceProtocol) {
         self.tokenStorage = tokenStorage
-        self.datasource = LoginDatasource(storage: tokenStorage)
+        self.datasource = datasource
     }
 
     func login(username: String, password: String) async throws {
