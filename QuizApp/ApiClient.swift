@@ -8,7 +8,7 @@ protocol ApiClientProtocol {
 
 }
 
-class ApiClient {
+class ApiClient: ApiClientProtocol {
 
     func executeURLRequest<T: Decodable>(URLRequest: URLRequest) async throws -> T {
         guard let (data, response) = try? await URLSession.shared.data(for: URLRequest) else {

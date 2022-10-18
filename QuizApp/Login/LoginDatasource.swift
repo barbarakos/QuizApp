@@ -3,18 +3,19 @@ import Foundation
 protocol LoginDatasourceProtocol {
 
     func login(username: String, password: String) async throws -> LoginResponseModel
+
     func checkAccessToken() async throws
 
 }
 
 class LoginDatasource: LoginDatasourceProtocol {
 
-    private var loginClient: LoginClient!
-    private var storage: SecureStorage!
+    private var loginClient: LoginClientProtocol
+    private var storage: SecureStorage
 
-    init(storage: SecureStorage) {
+    init(storage: SecureStorage, loginClient: LoginClientProtocol) {
         self.storage = storage
-        self.loginClient = LoginClient()
+        self.loginClient = loginClient
     }
 
     func login(username: String, password: String) async throws -> LoginResponseModel {

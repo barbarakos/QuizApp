@@ -30,7 +30,7 @@ class QuizViewModel {
                   description: "Movie Geography description that can usually span over multiple lines",
                   difficulty: "MEDIUM", id: 0, imageUrl: "", name: "Geography2", numberOfQuestions: 8)]
 
-    init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
+    init(router: AppRouterProtocol) {
         self.router = router
     }
 

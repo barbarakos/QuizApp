@@ -3,14 +3,14 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    private var loginViewModel: LoginViewModel!
-
     var gradientBg: CAGradientLayer!
     var titleLabel: UILabel!
     var emailTextField: UITextField!
     var passwordTextField: UITextField!
     var logInButton: UIButton!
     var stackView: UIStackView!
+
+    private var loginViewModel: LoginViewModel!
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
@@ -33,7 +33,12 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
-        guard let username = emailTextField.text, let password = passwordTextField.text else { return }
+        guard
+            let username = emailTextField.text,
+            let password = passwordTextField.text
+        else {
+            return
+        }
 
         loginViewModel.login(username: username, password: password)
     }
@@ -125,15 +130,15 @@ extension LoginViewController: ConstructViewsProtocol {
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top).offset(50)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(50)
             $0.height.equalTo(30)
         }
 
         stackView.snp.makeConstraints {
-            $0.bottom.lessThanOrEqualTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(70)
+            $0.bottom.lessThanOrEqualTo(view.safeAreaLayoutGuide).inset(70)
             $0.top.lessThanOrEqualTo(titleLabel.snp.bottom).offset(150)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading).offset(20)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing).inset(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.height.equalTo(170)
         }
     }

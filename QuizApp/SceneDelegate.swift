@@ -12,11 +12,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let navigationController = UINavigationController()
-        let router = AppRouter(navigationController: navigationController)
+        let appDependencies = AppDependencies()
+        let router = AppRouter(navigationController: navigationController, appDependencies: appDependencies)
 
         Task {
             do {
-                let loginDatasource = LoginDatasource(storage: SecureStorage())
+                let loginDatasource = appDependencies.loginDatasource
                 try await loginDatasource.checkAccessToken()
                 router.showTabBarControllers()
             } catch {

@@ -14,7 +14,11 @@ class LoginClient: LoginClientProtocol {
     let loginPath = "api/v1/login"
     let checkPath = "api/v1/check"
 
-    private let apiClient = ApiClient()
+    private let apiClient: ApiClientProtocol
+
+    init(apiClient: ApiClientProtocol) {
+        self.apiClient = apiClient
+    }
 
     func login(password: String, username: String) async throws -> LoginResponseModel {
         guard let URL = URL(string: "\(baseURL)\(loginPath)") else {
