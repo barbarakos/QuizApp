@@ -8,8 +8,8 @@ protocol LoginUseCaseProtocol {
 
 class LoginUseCase: LoginUseCaseProtocol {
 
-    internal var datasource: LoginDatasourceProtocol!
-    internal var tokenStorage: SecureStorage!
+    private var datasource: LoginDatasourceProtocol
+    private var tokenStorage: SecureStorage
 
     init(tokenStorage: SecureStorage, datasource: LoginDatasourceProtocol) {
         self.tokenStorage = tokenStorage

@@ -8,8 +8,8 @@ protocol UserUseCaseProtocol {
 
 class UserUseCase: UserUseCaseProtocol {
 
-    internal var datasource: UserDatasourceProtocol!
-    internal var tokenStorage: SecureStorage!
+    private var datasource: UserDatasourceProtocol
+    private var tokenStorage: SecureStorage
 
     init(tokenStorage: SecureStorage, datasource: UserDatasourceProtocol) {
         self.tokenStorage = tokenStorage
@@ -20,7 +20,7 @@ class UserUseCase: UserUseCaseProtocol {
         guard let accessToken = tokenStorage.accessToken else {
             throw RequestError.dataError
         }
-        
+
         return try await datasource.getUser(accessToken: accessToken)
     }
 

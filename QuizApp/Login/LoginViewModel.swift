@@ -2,9 +2,9 @@ import Foundation
 
 class LoginViewModel {
 
-    internal var useCase: LoginUseCaseProtocol!
-    internal var router: AppRouterProtocol!
-    internal var tokenStorage: SecureStorage!
+    private var useCase: LoginUseCaseProtocol
+    private var router: AppRouterProtocol
+    private var tokenStorage: SecureStorage
 
     init(router: AppRouterProtocol, tokenStorage: SecureStorage, useCase: LoginUseCaseProtocol) {
         self.router = router

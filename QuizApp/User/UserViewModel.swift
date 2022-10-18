@@ -3,12 +3,12 @@ import Combine
 
 class UserViewModel {
 
-    internal var useCase: UserUseCaseProtocol!
-    internal var router: AppRouterProtocol!
-    internal var tokenStorage: SecureStorage!
-
     @Published var username: String!
     @Published var name: String!
+
+    private var useCase: UserUseCaseProtocol
+    private var router: AppRouterProtocol
+    private var tokenStorage: SecureStorage
 
     init(router: AppRouterProtocol, tokenStorage: SecureStorage, useCase: UserUseCaseProtocol) {
         self.router = router

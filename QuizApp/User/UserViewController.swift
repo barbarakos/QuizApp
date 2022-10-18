@@ -5,8 +5,6 @@ import Combine
 
 class UserViewController: UIViewController {
 
-    private var userViewModel: UserViewModel!
-
     var gradientBg: CAGradientLayer!
     var usernameTitleLabel: UILabel!
     var usernameLabel: UILabel!
@@ -14,6 +12,7 @@ class UserViewController: UIViewController {
     var nameLabel: UILabel!
     var logOutButton: UIButton!
 
+    private var userViewModel: UserViewModel!
     private var cancellables = Set<AnyCancellable>()
 
     init(viewModel: UserViewModel) {

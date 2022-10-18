@@ -3,14 +3,14 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    private var loginViewModel: LoginViewModel!
-
     var gradientBg: CAGradientLayer!
     var titleLabel: UILabel!
     var emailTextField: UITextField!
     var passwordTextField: UITextField!
     var logInButton: UIButton!
     var stackView: UIStackView!
+
+    private var loginViewModel: LoginViewModel!
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
@@ -33,8 +33,9 @@ class LoginViewController: UIViewController {
     }
 
     @objc func handleLogIn() {
-        guard let username = emailTextField.text,
-              let password = passwordTextField.text
+        guard
+            let username = emailTextField.text,
+            let password = passwordTextField.text
         else {
             return
         }

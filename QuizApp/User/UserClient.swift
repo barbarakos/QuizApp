@@ -11,7 +11,7 @@ class UserClient: UserClientProtocol {
     let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
     let userPath = "api/v1/account"
 
-    private let apiClient: ApiClientProtocol!
+    private let apiClient: ApiClientProtocol
 
     init(apiClient: ApiClientProtocol) {
         self.apiClient = apiClient
