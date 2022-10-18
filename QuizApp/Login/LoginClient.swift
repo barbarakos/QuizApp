@@ -14,7 +14,7 @@ class LoginClient: LoginClientProtocol {
     let loginPath = "api/v1/login"
     let checkPath = "api/v1/check"
 
-    private let apiClient: ApiClientProtocol!
+    private let apiClient: ApiClientProtocol
 
     init(apiClient: ApiClientProtocol) {
         self.apiClient = apiClient

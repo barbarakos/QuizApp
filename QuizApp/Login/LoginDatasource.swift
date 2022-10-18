@@ -10,8 +10,8 @@ protocol LoginDatasourceProtocol {
 
 class LoginDatasource: LoginDatasourceProtocol {
 
-    internal var loginClient: LoginClientProtocol!
-    internal var storage: SecureStorage!
+    private var loginClient: LoginClientProtocol
+    private var storage: SecureStorage
 
     init(storage: SecureStorage, loginClient: LoginClientProtocol) {
         self.storage = storage

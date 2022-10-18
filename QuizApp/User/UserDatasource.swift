@@ -10,7 +10,7 @@ protocol UserDatasourceProtocol {
 
 class UserDatasource: UserDatasourceProtocol {
 
-    internal var userClient: UserClientProtocol!
+    private var userClient: UserClientProtocol
 
     init(userClient: UserClientProtocol) {
         self.userClient = userClient
