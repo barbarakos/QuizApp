@@ -23,10 +23,13 @@
 		FB567F5F28EC0EA400842EF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */; };
 		FB567F6828EC29FA00842EF0 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FB567F6728EC29FA00842EF0 /* .swiftlint.yml */; };
 		FB8647C028F7FE98001AE89B /* UserRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8647BF28F7FE98001AE89B /* UserRequestModel.swift */; };
+		FB8647C228F807E9001AE89B /* QuizViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8647C128F807E9001AE89B /* QuizViewModel.swift */; };
+		FB8647CC28F82156001AE89B /* QuizListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8647CB28F82156001AE89B /* QuizListCollectionViewCell.swift */; };
+		FB8647CF28F829EE001AE89B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = FB8647CE28F829EE001AE89B /* Kingfisher */; };
+		FB8647D128F82C5A001AE89B /* QuizModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8647D028F82C5A001AE89B /* QuizModel.swift */; };
 		FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FBC5AB1228EC3D5800CBC98A /* SnapKit */; };
 		FBC65C2728F5582C0045F87B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2628F5582C0045F87B /* TabBarController.swift */; };
 		FBC65C2928F558B00045F87B /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2828F558B00045F87B /* QuizViewController.swift */; };
-		FBC65C2B28F55ADD0045F87B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2A28F55ADD0045F87B /* SearchViewController.swift */; };
 		FBC65C2D28F55BDF0045F87B /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2C28F55BDF0045F87B /* UserViewModel.swift */; };
 		FBC65C2F28F56F360045F87B /* UserUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2E28F56F360045F87B /* UserUseCase.swift */; };
 		FBC65C3128F6A9370045F87B /* UserDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C3028F6A9370045F87B /* UserDatasource.swift */; };
@@ -57,9 +60,11 @@
 		FB567F6028EC0EA400842EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB567F6728EC29FA00842EF0 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FB8647BF28F7FE98001AE89B /* UserRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRequestModel.swift; sourceTree = "<group>"; };
+		FB8647C128F807E9001AE89B /* QuizViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewModel.swift; sourceTree = "<group>"; };
+		FB8647CB28F82156001AE89B /* QuizListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizListCollectionViewCell.swift; sourceTree = "<group>"; };
+		FB8647D028F82C5A001AE89B /* QuizModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModel.swift; sourceTree = "<group>"; };
 		FBC65C2628F5582C0045F87B /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FBC65C2828F558B00045F87B /* QuizViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizViewController.swift; sourceTree = "<group>"; };
-		FBC65C2A28F55ADD0045F87B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		FBC65C2C28F55BDF0045F87B /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		FBC65C2E28F56F360045F87B /* UserUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserUseCase.swift; sourceTree = "<group>"; };
 		FBC65C3028F6A9370045F87B /* UserDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDatasource.swift; sourceTree = "<group>"; };
@@ -77,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB8647CF28F829EE001AE89B /* Kingfisher in Frameworks */,
 				FB47247128F0350A0027EFC7 /* Keychain in Frameworks */,
 				FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */,
 			);
@@ -162,9 +168,9 @@
 				FB47247228F0385E0027EFC7 /* TokenStorage */,
 				FB47245228EEB6190027EFC7 /* Extensions */,
 				FB567F5228EC0EA200842EF0 /* AppDelegate.swift */,
+				FB8647CB28F82156001AE89B /* QuizListCollectionViewCell.swift */,
 				FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */,
 				FBC65C2628F5582C0045F87B /* TabBarController.swift */,
-				FBC65C2A28F55ADD0045F87B /* SearchViewController.swift */,
 				FB567F5B28EC0EA400842EF0 /* Assets.xcassets */,
 				FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */,
 				FB567F6028EC0EA400842EF0 /* Info.plist */,
@@ -181,6 +187,7 @@
 				FBC65C3928F6D1FA0045F87B /* RequestError.swift */,
 				FBC65C3B28F6F12A0045F87B /* UserResponseModel.swift */,
 				FB8647BF28F7FE98001AE89B /* UserRequestModel.swift */,
+				FB8647D028F82C5A001AE89B /* QuizModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,6 +196,7 @@
 			isa = PBXGroup;
 			children = (
 				FBC65C2828F558B00045F87B /* QuizViewController.swift */,
+				FB8647C128F807E9001AE89B /* QuizViewModel.swift */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
@@ -213,6 +221,7 @@
 			packageProductDependencies = (
 				FBC5AB1228EC3D5800CBC98A /* SnapKit */,
 				FB47247028F0350A0027EFC7 /* Keychain */,
+				FB8647CE28F829EE001AE89B /* Kingfisher */,
 			);
 			productName = QuizApp;
 			productReference = FB567F4F28EC0EA200842EF0 /* QuizApp.app */;
@@ -245,6 +254,7 @@
 			packageReferences = (
 				FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */,
+				FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = FB567F5028EC0EA200842EF0 /* Products */;
 			projectDirPath = "";
@@ -293,9 +303,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB8647CC28F82156001AE89B /* QuizListCollectionViewCell.swift in Sources */,
 				FB47246E28F034C90027EFC7 /* SecureStorage.swift in Sources */,
 				FB47247528F03BD20027EFC7 /* UserViewController.swift in Sources */,
 				FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */,
+				FB8647D128F82C5A001AE89B /* QuizModel.swift in Sources */,
+				FB8647C228F807E9001AE89B /* QuizViewModel.swift in Sources */,
 				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
 				FBC65C3128F6A9370045F87B /* UserDatasource.swift in Sources */,
 				FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */,
@@ -308,7 +321,6 @@
 				FBC65C3E28F6F3130045F87B /* ApiClient.swift in Sources */,
 				FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */,
 				FB8647C028F7FE98001AE89B /* UserRequestModel.swift in Sources */,
-				FBC65C2B28F55ADD0045F87B /* SearchViewController.swift in Sources */,
 				FBC65C3328F6A9540045F87B /* UserClient.swift in Sources */,
 				FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */,
 				FBC65C2728F5582C0045F87B /* TabBarController.swift in Sources */,
@@ -533,6 +545,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 		FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -548,6 +568,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */;
 			productName = Keychain;
+		};
+		FB8647CE28F829EE001AE89B /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		FBC5AB1228EC3D5800CBC98A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -22,10 +22,10 @@ class AppRouter: AppRouterProtocol {
         let userVM = UserViewModel(router: self, tokenStorage: tokenStorage)
         let userVC = UserViewController(viewModel: userVM)
 
-        let searchVC = SearchViewController()
-        let quizVC = QuizViewController()
+        let quizVM = QuizViewModel(router: self, tokenStorage: tokenStorage)
+        let quizVC = QuizViewController(viewModel: quizVM)
 
-        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
+        let viewControllers: [UIViewController] = [quizVC, userVC]
         let tabBarController = TabBarController(viewControllers)
 
         navigationController.setViewControllers([tabBarController], animated: true)

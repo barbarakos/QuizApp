@@ -19,11 +19,11 @@ class UserClient: UserClientProtocol {
             throw RequestError.invalidURL
         }
 
-        var URLrequest = URLRequest(url: URL)
-        URLrequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLrequest.httpMethod = "GET"
+        var URLRequest = URLRequest(url: URL)
+        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        URLRequest.httpMethod = "GET"
 
-        return try await apiClient.executeURLRequest(URLrequest: URLrequest)
+        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
     }
 
     func changeName(name: String, accessToken: String) async throws {
@@ -31,13 +31,13 @@ class UserClient: UserClientProtocol {
             throw RequestError.invalidURL
         }
 
-        var URLrequest = URLRequest(url: URL)
-        URLrequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLrequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLrequest.httpMethod = "PATCH"
-        URLrequest.httpBody = try? JSONEncoder().encode(UserRequestModel(name: name))
+        var URLRequest = URLRequest(url: URL)
+        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        URLRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        URLRequest.httpMethod = "PATCH"
+        URLRequest.httpBody = try? JSONEncoder().encode(UserRequestModel(name: name))
 
-        try await apiClient.executeURLRequest(URLrequest: URLrequest)
+        try await apiClient.executeURLRequest(URLRequest: URLRequest)
     }
 
 }

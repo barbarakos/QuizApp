@@ -2,15 +2,16 @@ import Foundation
 
 protocol ApiClientProtocol {
 
-    func executeURLRequest<T: Decodable>(URLrequest: URLRequest) async throws -> T
-    func executeURLRequest(URLrequest: URLRequest) async throws
+    func executeURLRequest<T: Decodable>(URLRequest: URLRequest) async throws -> T
+
+    func executeURLRequest(URLRequest: URLRequest) async throws
 
 }
 
 class ApiClient {
 
-    func executeURLRequest<T: Decodable>(URLrequest: URLRequest) async throws -> T {
-        guard let (data, response) = try? await URLSession.shared.data(for: URLrequest) else {
+    func executeURLRequest<T: Decodable>(URLRequest: URLRequest) async throws -> T {
+        guard let (data, response) = try? await URLSession.shared.data(for: URLRequest) else {
             throw RequestError.serverError
         }
 
@@ -37,8 +38,8 @@ class ApiClient {
         }
     }
 
-    func executeURLRequest(URLrequest: URLRequest) async throws {
-        guard let (_, response) = try? await URLSession.shared.data(for: URLrequest) else {
+    func executeURLRequest(URLRequest: URLRequest) async throws {
+        guard let (_, response) = try? await URLSession.shared.data(for: URLRequest) else {
             throw RequestError.serverError
         }
 
