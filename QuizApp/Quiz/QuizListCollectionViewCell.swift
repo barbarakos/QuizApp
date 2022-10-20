@@ -68,7 +68,7 @@ extension QuizListCollectionViewCell: ConstructViewsProtocol {
 
         imageView.layer.cornerRadius = 10
         imageView.tintColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1)
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
 
         titleLabel.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
@@ -87,7 +87,7 @@ extension QuizListCollectionViewCell: ConstructViewsProtocol {
         }
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(25)
             $0.leading.equalTo(imageView.snp.trailing).offset(Constants.margins)
         }
 

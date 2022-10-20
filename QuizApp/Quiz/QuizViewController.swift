@@ -52,7 +52,7 @@ class QuizViewController: UIViewController {
     func applySnapshot(animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(quizViewModel.mockQuizzes)
+        snapshot.appendItems(quizViewModel.quizzes)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
@@ -75,11 +75,15 @@ class QuizViewController: UIViewController {
         defineLayoutForViews()
     }
 
+    @MainActor
     @objc func didSelectCategory() {
         guard let category = segmented.titleForSegment(at: segmented.selectedSegmentIndex) else { return }
 
-        quizViewModel.getQuizzes(for: category.uppercased())
-        applySnapshot()
+        quizViewModel.getQuizzes(for: category.uppercased(), completion: {
+            DispatchQueue.main.async { [weak self] in
+                self?.applySnapshot()
+            }
+        })
     }
 
 }

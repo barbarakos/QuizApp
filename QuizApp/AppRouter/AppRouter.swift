@@ -35,7 +35,7 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
-        let quizVM = QuizViewModel(router: self)
+        let quizVM = QuizViewModel(router: self, useCase: appDependencies.quizUseCase)
         let quizVC = QuizViewController(viewModel: quizVM)
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
