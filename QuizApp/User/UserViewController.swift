@@ -1,9 +1,17 @@
 import Foundation
 import UIKit
-import SnapKit
 import Combine
+import SnapKit
 
 class UserViewController: UIViewController {
+
+    enum Constants {
+
+        static let logoutConstant = 40
+        static let margins = 20
+        static let height = 30
+
+    }
 
     var gradientBg: CAGradientLayer!
     var usernameTitleLabel: UILabel!
@@ -12,8 +20,8 @@ class UserViewController: UIViewController {
     var nameTextField: UITextField!
     var logOutButton: UIButton!
 
-    private var userViewModel: UserViewModel!
     private var cancellables = Set<AnyCancellable>()
+    private var userViewModel: UserViewModel!
 
     init(viewModel: UserViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -123,34 +131,34 @@ extension UserViewController: ConstructViewsProtocol {
         gradientBg.locations = [0, 1]
 
         usernameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(40)
-            $0.height.equalTo(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.height.equalTo(Constants.height)
         }
 
         usernameLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.top.equalTo(usernameTitleLabel.snp.bottom).offset(10)
-            $0.height.equalTo(30)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.top.equalTo(usernameTitleLabel.snp.bottom).offset(5)
+            $0.height.equalTo(Constants.height)
         }
 
         nameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.top.equalTo(usernameLabel.snp.bottom).offset(20)
-            $0.height.equalTo(20)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.top.equalTo(usernameLabel.snp.bottom).offset(Constants.margins)
+            $0.height.equalTo(Constants.height)
         }
 
         nameTextField.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
-            $0.top.equalTo(nameTitleLabel.snp.bottom).offset(10)
-            $0.height.equalTo(30)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.top.equalTo(nameTitleLabel.snp.bottom).offset(5)
+            $0.height.equalTo(Constants.height)
         }
 
         logOutButton.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(30)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
-            $0.height.equalTo(40)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.logoutConstant)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.logoutConstant)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.logoutConstant)
+            $0.height.equalTo(Constants.logoutConstant)
         }
     }
 
