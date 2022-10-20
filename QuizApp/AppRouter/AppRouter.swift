@@ -49,7 +49,7 @@ class AppRouter: AppRouterProtocol {
 
         let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
         let tabBarController = TabBarController(viewControllers)
-        tabBarController.selectedViewController = viewControllers[2]
+        tabBarController.selectedViewController = viewControllers[0]
 
         navigationController.setViewControllers([tabBarController], animated: true)
     }
