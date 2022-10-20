@@ -9,7 +9,7 @@ class UserViewController: UIViewController {
     var usernameTitleLabel: UILabel!
     var usernameLabel: UILabel!
     var nameTitleLabel: UILabel!
-    var nameLabel: UILabel!
+    var nameTextField: UITextField!
     var logOutButton: UIButton!
 
     private var userViewModel: UserViewModel!
@@ -41,6 +41,12 @@ class UserViewController: UIViewController {
         userViewModel.logout()
     }
 
+    func changeName() {
+        guard let name = nameTextField.text else { return }
+
+        userViewModel.changeName(name: name)
+    }
+
     func bindViewModel() {
         userViewModel
             .$username
@@ -52,7 +58,7 @@ class UserViewController: UIViewController {
         userViewModel
             .$name
             .sink { [weak self] name in
-                self?.nameLabel.text = name
+                self?.nameTextField.text = name
             }
             .store(in: &cancellables)
     }
@@ -75,8 +81,8 @@ extension UserViewController: ConstructViewsProtocol {
         nameTitleLabel = UILabel()
         view.addSubview(nameTitleLabel)
 
-        nameLabel = UILabel()
-        view.addSubview(nameLabel)
+        nameTextField = UITextField()
+        view.addSubview(nameTextField)
 
         logOutButton = UIButton(type: .system)
         view.addSubview(logOutButton)
@@ -99,8 +105,10 @@ extension UserViewController: ConstructViewsProtocol {
         nameTitleLabel.text = "NAME"
         nameTitleLabel.textColor = .white
 
-        nameLabel.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
-        nameLabel.textColor = .white
+        nameTextField.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
+        nameTextField.textColor = .white
+        nameTextField.delegate = self
+        nameTextField.isUserInteractionEnabled = true
 
         logOutButton.setTitle("Log out", for: .normal)
         logOutButton.setTitleColor(UIColor.red, for: .normal)
@@ -126,12 +134,34 @@ extension UserViewController: ConstructViewsProtocol {
             $0.height.equalTo(30)
         }
 
+        nameTitleLabel.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(usernameLabel.snp.bottom).offset(20)
+            $0.height.equalTo(20)
+        }
+
+        nameTextField.snp.makeConstraints {
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(20)
+            $0.top.equalTo(nameTitleLabel.snp.bottom).offset(10)
+            $0.height.equalTo(30)
+        }
+
         logOutButton.snp.makeConstraints {
             $0.leading.equalTo(view.safeAreaLayoutGuide).offset(30)
             $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(30)
             $0.height.equalTo(40)
         }
+    }
+
+}
+
+extension UserViewController: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        changeName()
+        return true
     }
 
 }

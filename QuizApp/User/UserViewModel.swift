@@ -32,6 +32,16 @@ class UserViewModel {
         }
     }
 
+    func changeName(name: String) {
+        Task {
+            do {
+                try await useCase.changeName(name: name)
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     func logout() {
         tokenStorage.deleteToken()
         router.showLogIn()

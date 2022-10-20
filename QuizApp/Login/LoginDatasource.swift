@@ -3,6 +3,7 @@ import Foundation
 protocol LoginDatasourceProtocol {
 
     func login(username: String, password: String) async throws -> LoginResponseModel
+
     func checkAccessToken() async throws
 
 }

@@ -4,6 +4,8 @@ protocol UserUseCaseProtocol {
 
     func getUser() async throws -> UserResponseModel
 
+    func changeName(name: String) async throws
+
 }
 
 class UserUseCase: UserUseCaseProtocol {
@@ -22,6 +24,14 @@ class UserUseCase: UserUseCaseProtocol {
         }
 
         return try await datasource.getUser(accessToken: accessToken)
+    }
+
+    func changeName(name: String) async throws {
+        guard let accessToken = tokenStorage.accessToken else {
+            throw RequestError.dataError
+        }
+
+        try await datasource.changeName(name: name, accessToken: accessToken)
     }
 
 }

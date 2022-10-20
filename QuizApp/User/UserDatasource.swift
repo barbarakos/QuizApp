@@ -4,6 +4,8 @@ protocol UserDatasourceProtocol {
 
     func getUser(accessToken: String) async throws -> UserResponseModel
 
+    func changeName(name: String, accessToken: String) async throws
+
 }
 
 class UserDatasource: UserDatasourceProtocol {
@@ -16,6 +18,10 @@ class UserDatasource: UserDatasourceProtocol {
 
     func getUser(accessToken: String) async throws -> UserResponseModel {
         return try await userClient.getUser(accessToken: accessToken)
+    }
+
+    func changeName(name: String, accessToken: String) async throws {
+        try await userClient.changeName(name: name, accessToken: accessToken)
     }
 
 }

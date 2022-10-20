@@ -35,19 +35,13 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
-        let searchVC = SearchViewController()
-        searchVC.tabBarItem = UITabBarItem(
-            title: "Search",
-            image: UIImage(systemName: "magnifyingglass"),
-            selectedImage: UIImage(systemName: "magnifyingglass"))
-
         let quizVC = QuizViewController()
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(systemName: "stopwatch"),
             selectedImage: UIImage(systemName: "stopwatch.fill"))
 
-        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
+        let viewControllers: [UIViewController] = [quizVC, userVC]
         let tabBarController = TabBarController(viewControllers)
         tabBarController.selectedViewController = viewControllers[0]
 
