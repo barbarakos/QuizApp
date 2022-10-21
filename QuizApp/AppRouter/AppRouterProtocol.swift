@@ -4,6 +4,6 @@ protocol AppRouterProtocol {
 
     func showLogIn()
 
-    func showUserVC()
+    func showTabBarControllers()
 
 }

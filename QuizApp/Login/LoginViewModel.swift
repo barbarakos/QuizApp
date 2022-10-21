@@ -2,14 +2,14 @@ import Foundation
 
 class LoginViewModel {
 
-    private var useCase: LoginUseCase!
-    private var router: AppRouterProtocol!
-    private var tokenStorage: SecureStorage!
+    private var useCase: LoginUseCaseProtocol
+    private var router: AppRouterProtocol
+    private var tokenStorage: SecureStorage
 
-    init(router: AppRouterProtocol, tokenStorage: SecureStorage) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorage, useCase: LoginUseCaseProtocol) {
         self.router = router
         self.tokenStorage = tokenStorage
-        self.useCase = LoginUseCase(tokenStorage: tokenStorage)
+        self.useCase = useCase
     }
 
     func login(username: String, password: String) {
@@ -18,7 +18,8 @@ class LoginViewModel {
                 try await useCase.login(username: username, password: password)
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.router.showUserVC()
+
+                    self.router.showTabBarControllers()
                 }
 
             } catch {

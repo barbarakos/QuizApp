@@ -3,17 +3,17 @@ import Foundation
 protocol LoginUseCaseProtocol {
 
     func login(username: String, password: String) async throws
-    
+
 }
 
 class LoginUseCase: LoginUseCaseProtocol {
 
-    private var datasource = LoginDatasource()
-    private var tokenStorage: SecureStorage!
+    private var datasource: LoginDatasourceProtocol
+    private var tokenStorage: SecureStorage
 
-    convenience init(tokenStorage: SecureStorage) {
-        self.init()
+    init(tokenStorage: SecureStorage, datasource: LoginDatasourceProtocol) {
         self.tokenStorage = tokenStorage
+        self.datasource = datasource
     }
 
     func login(username: String, password: String) async throws {
