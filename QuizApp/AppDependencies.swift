@@ -20,28 +20,28 @@ class AppDependencies {
         QuizClient(apiClient: apiClient)
     }()
 
-    lazy var loginDatasource: LoginDatasourceProtocol = {
-        LoginDatasource(storage: tokenStorage, loginClient: loginClient)
+    lazy var loginDataSource: LoginDataSourceProtocol = {
+        LoginDataSource(storage: tokenStorage, loginClient: loginClient)
     }()
 
-    lazy var userDatasource: UserDatasourceProtocol = {
-        UserDatasource(userClient: userClient)
+    lazy var userDataSource: UserDataSourceProtocol = {
+        UserDataSource(userClient: userClient)
     }()
 
-    lazy var quizDatasource: QuizDatasourceProtocol = {
-        QuizDatasource(quizClient: quizClient)
+    lazy var quizDataSource: QuizDataSourceProtocol = {
+        QuizDataSource(quizClient: quizClient)
     }()
 
     lazy var loginUseCase: LoginUseCaseProtocol = {
-        LoginUseCase(tokenStorage: tokenStorage, datasource: loginDatasource)
+        LoginUseCase(tokenStorage: tokenStorage, dataSource: loginDataSource)
     }()
 
     lazy var userUseCase: UserUseCaseProtocol = {
-        UserUseCase(tokenStorage: tokenStorage, datasource: userDatasource)
+        UserUseCase(tokenStorage: tokenStorage, dataSource: userDataSource)
     }()
 
     lazy var quizUseCase: QuizUseCaseProtocol = {
-        QuizUseCase(tokenStorage: tokenStorage, datasource: quizDatasource)
+        QuizUseCase(tokenStorage: tokenStorage, dataSource: quizDataSource)
     }()
 
 }

@@ -1,10 +1,10 @@
-protocol QuizDatasourceProtocol {
+protocol QuizDataSourceProtocol {
 
     func getQuizzes(for category: String, accessToken: String) async throws -> [QuizModel]
 
 }
 
-class QuizDatasource: QuizDatasourceProtocol {
+class QuizDataSource: QuizDataSourceProtocol {
 
     private var quizClient: QuizClientProtocol
 

@@ -5,26 +5,23 @@ import SnapKit
 
 class UserViewController: UIViewController {
 
-    enum Constants {
-
-        static let logoutConstant = 40
-        static let margins = 20
-        static let height = 30
-
-    }
-
-    var gradientBg: CAGradientLayer!
+    var gradientLayer: CAGradientLayer!
     var usernameTitleLabel: UILabel!
     var usernameLabel: UILabel!
     var nameTitleLabel: UILabel!
     var nameTextField: UITextField!
     var logOutButton: UIButton!
 
+    private let logoutConstant = 40
+    private let margins = 20
+    private let height = 30
+
     private var cancellables = Set<AnyCancellable>()
     private var userViewModel: UserViewModel!
 
     init(viewModel: UserViewModel) {
         super.init(nibName: nil, bundle: nil)
+
         self.userViewModel = viewModel
     }
 
@@ -34,13 +31,8 @@ class UserViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        buildViews()
-    }
 
-    func buildViews() {
-        createViews()
-        styleViews()
-        defineLayoutForViews()
+        buildViews()
         bindViewModel()
         userViewModel.getUser()
     }
@@ -75,10 +67,16 @@ class UserViewController: UIViewController {
 
 extension UserViewController: ConstructViewsProtocol {
 
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+
     func createViews() {
-        gradientBg = CAGradientLayer()
-        gradientBg.type = .axial
-        view.layer.addSublayer(gradientBg)
+        gradientLayer = CAGradientLayer()
+        gradientLayer.type = .axial
+        view.layer.addSublayer(gradientLayer)
 
         usernameTitleLabel = UILabel()
         view.addSubview(usernameTitleLabel)
@@ -97,7 +95,7 @@ extension UserViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientBg.colors = [
+        gradientLayer.colors = [
             UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
             UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
         ]
@@ -127,38 +125,38 @@ extension UserViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        gradientBg.frame = view.bounds
-        gradientBg.locations = [0, 1]
+        gradientLayer.frame = view.bounds
+        gradientLayer.locations = [0, 1]
 
         usernameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
-            $0.height.equalTo(Constants.height)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(margins)
+            $0.height.equalTo(height)
         }
 
         usernameLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
             $0.top.equalTo(usernameTitleLabel.snp.bottom).offset(5)
-            $0.height.equalTo(Constants.height)
+            $0.height.equalTo(height)
         }
 
         nameTitleLabel.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
-            $0.top.equalTo(usernameLabel.snp.bottom).offset(Constants.margins)
-            $0.height.equalTo(Constants.height)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
+            $0.top.equalTo(usernameLabel.snp.bottom).offset(margins)
+            $0.height.equalTo(height)
         }
 
         nameTextField.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
             $0.top.equalTo(nameTitleLabel.snp.bottom).offset(5)
-            $0.height.equalTo(Constants.height)
+            $0.height.equalTo(height)
         }
 
         logOutButton.snp.makeConstraints {
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.logoutConstant)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.logoutConstant)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(Constants.logoutConstant)
-            $0.height.equalTo(Constants.logoutConstant)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(logoutConstant)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(logoutConstant)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(logoutConstant)
+            $0.height.equalTo(logoutConstant)
         }
     }
 

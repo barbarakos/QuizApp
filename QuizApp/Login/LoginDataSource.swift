@@ -1,6 +1,6 @@
 import Foundation
 
-protocol LoginDatasourceProtocol {
+protocol LoginDataSourceProtocol {
 
     func login(username: String, password: String) async throws -> LoginResponseModel
 
@@ -8,7 +8,7 @@ protocol LoginDatasourceProtocol {
 
 }
 
-class LoginDatasource: LoginDatasourceProtocol {
+class LoginDataSource: LoginDataSourceProtocol {
 
     private var loginClient: LoginClientProtocol
     private var storage: SecureStorage

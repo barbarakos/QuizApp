@@ -1,6 +1,8 @@
+import Combine
+
 class QuizViewModel {
 
-    var quizzes: [QuizModel] = []
+    @Published var quizzes: [QuizModel] = []
 
     private var router: AppRouterProtocol
     private var useCase: QuizUseCaseProtocol
@@ -38,13 +40,11 @@ class QuizViewModel {
     }
 
     @MainActor
-    func getQuizzes(for category: String, completion: @escaping () -> Void) {
+    func getQuizzes(for category: String) {
         Task {
             do {
                 let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
                 quizzes = fetchedQuizzes
-//                    .map { QuizViewModel(from: $0)
-                completion()
             } catch {
                 print(error)
             }

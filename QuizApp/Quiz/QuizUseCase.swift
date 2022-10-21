@@ -6,12 +6,12 @@ protocol QuizUseCaseProtocol {
 
 class QuizUseCase: QuizUseCaseProtocol {
 
-    private var datasource: QuizDatasourceProtocol
+    private var dataSource: QuizDataSourceProtocol
     private var tokenStorage: SecureStorage
 
-    init(tokenStorage: SecureStorage, datasource: QuizDatasourceProtocol) {
+    init(tokenStorage: SecureStorage, dataSource: QuizDataSourceProtocol) {
         self.tokenStorage = tokenStorage
-        self.datasource = datasource
+        self.dataSource = dataSource
     }
 
     func getQuizzes(for category: String) async throws -> [QuizModel] {
@@ -19,7 +19,7 @@ class QuizUseCase: QuizUseCaseProtocol {
             throw RequestError.dataError
         }
 
-        return try await datasource.getQuizzes(for: category, accessToken: accessToken)
+        return try await dataSource.getQuizzes(for: category, accessToken: accessToken)
     }
 
 }

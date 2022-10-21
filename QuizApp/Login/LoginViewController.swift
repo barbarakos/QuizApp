@@ -3,7 +3,7 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    var gradientBg: CAGradientLayer!
+    var gradientLayer: CAGradientLayer!
     var titleLabel: UILabel!
     var emailTextField: UITextField!
     var passwordTextField: UITextField!
@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -23,13 +24,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        buildViews()
-    }
 
-    func buildViews() {
-        createViews()
-        styleViews()
-        defineLayoutForViews()
+        buildViews()
     }
 
     @objc func handleLogIn() {
@@ -54,10 +50,16 @@ class LoginViewController: UIViewController {
 
 extension LoginViewController: ConstructViewsProtocol {
 
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+
     func createViews() {
-        gradientBg = CAGradientLayer()
-        gradientBg.type = .axial
-        view.layer.addSublayer(gradientBg)
+        gradientLayer = CAGradientLayer()
+        gradientLayer.type = .axial
+        view.layer.addSublayer(gradientLayer)
 
         titleLabel = UILabel()
         view.addSubview(titleLabel)
@@ -76,7 +78,7 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientBg.colors = [
+        gradientLayer.colors = [
             UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
             UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
         ]
@@ -125,8 +127,8 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        gradientBg.frame = view.bounds
-        gradientBg.locations = [0, 1]
+        gradientLayer.frame = view.bounds
+        gradientLayer.locations = [0, 1]
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()

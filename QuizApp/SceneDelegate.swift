@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         Task {
             do {
-                let loginDatasource = appDependencies.loginDatasource
+                let loginDatasource = appDependencies.loginDataSource
                 try await loginDatasource.checkAccessToken()
                 router.showTabBarControllers()
             } catch {

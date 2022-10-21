@@ -1,39 +1,28 @@
 import UIKit
+import Combine
 import SnapKit
 
 class QuizViewController: UIViewController {
 
-    enum Constants {
-
-        static let topOffset = 20
-        static let margins = 10
-        static let height = 30
-
-    }
-
-    enum CategorySection {
-
-        case main
-        case greography
-        case movies
-        case music
-        case sport
-
-    }
-
     typealias DataSource = UICollectionViewDiffableDataSource<CategorySection, QuizModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CategorySection, QuizModel>
 
-    var gradientBg: CAGradientLayer!
+    var gradientLayer: CAGradientLayer!
     var titleLabel: UILabel!
-    var segmented: UISegmentedControl!
+    var categorySegmentedControl: UISegmentedControl!
     var quizListCollectionView: UICollectionView!
 
+    private let topOffset = 20
+    private let margins = 10
+    private let height = 30
+
     private lazy var dataSource = makeDataSource()
-    private var quizViewModel: QuizViewModel!
+    private var cancellables = Set<AnyCancellable>()
+    private var quizViewModel: QuizViewModel
 
     init(viewModel: QuizViewModel) {
         self.quizViewModel = viewModel
+
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -43,7 +32,9 @@ class QuizViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         buildViews()
+        bindViewModel()
         configureCollectionView()
         didSelectCategory()
         applySnapshot(animatingDifferences: false)
@@ -69,47 +60,56 @@ class QuizViewController: UIViewController {
         return dataSource
     }
 
-    func buildViews() {
-        createViews()
-        styleViews()
-        defineLayoutForViews()
+    @objc func didSelectCategory() {
+        guard
+            let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
+        else { return }
+
+        quizViewModel.getQuizzes(for: category.uppercased())
     }
 
-    @MainActor
-    @objc func didSelectCategory() {
-        guard let category = segmented.titleForSegment(at: segmented.selectedSegmentIndex) else { return }
-
-        quizViewModel.getQuizzes(for: category.uppercased(), completion: {
-            DispatchQueue.main.async { [weak self] in
-                self?.applySnapshot()
+    func bindViewModel() {
+        quizViewModel
+            .$quizzes
+            .sink { [weak self] _ in
+                DispatchQueue.main.async { [weak self] in
+                    self?.applySnapshot()
+                }
             }
-        })
+            .store(in: &cancellables)
     }
 
 }
 
 extension QuizViewController: ConstructViewsProtocol {
 
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+
     func createViews() {
-        gradientBg = CAGradientLayer()
-        gradientBg.type = .axial
-        view.layer.addSublayer(gradientBg)
+        gradientLayer = CAGradientLayer()
+        gradientLayer.type = .axial
+        view.layer.addSublayer(gradientLayer)
 
         titleLabel = UILabel()
         view.addSubview(titleLabel)
 
-        segmented = UISegmentedControl(items: ["Geography", "Movies", "Music", "Sport"])
-        view.addSubview(segmented)
+        categorySegmentedControl = UISegmentedControl(
+            items: [CategorySection.geography.title,
+                    CategorySection.movies.title,
+                    CategorySection.music.title,
+                    CategorySection.sport.title])
+        view.addSubview(categorySegmentedControl)
 
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 10
-        quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         view.addSubview(quizListCollectionView)
     }
 
     func styleViews() {
-        gradientBg.colors = [
+        gradientLayer.colors = [
             UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
             UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
         ]
@@ -118,15 +118,15 @@ extension QuizViewController: ConstructViewsProtocol {
         titleLabel.text = "PopQuiz"
         titleLabel.textColor = .white
 
-        segmented.addTarget(self, action: #selector(didSelectCategory), for: .valueChanged)
-        segmented.layer.cornerRadius = 10
-        segmented.selectedSegmentIndex = 0
+        categorySegmentedControl.addTarget(self, action: #selector(didSelectCategory), for: .valueChanged)
+        categorySegmentedControl.layer.cornerRadius = 10
+        categorySegmentedControl.selectedSegmentIndex = 0
         let titleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        segmented.setTitleTextAttributes(titleAttributes, for: .normal)
-        segmented.setTitleTextAttributes(titleAttributes, for: .selected)
-        segmented.apportionsSegmentWidthsByContent = true
-        segmented.selectedSegmentTintColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1)
-        segmented.backgroundColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 0.5)
+        categorySegmentedControl.setTitleTextAttributes(titleAttributes, for: .normal)
+        categorySegmentedControl.setTitleTextAttributes(titleAttributes, for: .selected)
+        categorySegmentedControl.apportionsSegmentWidthsByContent = true
+        categorySegmentedControl.selectedSegmentTintColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1)
+        categorySegmentedControl.backgroundColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 0.5)
 
         quizListCollectionView.backgroundColor = .clear
         quizListCollectionView.isScrollEnabled = true
@@ -134,26 +134,26 @@ extension QuizViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        gradientBg.frame = view.bounds
-        gradientBg.locations = [0, 1]
+        gradientLayer.frame = view.bounds
+        gradientLayer.locations = [0, 1]
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-Constants.height)
-            $0.height.equalTo(Constants.height)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-height)
+            $0.height.equalTo(height)
         }
 
-        segmented.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(Constants.topOffset)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.margins)
-            $0.height.equalTo(Constants.height)
+        categorySegmentedControl.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(topOffset)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(margins)
+            $0.height.equalTo(height)
         }
 
         quizListCollectionView.snp.makeConstraints {
-            $0.top.equalTo(segmented.snp.bottom).offset(Constants.topOffset)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(Constants.margins)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(Constants.margins)
+            $0.top.equalTo(categorySegmentedControl.snp.bottom).offset(topOffset)
+            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(margins)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(5)
         }
     }
@@ -165,7 +165,10 @@ extension QuizViewController {
     func configureCollectionView() {
         quizListCollectionView.register(QuizListCollectionViewCell.self,
                                         forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
-        quizListCollectionView.collectionViewLayout = UICollectionViewCompositionalLayout(
+    }
+
+    func configureLayout() -> UICollectionViewCompositionalLayout {
+        let layout = UICollectionViewCompositionalLayout(
             sectionProvider: { (_, _) -> NSCollectionLayoutSection? in
                 let size = NSCollectionLayoutSize(
                     widthDimension: NSCollectionLayoutDimension.fractionalWidth(1),
@@ -178,6 +181,7 @@ extension QuizViewController {
                 section.interGroupSpacing = 10
                 return section
             })
+        return layout
     }
 
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-protocol UserDatasourceProtocol {
+protocol UserDataSourceProtocol {
 
     func getUser(accessToken: String) async throws -> UserResponseModel
 
@@ -8,7 +8,7 @@ protocol UserDatasourceProtocol {
 
 }
 
-class UserDatasource: UserDatasourceProtocol {
+class UserDataSource: UserDataSourceProtocol {
 
     private var userClient: UserClientProtocol
 

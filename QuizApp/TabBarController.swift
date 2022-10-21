@@ -5,6 +5,7 @@ class TabBarController: UITabBarController {
 
     convenience init(_ viewControllers: [UIViewController]) {
         self.init()
+
         self.viewControllers = viewControllers
         setupTabBar()
     }
