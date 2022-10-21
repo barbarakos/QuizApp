@@ -5,13 +5,10 @@ import SnapKit
 
 class QuizListCollectionViewCell: UICollectionViewCell {
 
-    enum Constants {
-
-        static let margins = 10
-        static let trailingConstant = 20
-    }
-
     static let reuseIdentifier = String(describing: QuizListCollectionViewCell.self)
+
+    private let margins = 10
+    private let trailingConstant = 20
 
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
@@ -20,6 +17,7 @@ class QuizListCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         buildViews()
     }
 
@@ -31,22 +29,21 @@ class QuizListCollectionViewCell: UICollectionViewCell {
         titleLabel.text = quiz.name
         descriptionLabel.text = quiz.description
 
-        difficultyView.type = DifficultyEnum(rawValue: quiz.difficulty)!
-        difficultyView.setDifficulty()
+        difficultyView.setDifficulty(type: DifficultyEnum(rawValue: quiz.difficulty) ?? .easy)
 
         let imageUrl = URL(string: quiz.imageUrl)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))
     }
+
+}
+
+extension QuizListCollectionViewCell: ConstructViewsProtocol {
 
     func buildViews() {
         createViews()
         styleViews()
         defineLayoutForViews()
     }
-
-}
-
-extension QuizListCollectionViewCell: ConstructViewsProtocol {
 
     func createViews() {
         imageView = UIImageView()
@@ -63,7 +60,7 @@ extension QuizListCollectionViewCell: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        contentView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.3)
+        contentView.backgroundColor = .white.withAlphaComponent(0.3)
         contentView.layer.cornerRadius = 15
 
         imageView.layer.cornerRadius = 10
@@ -88,19 +85,19 @@ extension QuizListCollectionViewCell: ConstructViewsProtocol {
 
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
-            $0.leading.equalTo(imageView.snp.trailing).offset(Constants.margins)
+            $0.leading.equalTo(imageView.snp.trailing).offset(margins)
         }
 
         descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).inset(10)
-            $0.leading.equalTo(imageView.snp.trailing).offset(Constants.margins)
-            $0.trailing.equalToSuperview().inset(Constants.trailingConstant)
-            $0.bottom.equalToSuperview().inset(Constants.margins)
+            $0.leading.equalTo(imageView.snp.trailing).offset(margins)
+            $0.trailing.equalToSuperview().inset(trailingConstant)
+            $0.bottom.equalToSuperview().inset(margins)
         }
 
         difficultyView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(Constants.margins)
-            $0.trailing.equalToSuperview().inset(Constants.trailingConstant)
+            $0.top.equalToSuperview().offset(margins)
+            $0.trailing.equalToSuperview().inset(trailingConstant)
             $0.height.equalTo(20)
             $0.width.equalTo(50)
         }
