@@ -1,21 +1,20 @@
 import UIKit
+import Factory
 
 class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController
-    private let appDependencies: AppDependencies
 
-    init(navigationController: UINavigationController, appDependencies: AppDependencies) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.appDependencies = appDependencies
     }
 
     @MainActor
     func showLogIn() {
         let viewModel = LoginViewModel(
             router: self,
-            tokenStorage: appDependencies.tokenStorage,
-            useCase: appDependencies.loginUseCase)
+            tokenStorage: Container.tokenStorage(),
+            useCase: Container.loginUseCase())
 
         let vc = LoginViewController(viewModel: viewModel)
 
@@ -26,8 +25,8 @@ class AppRouter: AppRouterProtocol {
     func showTabBarControllers() {
         let userVM = UserViewModel(
             router: self,
-            tokenStorage: appDependencies.tokenStorage,
-            useCase: appDependencies.userUseCase)
+            tokenStorage: Container.tokenStorage(),
+            useCase: Container.userUseCase())
 
         let userVC = UserViewController(viewModel: userVM)
         userVC.tabBarItem = UITabBarItem(
@@ -35,7 +34,7 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
-        let quizVM = QuizViewModel(router: self, useCase: appDependencies.quizUseCase)
+        let quizVM = QuizViewModel(router: self, useCase: Container.quizUseCase())
         let quizVC = QuizViewController(viewModel: quizVM)
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",

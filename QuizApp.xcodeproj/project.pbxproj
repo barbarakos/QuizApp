@@ -38,6 +38,7 @@
 		FB8648162906793B001AE89B /* LoginDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8648152906793B001AE89B /* LoginDataSource.swift */; };
 		FB86481829067974001AE89B /* QuizDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86481729067974001AE89B /* QuizDataSource.swift */; };
 		FB86481C290679CC001AE89B /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB86481B290679CC001AE89B /* UserDataSource.swift */; };
+		FB86481F29068A58001AE89B /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = FB86481E29068A58001AE89B /* Factory */; };
 		FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = FBC5AB1228EC3D5800CBC98A /* SnapKit */; };
 		FBC65C2728F5582C0045F87B /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2628F5582C0045F87B /* TabBarController.swift */; };
 		FBC65C2928F558B00045F87B /* QuizViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C2828F558B00045F87B /* QuizViewController.swift */; };
@@ -103,6 +104,7 @@
 				FB8647CF28F829EE001AE89B /* Kingfisher in Frameworks */,
 				FB47247128F0350A0027EFC7 /* Keychain in Frameworks */,
 				FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */,
+				FB86481F29068A58001AE89B /* Factory in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,6 +403,7 @@
 				FBC5AB1228EC3D5800CBC98A /* SnapKit */,
 				FB47247028F0350A0027EFC7 /* Keychain */,
 				FB8647CE28F829EE001AE89B /* Kingfisher */,
+				FB86481E29068A58001AE89B /* Factory */,
 			);
 			productName = QuizApp;
 			productReference = FB567F4F28EC0EA200842EF0 /* QuizApp.app */;
@@ -434,6 +437,7 @@
 				FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */,
 				FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */,
 				FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				FB86481D29068A58001AE89B /* XCRemoteSwiftPackageReference "Factory" */,
 			);
 			productRefGroup = FB567F5028EC0EA200842EF0 /* Products */;
 			projectDirPath = "";
@@ -741,6 +745,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		FB86481D29068A58001AE89B /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		FBC5AB1128EC3D5800CBC98A /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -761,6 +773,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		FB86481E29068A58001AE89B /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB86481D29068A58001AE89B /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
 		};
 		FBC5AB1228EC3D5800CBC98A /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

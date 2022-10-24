@@ -4,9 +4,9 @@ class LoginViewModel {
 
     private var useCase: LoginUseCaseProtocol
     private var router: AppRouterProtocol
-    private var tokenStorage: SecureStorage
+    private var tokenStorage: SecureStorageProtocol
 
-    init(router: AppRouterProtocol, tokenStorage: SecureStorage, useCase: LoginUseCaseProtocol) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorageProtocol, useCase: LoginUseCaseProtocol) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = useCase

@@ -8,9 +8,9 @@ protocol QuizUseCaseProtocol {
 class QuizUseCase: QuizUseCaseProtocol {
 
     private var dataSource: QuizDataSourceProtocol
-    private var tokenStorage: SecureStorage
+    private var tokenStorage: SecureStorageProtocol
 
-    init(tokenStorage: SecureStorage, dataSource: QuizDataSourceProtocol) {
+    init(tokenStorage: SecureStorageProtocol, dataSource: QuizDataSourceProtocol) {
         self.tokenStorage = tokenStorage
         self.dataSource = dataSource
     }
