@@ -24,11 +24,11 @@ class UserClient: UserClientProtocol {
             throw RequestError.invalidURL
         }
 
-        var URLrequest = URLRequest(url: URL)
-        URLrequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLrequest.httpMethod = "GET"
+        var URLRequest = URLRequest(url: URL)
+        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        URLRequest.httpMethod = "GET"
 
-        return try await apiClient.executeURLRequest(URLRequest: URLrequest)
+        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
     }
 
     func changeName(name: String, accessToken: String) async throws {
