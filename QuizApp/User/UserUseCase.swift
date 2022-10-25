@@ -10,12 +10,12 @@ protocol UserUseCaseProtocol {
 
 class UserUseCase: UserUseCaseProtocol {
 
-    private var datasource: UserDatasourceProtocol
+    private var dataSource: UserDataSourceProtocol
     private var tokenStorage: SecureStorage
 
-    init(tokenStorage: SecureStorage, datasource: UserDatasourceProtocol) {
+    init(tokenStorage: SecureStorage, dataSource: UserDataSourceProtocol) {
         self.tokenStorage = tokenStorage
-        self.datasource = datasource
+        self.dataSource = dataSource
     }
 
     func getUser() async throws -> UserResponseModel {
@@ -23,7 +23,7 @@ class UserUseCase: UserUseCaseProtocol {
             throw RequestError.dataError
         }
 
-        return try await datasource.getUser(accessToken: accessToken)
+        return try await dataSource.getUser(accessToken: accessToken)
     }
 
     func changeName(name: String) async throws {
@@ -31,7 +31,7 @@ class UserUseCase: UserUseCaseProtocol {
             throw RequestError.dataError
         }
 
-        try await datasource.changeName(name: name, accessToken: accessToken)
+        try await dataSource.changeName(name: name, accessToken: accessToken)
     }
 
 }

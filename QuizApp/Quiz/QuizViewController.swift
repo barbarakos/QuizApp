@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -16,6 +17,7 @@ class QuizViewController: UIViewController {
     private let height = 30
 
     private lazy var dataSource = makeDataSource()
+    private var cancellables = Set<AnyCancellable>()
     private var quizViewModel: QuizViewModel
 
     init(viewModel: QuizViewModel) {
@@ -32,6 +34,7 @@ class QuizViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindViewModel()
         configureCollectionView()
         didSelectCategory()
         applySnapshot(animatingDifferences: false)
@@ -40,7 +43,7 @@ class QuizViewController: UIViewController {
     func applySnapshot(animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         snapshot.appendSections([.main])
-        snapshot.appendItems(quizViewModel.mockQuizzes)
+        snapshot.appendItems(quizViewModel.quizzes)
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
@@ -63,7 +66,16 @@ class QuizViewController: UIViewController {
         else { return }
 
         quizViewModel.getQuizzes(for: category.uppercased())
-        applySnapshot()
+    }
+
+    @MainActor
+    func bindViewModel() {
+        quizViewModel
+            .$quizzes
+            .sink { [weak self] _ in
+                self?.applySnapshot()
+            }
+            .store(in: &cancellables)
     }
 
 }

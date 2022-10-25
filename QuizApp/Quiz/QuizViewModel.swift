@@ -1,10 +1,13 @@
+import Combine
+
 class QuizViewModel {
 
-    var mockQuizzes: [QuizModel] = []
+    @Published var quizzes: [QuizModel] = []
 
     private var router: AppRouterProtocol
+    private var useCase: QuizUseCaseProtocol
 
-    let quizzes: [QuizModel] = [
+    let mockquizzes: [QuizModel] = [
         QuizModel(category: "GEOGRAPHY",
                   description: "Geography Quiz description that can usually span over multiple lines",
                   difficulty: "EASY", id: 1, imageUrl: "", name: "Earth", numberOfQuestions: 8),
@@ -27,17 +30,25 @@ class QuizViewModel {
                   description: "Movie Geography description that can usually span over multiple lines",
                   difficulty: "NORMAL", id: 7, imageUrl: "", name: "Mars", numberOfQuestions: 8)]
 
-    init(router: AppRouterProtocol) {
+    init(router: AppRouterProtocol, useCase: QuizUseCaseProtocol) {
         self.router = router
+        self.useCase = useCase
     }
 
     func getAllQuizzes() {
-        mockQuizzes.removeAll()
-        mockQuizzes = quizzes
+        quizzes = mockquizzes
     }
+
+    @MainActor
     func getQuizzes(for category: String) {
-        mockQuizzes.removeAll()
-        mockQuizzes = quizzes.filter { $0.category == category }
+        Task {
+            do {
+                let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
+                quizzes = fetchedQuizzes
+            } catch {
+                print(error)
+            }
+        }
     }
 
 }

@@ -19,7 +19,6 @@ class ApiClient: ApiClientProtocol {
             throw RequestError.dataError
         }
 
-        print(httpResponse.statusCode)
         if !(200...299).contains(httpResponse.statusCode) {
             switch httpResponse.statusCode {
             case 400...499:

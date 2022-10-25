@@ -8,17 +8,16 @@ protocol LoginUseCaseProtocol {
 
 class LoginUseCase: LoginUseCaseProtocol {
 
-    private var datasource: LoginDatasourceProtocol
+    private var dataSource: LoginDataSourceProtocol
     private var tokenStorage: SecureStorage
 
-    init(tokenStorage: SecureStorage, datasource: LoginDatasourceProtocol) {
+    init(tokenStorage: SecureStorage, dataSource: LoginDataSourceProtocol) {
         self.tokenStorage = tokenStorage
-        self.datasource = datasource
+        self.dataSource = dataSource
     }
 
     func login(username: String, password: String) async throws {
-        let response = try await datasource.login(username: username, password: password)
-        print(response.accessToken)
+        let response = try await dataSource.login(username: username, password: password)
         tokenStorage.save(accessToken: response.accessToken)
     }
 
