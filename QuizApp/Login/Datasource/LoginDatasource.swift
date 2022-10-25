@@ -11,9 +11,9 @@ protocol LoginDataSourceProtocol {
 class LoginDataSource: LoginDataSourceProtocol {
 
     private var loginClient: LoginClientProtocol
-    private var storage: SecureStorageProtocol
+    private var storage: SecureStorage
 
-    init(storage: SecureStorageProtocol, loginClient: LoginClientProtocol) {
+    init(storage: SecureStorage, loginClient: LoginClientProtocol) {
         self.storage = storage
         self.loginClient = loginClient
     }
