@@ -37,27 +37,7 @@ class QuizViewController: UIViewController {
         bindViewModel()
         configureCollectionView()
         didSelectCategory()
-        applySnapshot(animatingDifferences: false)
-    }
-
-    func applySnapshot(animatingDifferences: Bool = true) {
-        var snapshot = Snapshot()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(quizViewModel.quizzes)
-        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
-    }
-
-    func makeDataSource() -> DataSource {
-        let dataSource = DataSource(
-            collectionView: quizListCollectionView,
-            cellProvider: { (collectionView, indexPath, quiz) -> UICollectionViewCell? in
-                let cell = collectionView.dequeueReusableCell(
-                    withReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier,
-                    for: indexPath) as? QuizListCollectionViewCell
-                cell?.set(for: quiz)
-                return cell
-            })
-        return dataSource
+        applySnapshot(allQuizzes: true, animatingDifferences: false)
     }
 
     @objc func didSelectCategory() {
@@ -65,15 +45,20 @@ class QuizViewController: UIViewController {
             let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
         else { return }
 
-        quizViewModel.getQuizzes(for: category.uppercased())
+        if category == "All" {
+            quizViewModel.getAllQuizzes()
+        } else {
+            quizViewModel.getQuizzes(for: category.uppercased())
+        }
     }
 
-    @MainActor
     func bindViewModel() {
         quizViewModel
             .$quizzes
             .sink { [weak self] _ in
-                self?.applySnapshot()
+                DispatchQueue.main.async { [weak self] in
+                    self?.applySnapshot(allQuizzes: true)
+                }
             }
             .store(in: &cancellables)
     }
@@ -97,7 +82,8 @@ extension QuizViewController: ConstructViewsProtocol {
         view.addSubview(titleLabel)
 
         categorySegmentedControl = UISegmentedControl(
-            items: [CategorySection.geography.title,
+            items: ["All",
+                    CategorySection.geography.title,
                     CategorySection.movies.title,
                     CategorySection.music.title,
                     CategorySection.sport.title])
@@ -151,9 +137,7 @@ extension QuizViewController: ConstructViewsProtocol {
 
         quizListCollectionView.snp.makeConstraints {
             $0.top.equalTo(categorySegmentedControl.snp.bottom).offset(topOffset)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(margins)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(5)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 
@@ -164,6 +148,11 @@ extension QuizViewController {
     func configureCollectionView() {
         quizListCollectionView.register(QuizListCollectionViewCell.self,
                                         forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
+
+        quizListCollectionView.register(
+            SectionHeaderReusableView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier)
     }
 
     func configureLayout() -> UICollectionViewCompositionalLayout {
@@ -178,9 +167,69 @@ extension QuizViewController {
                 let section = NSCollectionLayoutSection(group: group)
                 section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
                 section.interGroupSpacing = 10
+                let headerFooterSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .estimated(20))
+                let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerFooterSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top)
+                section.boundarySupplementaryItems = [sectionHeader]
                 return section
             })
         return layout
     }
+
+    func applySnapshot(allQuizzes: Bool = false, animatingDifferences: Bool = true) {
+        var snapshot = Snapshot()
+        if allQuizzes {
+            CategorySection.allCases.forEach { section in
+                let quizzes = quizViewModel.quizzes.filter { $0.category == section.rawValue.uppercased() }
+                if !quizzes.isEmpty {
+                    snapshot.appendSections([section])
+                    snapshot.appendItems(quizzes, toSection: section)
+                }
+            }
+        } else {
+            guard
+                let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
+            else { return }
+
+            let section = CategorySection(rawValue: category)
+            snapshot.appendSections([section!])
+            snapshot.appendItems(quizViewModel.quizzes)
+        }
+        dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
+    }
+
+    func makeDataSource() -> DataSource {
+        let dataSource = DataSource(
+            collectionView: quizListCollectionView,
+            cellProvider: { (collectionView, indexPath, quiz) -> UICollectionViewCell? in
+                let cell = collectionView.dequeueReusableCell(
+                    withReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier,
+                    for: indexPath) as? QuizListCollectionViewCell
+                cell?.set(for: quiz)
+                return cell
+            })
+        dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
+            guard kind == UICollectionView.elementKindSectionHeader else {
+                return nil
+            }
+
+            let view = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
+                for: indexPath) as? SectionHeaderReusableView
+
+            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+            view?.titleLabel.text = section.rawValue
+            view?.titleLabel.textColor = section.color()
+            return view
+        }
+
+        return dataSource
+    }
+
 
 }
