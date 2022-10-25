@@ -2,6 +2,7 @@ import Combine
 
 class QuizViewModel {
 
+    @Published var errorOccurred: Bool = false
     @Published var quizzes: [QuizModel] = []
 
     private var router: AppRouterProtocol
@@ -18,9 +19,10 @@ class QuizViewModel {
             do {
                 let fetchedQuizzes = try await useCase.getAllQuizzes()
                 quizzes = fetchedQuizzes
+                errorOccurred = false
             } catch {
                 quizzes.removeAll()
-                print(error)
+                errorOccurred = true
             }
         }
     }
@@ -31,9 +33,10 @@ class QuizViewModel {
             do {
                 let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
                 quizzes = fetchedQuizzes
+                errorOccurred = false
             } catch {
                 quizzes.removeAll()
-                print(error)
+                errorOccurred = true
             }
         }
     }

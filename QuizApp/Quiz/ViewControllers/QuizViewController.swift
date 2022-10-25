@@ -11,13 +11,16 @@ class QuizViewController: UIViewController {
     var titleLabel: UILabel!
     var categorySegmentedControl: UISegmentedControl!
     var quizListCollectionView: UICollectionView!
+    var noQuizErrorView: NoQuizErrorView!
 
     private let topOffset = 20
     private let margins = 10
     private let height = 30
+    private let errorViewConst = 200
 
     private lazy var dataSource = makeDataSource()
     private var cancellables = Set<AnyCancellable>()
+    private var errorOccurred: Bool = false
     private var quizViewModel: QuizViewModel
 
     init(viewModel: QuizViewModel) {
@@ -52,12 +55,43 @@ class QuizViewController: UIViewController {
         }
     }
 
+    func handleNoQuizzesAvailable() {
+        if errorOccurred {
+            noQuizErrorView.set(
+                title: "Error",
+                errorDescripton: "Data can't be reached. Please try again.")
+            noQuizErrorView.isHidden = false
+        } else if quizViewModel.quizzes.isEmpty {
+            noQuizErrorView.set(
+                title: "No data",
+                errorDescripton: "There are no available quizzes for this category.")
+            noQuizErrorView.isHidden = false
+        } else {
+            noQuizErrorView.isHidden = true
+        }
+    }
+
     func bindViewModel() {
+        quizViewModel
+            .$errorOccurred
+            .sink { [weak self] errorOccurred in
+                guard let self = self else { return }
+
+                self.errorOccurred = errorOccurred
+                if errorOccurred {
+                    self.applySnapshot(allQuizzes: true)
+                }
+            }
+            .store(in: &cancellables)
+
         quizViewModel
             .$quizzes
             .sink { [weak self] _ in
                 DispatchQueue.main.async { [weak self] in
-                    self?.applySnapshot(allQuizzes: true)
+                    guard let self = self else { return }
+
+                    self.applySnapshot(allQuizzes: true)
+                    self.handleNoQuizzesAvailable()
                 }
             }
             .store(in: &cancellables)
@@ -91,6 +125,9 @@ extension QuizViewController: ConstructViewsProtocol {
 
         quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         view.addSubview(quizListCollectionView)
+
+        noQuizErrorView = NoQuizErrorView()
+        view.addSubview(noQuizErrorView)
     }
 
     func styleViews() {
@@ -116,6 +153,8 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView.backgroundColor = .clear
         quizListCollectionView.isScrollEnabled = true
         quizListCollectionView.layer.cornerRadius = 7
+
+        noQuizErrorView.isHidden = true
     }
 
     func defineLayoutForViews() {
@@ -138,6 +177,12 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView.snp.makeConstraints {
             $0.top.equalTo(categorySegmentedControl.snp.bottom).offset(topOffset)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+
+        noQuizErrorView.snp.makeConstraints {
+            $0.width.equalTo(errorViewConst)
+            $0.height.equalTo(errorViewConst)
+            $0.center.equalToSuperview()
         }
     }
 
@@ -192,7 +237,8 @@ extension QuizViewController {
             }
         } else {
             guard
-                let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
+                let category = categorySegmentedControl.titleForSegment(
+                    at: categorySegmentedControl.selectedSegmentIndex)
             else { return }
 
             let section = CategorySection(rawValue: category)
@@ -230,6 +276,5 @@ extension QuizViewController {
 
         return dataSource
     }
-
 
 }
