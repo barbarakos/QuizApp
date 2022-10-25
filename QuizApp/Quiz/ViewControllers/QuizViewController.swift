@@ -1,5 +1,5 @@
-import UIKit
 import Combine
+import UIKit
 import SnapKit
 
 class QuizViewController: UIViewController {
@@ -238,7 +238,8 @@ extension QuizViewController {
             }
         } else {
             guard
-                let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
+                let category = categorySegmentedControl.titleForSegment(
+                    at: categorySegmentedControl.selectedSegmentIndex)
             else { return }
 
             let section = CategorySection(rawValue: category)
@@ -264,9 +265,9 @@ extension QuizViewController {
             }
 
             let view = collectionView.dequeueReusableSupplementaryView(
-                        ofKind: kind,
-                        withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
-                        for: indexPath) as? SectionHeaderReusableView
+                ofKind: kind,
+                withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
+                for: indexPath) as? SectionHeaderReusableView
 
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             view?.titleLabel.text = section.rawValue

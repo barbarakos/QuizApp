@@ -1,6 +1,7 @@
 protocol QuizDataSourceProtocol {
 
     func getQuizzes(for category: String, accessToken: String) async throws -> [QuizModel]
+    func getAllQuizzes(accessToken: String) async throws -> [QuizModel]
 
     func getAllQuizzes(accessToken: String) async throws -> [QuizModel]
 
