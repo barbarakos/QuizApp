@@ -1,5 +1,5 @@
-import UIKit
 import Combine
+import UIKit
 import SnapKit
 
 class QuizViewController: UIViewController {
@@ -68,13 +68,12 @@ class QuizViewController: UIViewController {
         quizViewModel.getQuizzes(for: category.uppercased())
     }
 
+    @MainActor
     func bindViewModel() {
         quizViewModel
             .$quizzes
             .sink { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    self?.applySnapshot()
-                }
+                self?.applySnapshot()
             }
             .store(in: &cancellables)
     }
