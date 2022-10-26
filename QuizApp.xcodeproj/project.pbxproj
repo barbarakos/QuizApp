@@ -134,7 +134,7 @@
 				FB8647F32902A840001AE89B /* Models */,
 				FB8647F12902A821001AE89B /* ViewControllers */,
 				FB8647F02902A817001AE89B /* ViewModel */,
-				FB8647EF2902A80A001AE89B /* Datasource */,
+				FB8647EF2902A80A001AE89B /* DataSource */,
 				FB8647EE2902A7FD001AE89B /* UseCase */,
 				FB8647ED2902A7C9001AE89B /* Client */,
 			);
@@ -228,12 +228,12 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
-		FB8647EF2902A80A001AE89B /* Datasource */ = {
+		FB8647EF2902A80A001AE89B /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
 				FB8648152906793B001AE89B /* LoginDataSource.swift */,
 			);
-			path = Datasource;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		FB8647F02902A817001AE89B /* ViewModel */ = {

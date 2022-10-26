@@ -11,31 +11,18 @@ class AppRouter: AppRouterProtocol {
 
     @MainActor
     func showLogIn() {
-        let viewModel = LoginViewModel(
-            router: self,
-            tokenStorage: Container.tokenStorage(),
-            useCase: Container.loginUseCase())
-
-        let vc = LoginViewController(viewModel: viewModel)
-
-        navigationController.setViewControllers([vc], animated: true)
+        navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
     @MainActor
     func showTabBarControllers() {
-        let userVM = UserViewModel(
-            router: self,
-            tokenStorage: Container.tokenStorage(),
-            useCase: Container.userUseCase())
-
-        let userVC = UserViewController(viewModel: userVM)
+        let userVC = Container.userViewController()
         userVC.tabBarItem = UITabBarItem(
             title: "Settings",
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
-        let quizVM = QuizViewModel(router: self, useCase: Container.quizUseCase())
-        let quizVC = QuizViewController(viewModel: quizVM)
+        let quizVC = Container.quizViewController()
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(systemName: "stopwatch"),

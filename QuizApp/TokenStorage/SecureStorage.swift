@@ -4,7 +4,9 @@ import Keychain
 protocol SecureStorageProtocol {
 
     var accessToken: String? { get }
+
     func save(accessToken: String)
+
     func deleteToken()
 
 }

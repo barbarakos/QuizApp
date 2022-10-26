@@ -12,8 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let navigationController = UINavigationController()
-        let router = AppRouter(navigationController: navigationController)
+        let router = Container.appRouter()
 
         Task {
             do {
@@ -23,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             } catch {
                 router.showLogIn()
             }
-            window?.rootViewController = navigationController
+            window?.rootViewController = Container.navigationController()
             window?.makeKeyAndVisible()
         }
     }
