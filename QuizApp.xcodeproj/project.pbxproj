@@ -155,7 +155,7 @@
 				FB8647F22902A82F001AE89B /* ViewControllers */,
 				FB8647FE2902A946001AE89B /* ViewModel */,
 				FB8647FD2902A93D001AE89B /* Client */,
-				FB8647FC2902A92B001AE89B /* Datasource */,
+				FB8647FC2902A92B001AE89B /* DataSource */,
 				FB8647FB2902A923001AE89B /* UseCase */,
 				FB8647F42902A856001AE89B /* Models */,
 			);
@@ -288,12 +288,12 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		FB8647F62902A894001AE89B /* Datasource */ = {
+		FB8647F62902A894001AE89B /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
 				FB86481729067974001AE89B /* QuizDataSource.swift */,
 			);
-			path = Datasource;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		FB8647F72902A8C5001AE89B /* ViewModel */ = {
@@ -336,12 +336,12 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
-		FB8647FC2902A92B001AE89B /* Datasource */ = {
+		FB8647FC2902A92B001AE89B /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
 				FB86481B290679CC001AE89B /* UserDataSource.swift */,
 			);
-			path = Datasource;
+			path = DataSource;
 			sourceTree = "<group>";
 		};
 		FB8647FD2902A93D001AE89B /* Client */ = {
@@ -376,7 +376,7 @@
 				FB8647E8290296E2001AE89B /* Views */,
 				FB8647F82902A8CE001AE89B /* Client */,
 				FB8647FA2902A910001AE89B /* UseCase */,
-				FB8647F62902A894001AE89B /* Datasource */,
+				FB8647F62902A894001AE89B /* DataSource */,
 				FB8647F52902A87F001AE89B /* Models */,
 			);
 			path = Quiz;
