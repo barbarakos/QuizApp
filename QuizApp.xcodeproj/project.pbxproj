@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB2D54F1290989C60071162A /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = FB2D54F0290989C60071162A /* Factory */; };
+		FB2D54F3290A63EB0071162A /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D54F2290A63EB0071162A /* UserDataSource.swift */; };
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
 		FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245828EEB8540027EFC7 /* AppRouter.swift */; };
@@ -53,6 +55,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB2D54F2290A63EB0071162A /* UserDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
 		FB47245828EEB8540027EFC7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -514,6 +517,7 @@
 				FBC65C3A28F6D1FA0045F87B /* RequestError.swift in Sources */,
 				FB8648162906793B001AE89B /* LoginDataSource.swift in Sources */,
 				FBC65C2F28F56F360045F87B /* UserUseCase.swift in Sources */,
+				FB2D54F3290A63EB0071162A /* UserDataSource.swift in Sources */,
 				FBC65C3C28F6F12A0045F87B /* UserResponseModel.swift in Sources */,
 				FB86481C290679CC001AE89B /* UserDataSource.swift in Sources */,
 				FB8647D528FE99D7001AE89B /* QuizUseCase.swift in Sources */,
@@ -729,6 +733,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FB2D54EF290989C60071162A /* XCRemoteSwiftPackageReference "Factory" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hmlongco/Factory";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/GroupeMINASTE/Keychain.swift.git";
@@ -764,6 +776,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FB2D54F0290989C60071162A /* Factory */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB2D54EF290989C60071162A /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = Factory;
+		};
 		FB47247028F0350A0027EFC7 /* Keychain */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */;
