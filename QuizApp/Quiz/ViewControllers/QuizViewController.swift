@@ -37,7 +37,6 @@ class QuizViewController: UIViewController {
         bindViewModel()
         configureCollectionView()
         didSelectCategory()
-        applySnapshot(allQuizzes: true, animatingDifferences: false)
     }
 
     @objc func didSelectCategory() {
@@ -45,20 +44,18 @@ class QuizViewController: UIViewController {
             let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
         else { return }
 
-        if category == "All" {
-            quizViewModel.getAllQuizzes()
-        } else {
+        if CategorySection.allCategories.contains(category) {
             quizViewModel.getQuizzes(for: category.uppercased())
+        } else {
+            quizViewModel.getAllQuizzes()
         }
     }
 
     func bindViewModel() {
         quizViewModel
             .$quizzes
-            .sink { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    self?.applySnapshot(allQuizzes: true)
-                }
+            .sink { [weak self] quizzes in
+                self?.applySnapshot(quizzes: quizzes)
             }
             .store(in: &cancellables)
     }
@@ -180,25 +177,16 @@ extension QuizViewController {
         return layout
     }
 
-    func applySnapshot(allQuizzes: Bool = false, animatingDifferences: Bool = true) {
+    func applySnapshot(quizzes: [QuizModel], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
-        if allQuizzes {
-            CategorySection.allCases.forEach { section in
-                let quizzes = quizViewModel.quizzes.filter { $0.category == section.rawValue.uppercased() }
-                if !quizzes.isEmpty {
-                    snapshot.appendSections([section])
-                    snapshot.appendItems(quizzes, toSection: section)
-                }
+        CategorySection.allCases.forEach { section in
+            let filteredQuizzes = quizzes.filter { $0.category == section.title.uppercased() }
+            if !filteredQuizzes.isEmpty {
+                snapshot.appendSections([section])
+                snapshot.appendItems(filteredQuizzes, toSection: section)
             }
-        } else {
-            guard
-                let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
-            else { return }
-
-            let section = CategorySection(rawValue: category)
-            snapshot.appendSections([section!])
-            snapshot.appendItems(quizViewModel.quizzes)
         }
+
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
@@ -212,24 +200,23 @@ extension QuizViewController {
                 cell?.set(for: quiz)
                 return cell
             })
+
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard kind == UICollectionView.elementKindSectionHeader else {
+            guard kind == UICollectionView.elementKindSectionHeader,
+                  let view = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
+                    for: indexPath) as? SectionHeaderReusableView
+            else {
                 return nil
             }
 
-            let view = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
-                for: indexPath) as? SectionHeaderReusableView
-
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            view?.titleLabel.text = section.rawValue
-            view?.titleLabel.textColor = section.color()
+            view.setTitle(title: section.title, color: section.color)
             return view
         }
 
         return dataSource
     }
-
 
 }
