@@ -2,12 +2,12 @@ import UIKit
 
 enum CategorySection: String, CaseIterable {
 
-    case geography = "Geography"
-    case movies = "Movies"
-    case music = "Music"
-    case sport = "Sport"
+    case geography
+    case movies
+    case music
+    case sport
 
-    func color() -> UIColor {
+    var color: UIColor {
         switch self {
         case .geography:
             return  UIColor.systemGreen
@@ -31,6 +31,13 @@ enum CategorySection: String, CaseIterable {
         case .sport:
             return "Sport"
         }
+    }
+
+    static var allCategories: [String] {
+        return [CategorySection.geography.title,
+                CategorySection.movies.title,
+                CategorySection.music.title,
+                CategorySection.sport.title]
     }
 
 }
