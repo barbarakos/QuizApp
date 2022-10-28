@@ -46,7 +46,8 @@ class QuizViewController: UIViewController {
             let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
         else { return }
 
-        if CategorySection.allCategories.contains(category) {
+        let allCategories = CategorySection.allCases.map { $0.rawValue }
+        if allCategories.contains(category) {
             quizViewModel.getQuizzes(for: category.uppercased())
         } else {
             quizViewModel.getAllQuizzes()
@@ -108,12 +109,8 @@ extension QuizViewController: ConstructViewsProtocol {
         titleLabel = UILabel()
         view.addSubview(titleLabel)
 
-        categorySegmentedControl = UISegmentedControl(
-            items: ["All",
-                    CategorySection.geography.title,
-                    CategorySection.movies.title,
-                    CategorySection.music.title,
-                    CategorySection.sport.title])
+        let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
+        categorySegmentedControl = UISegmentedControl(items: items)
         view.addSubview(categorySegmentedControl)
 
         quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
@@ -221,7 +218,7 @@ extension QuizViewController {
     func applySnapshot(quizzes: [QuizModel], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
         CategorySection.allCases.forEach { section in
-            let filteredQuizzes = quizzes.filter { $0.category == section.title.uppercased() }
+            let filteredQuizzes = quizzes.filter { $0.category == section.rawValue.uppercased() }
             if !filteredQuizzes.isEmpty {
                 snapshot.appendSections([section])
                 snapshot.appendItems(filteredQuizzes, toSection: section)
@@ -248,12 +245,10 @@ extension QuizViewController {
                     ofKind: kind,
                     withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
                     for: indexPath) as? SectionHeaderReusableView
-            else {
-                return nil
-            }
+            else { return nil }
 
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            view.setTitle(title: section.title, color: section.color)
+            view.setTitle(title: section.rawValue, color: section.color)
             return view
         }
 

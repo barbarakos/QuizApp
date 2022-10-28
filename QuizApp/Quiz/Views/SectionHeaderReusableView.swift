@@ -43,17 +43,12 @@ extension SectionHeaderReusableView: ConstructViewsProtocol {
             weight: .bold)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.textColor = .white
-        titleLabel.textAlignment = .left
         titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .byTruncatingTail
-        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
     }
 
     func defineLayoutForViews() {
         titleLabel.snp.makeConstraints {
-            $0.leading.equalTo(safeAreaLayoutGuide).offset(10)
-            $0.trailing.equalTo(safeAreaLayoutGuide).inset(10)
-            $0.top.bottom.equalToSuperview().inset(10)
+            $0.edges.equalToSuperview().inset(10)
         }
     }
 
