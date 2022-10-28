@@ -55,26 +55,26 @@ class QuizViewController: UIViewController {
     }
 
     func handleNoQuizzesAvailable(error: QuizError) {
-        if error == .serverError {
+        switch error {
+        case .serverError:
             quizErrorView.set(
                 title: "Error",
                 description: "Data can't be reached. Please try again.")
-            quizErrorView.isHidden = false
-        } else {
+        case .empty:
             quizErrorView.set(
                 title: "No data",
                 description: "There are no available quizzes for this category.")
-            quizErrorView.isHidden = false
         }
+        quizErrorView.isHidden = false
     }
 
     func bindViewModel() {
         quizViewModel
             .$quizError
-            .sink { [weak self] quizError in
-                if let error = quizError {
-                    self?.handleNoQuizzesAvailable(error: error)
-                }
+            .removeDuplicates()
+            .compactMap { $0 }
+            .sink { [weak self] error in
+                self?.handleNoQuizzesAvailable(error: error)
             }
             .store(in: &cancellables)
 
@@ -84,9 +84,7 @@ class QuizViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.applySnapshot(quizzes: quizzes)
-                if !quizzes.isEmpty {
-                    self.quizErrorView.isHidden = true
-                }
+                self.quizErrorView.isHidden = !quizzes.isEmpty
             }
             .store(in: &cancellables)
     }

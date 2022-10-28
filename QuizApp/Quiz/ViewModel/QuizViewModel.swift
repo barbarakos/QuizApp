@@ -18,9 +18,7 @@ class QuizViewModel {
         Task {
             do {
                 let fetchedQuizzes = try await useCase.getAllQuizzes()
-                if fetchedQuizzes.isEmpty {
-                    quizError = QuizError.empty
-                }
+                quizError = fetchedQuizzes.isEmpty ? .empty : nil
                 quizzes = fetchedQuizzes
             } catch {
                 quizzes.removeAll()
@@ -34,9 +32,7 @@ class QuizViewModel {
         Task {
             do {
                 let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
-                if fetchedQuizzes.isEmpty {
-                    quizError = QuizError.empty
-                }
+                quizError = fetchedQuizzes.isEmpty ? .empty : nil
                 quizzes = fetchedQuizzes
             } catch {
                 quizzes.removeAll()
