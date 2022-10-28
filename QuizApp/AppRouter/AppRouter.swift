@@ -5,8 +5,8 @@ class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init() {
+        self.navigationController = UINavigationController()
     }
 
     @MainActor

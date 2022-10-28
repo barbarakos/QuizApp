@@ -42,7 +42,6 @@ class QuizViewController: UIViewController {
         didSelectCategory()
     }
 
-    @MainActor
     @objc func didSelectCategory() {
         guard
             let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
