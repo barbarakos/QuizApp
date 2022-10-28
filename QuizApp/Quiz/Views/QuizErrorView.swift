@@ -1,11 +1,11 @@
 import UIKit
 import SnapKit
 
-class NoQuizErrorView: UIView {
+class QuizErrorView: UIView {
 
-    private var errorImageView: UIImageView!
+    private var imageView: UIImageView!
     private var titleLabel: UILabel!
-    private var errorDescriptionLabel: UILabel!
+    private var descriptionLabel: UILabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -13,9 +13,9 @@ class NoQuizErrorView: UIView {
         buildViews()
     }
 
-    func set(title: String, errorDescripton: String) {
+    func set(title: String, description: String) {
         titleLabel.text = title
-        errorDescriptionLabel.text = errorDescripton
+        descriptionLabel.text = description
     }
 
     required init?(coder: NSCoder) {
@@ -24,7 +24,7 @@ class NoQuizErrorView: UIView {
 
 }
 
-extension NoQuizErrorView: ConstructViewsProtocol {
+extension QuizErrorView: ConstructViewsProtocol {
 
     func buildViews() {
         createViews()
@@ -33,46 +33,45 @@ extension NoQuizErrorView: ConstructViewsProtocol {
     }
 
     func createViews() {
-        errorImageView = UIImageView()
-        addSubview(errorImageView)
+        imageView = UIImageView()
+        addSubview(imageView)
 
         titleLabel = UILabel()
         addSubview(titleLabel)
 
-        errorDescriptionLabel = UILabel()
-        addSubview(errorDescriptionLabel)
+        descriptionLabel = UILabel()
+        addSubview(descriptionLabel)
     }
 
     func styleViews() {
-        errorImageView.image = UIImage(named: "error")
-        errorImageView.contentMode = .scaleAspectFit
-        errorImageView.layer.masksToBounds = true
+        imageView.image = UIImage(named: "error")
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.masksToBounds = true
 
         titleLabel.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
         titleLabel.textColor = .white
         titleLabel.textAlignment = .center
 
-        errorDescriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
-        errorDescriptionLabel.numberOfLines = 0
-        errorDescriptionLabel.lineBreakMode = .byTruncatingTail
-        errorDescriptionLabel.textColor = .white
-        errorDescriptionLabel.textAlignment = .center
+        descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.regular)
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .byTruncatingTail
+        descriptionLabel.textColor = .white
+        descriptionLabel.textAlignment = .center
     }
 
     func defineLayoutForViews() {
-        errorImageView.snp.makeConstraints {
+        imageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.height.equalTo(50)
         }
 
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(errorImageView.snp.bottom).offset(18)
+            $0.top.equalTo(imageView.snp.bottom).offset(18)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(20)
         }
 
-        errorDescriptionLabel.snp.makeConstraints {
+        descriptionLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(10)
             $0.centerX.equalToSuperview()
             $0.leading.trailing.lessThanOrEqualToSuperview()

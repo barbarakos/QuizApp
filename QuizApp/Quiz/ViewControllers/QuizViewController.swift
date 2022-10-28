@@ -11,7 +11,7 @@ class QuizViewController: UIViewController {
     var titleLabel: UILabel!
     var categorySegmentedControl: UISegmentedControl!
     var quizListCollectionView: UICollectionView!
-    var noQuizErrorView: NoQuizErrorView!
+    var quizErrorView: QuizErrorView!
 
     private let topOffset = 20
     private let margins = 10
@@ -20,7 +20,6 @@ class QuizViewController: UIViewController {
 
     private lazy var dataSource = makeDataSource()
     private var cancellables = Set<AnyCancellable>()
-    private var errorOccurred: Bool = false
     private var quizViewModel: QuizViewModel
 
     init(viewModel: QuizViewModel) {
@@ -54,31 +53,26 @@ class QuizViewController: UIViewController {
         }
     }
 
-    func handleNoQuizzesAvailable(quizzes: [QuizModel]) {
-        if errorOccurred {
-            noQuizErrorView.set(
+    func handleNoQuizzesAvailable(error: QuizError) {
+        if error == .serverError {
+            quizErrorView.set(
                 title: "Error",
-                errorDescripton: "Data can't be reached. Please try again.")
-            noQuizErrorView.isHidden = false
-        } else if quizzes.isEmpty {
-            noQuizErrorView.set(
-                title: "No data",
-                errorDescripton: "There are no available quizzes for this category.")
-            noQuizErrorView.isHidden = false
+                description: "Data can't be reached. Please try again.")
+            quizErrorView.isHidden = false
         } else {
-            noQuizErrorView.isHidden = true
+            quizErrorView.set(
+                title: "No data",
+                description: "There are no available quizzes for this category.")
+            quizErrorView.isHidden = false
         }
     }
 
     func bindViewModel() {
         quizViewModel
-            .$errorOccurred
-            .sink { [weak self] errorOccurred in
-                guard let self = self else { return }
-
-                self.errorOccurred = errorOccurred
-                if errorOccurred {
-                    self.applySnapshot(quizzes: self.quizViewModel.quizzes)
+            .$quizError
+            .sink { [weak self] quizError in
+                if let error = quizError {
+                    self?.handleNoQuizzesAvailable(error: error)
                 }
             }
             .store(in: &cancellables)
@@ -89,7 +83,9 @@ class QuizViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.applySnapshot(quizzes: quizzes)
-                self.handleNoQuizzesAvailable(quizzes: quizzes)
+                if !quizzes.isEmpty {
+                    self.quizErrorView.isHidden = true
+                }
             }
             .store(in: &cancellables)
     }
@@ -123,8 +119,8 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         view.addSubview(quizListCollectionView)
 
-        noQuizErrorView = NoQuizErrorView()
-        view.addSubview(noQuizErrorView)
+        quizErrorView = QuizErrorView()
+        view.addSubview(quizErrorView)
     }
 
     func styleViews() {
@@ -151,7 +147,7 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView.isScrollEnabled = true
         quizListCollectionView.layer.cornerRadius = 7
 
-        noQuizErrorView.isHidden = true
+        quizErrorView.isHidden = true
     }
 
     func defineLayoutForViews() {
@@ -176,7 +172,7 @@ extension QuizViewController: ConstructViewsProtocol {
             $0.leading.trailing.bottom.equalToSuperview()
         }
 
-        noQuizErrorView.snp.makeConstraints {
+        quizErrorView.snp.makeConstraints {
             $0.width.equalTo(errorViewConst)
             $0.height.equalTo(errorViewConst)
             $0.center.equalToSuperview()

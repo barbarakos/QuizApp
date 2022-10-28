@@ -32,10 +32,10 @@ class QuizClient: QuizClientProtocol {
     }
 
     func getAllQuizzes(accessToken: String) async throws -> [QuizModel] {
-        guard let URL = URL(string: "\(baseURL)\(quizzesPath)") else {
+        guard let URL = URL(string: "") else {
             throw RequestError.invalidURL
         }
-
+//        \(baseURL)\(quizzesPath)
         var URLRequest = URLRequest(url: URL)
         URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         URLRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
