@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
-        
+
         super.init(nibName: nil, bundle: nil)
     }
 
