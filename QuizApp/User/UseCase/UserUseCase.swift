@@ -11,9 +11,9 @@ protocol UserUseCaseProtocol {
 class UserUseCase: UserUseCaseProtocol {
 
     private var dataSource: UserDataSourceProtocol
-    private var tokenStorage: SecureStorage
+    private var tokenStorage: SecureStorageProtocol
 
-    init(tokenStorage: SecureStorage, dataSource: UserDataSourceProtocol) {
+    init(tokenStorage: SecureStorageProtocol, dataSource: UserDataSourceProtocol) {
         self.tokenStorage = tokenStorage
         self.dataSource = dataSource
     }

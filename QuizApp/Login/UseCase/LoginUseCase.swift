@@ -9,9 +9,9 @@ protocol LoginUseCaseProtocol {
 class LoginUseCase: LoginUseCaseProtocol {
 
     private var dataSource: LoginDataSourceProtocol
-    private var tokenStorage: SecureStorage
+    private var tokenStorage: SecureStorageProtocol
 
-    init(tokenStorage: SecureStorage, dataSource: LoginDataSourceProtocol) {
+    init(tokenStorage: SecureStorageProtocol, dataSource: LoginDataSourceProtocol) {
         self.tokenStorage = tokenStorage
         self.dataSource = dataSource
     }
