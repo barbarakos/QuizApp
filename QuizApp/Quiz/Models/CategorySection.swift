@@ -2,10 +2,10 @@ import UIKit
 
 enum CategorySection: String, CaseIterable {
 
-    case geography
-    case movies
-    case music
-    case sport
+    case geography = "Geography"
+    case movies = "Movies"
+    case music = "Music"
+    case sport = "Sport"
 
     var color: UIColor {
         switch self {
@@ -17,19 +17,6 @@ enum CategorySection: String, CaseIterable {
             return UIColor.systemRed
         case .sport:
             return UIColor.systemBlue
-        }
-    }
-
-    var title: String {
-        switch self {
-        case .geography:
-            return "Geography"
-        case .movies:
-            return "Movies"
-        case .music:
-            return "Music"
-        case .sport:
-            return "Sport"
         }
     }
 

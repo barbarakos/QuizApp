@@ -3,7 +3,7 @@ import UIKit
 class DifficultyStackView: UIStackView {
 
     private let rectangleConstant = 12
-    private let cornerRadius = 3
+    private let cornerRadius: CGFloat = 3
     private let emptyFillColor = UIColor(white: 1, alpha: 0.7)
 
     private var difficultyView1: UIView!
@@ -59,9 +59,9 @@ extension DifficultyStackView: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        difficultyView1.layer.cornerRadius = CGFloat(cornerRadius)
-        difficultyView2.layer.cornerRadius = CGFloat(cornerRadius)
-        difficultyView3.layer.cornerRadius = CGFloat(cornerRadius)
+        difficultyView1.layer.cornerRadius = cornerRadius
+        difficultyView2.layer.cornerRadius = cornerRadius
+        difficultyView3.layer.cornerRadius = cornerRadius
 
         let transform = CGAffineTransformMakeRotation(CGFloat.pi/4)
         difficultyView1.transform = transform

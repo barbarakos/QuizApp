@@ -5,8 +5,13 @@ class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController
 
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
+    init() {
+        self.navigationController = UINavigationController()
+    }
+
+    func start(in window: UIWindow?) {
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
     }
 
     @MainActor

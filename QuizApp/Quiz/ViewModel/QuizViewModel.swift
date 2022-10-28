@@ -2,7 +2,7 @@ import Combine
 
 class QuizViewModel {
 
-    @Published var errorOccurred: Bool = false
+    @Published var quizError: QuizError?
     @Published var quizzes: [QuizModel] = []
 
     private var router: AppRouterProtocol
@@ -18,11 +18,13 @@ class QuizViewModel {
         Task {
             do {
                 let fetchedQuizzes = try await useCase.getAllQuizzes()
+                if fetchedQuizzes.isEmpty {
+                    quizError = QuizError.empty
+                }
                 quizzes = fetchedQuizzes
-                errorOccurred = false
             } catch {
                 quizzes.removeAll()
-                errorOccurred = true
+                quizError = QuizError.serverError
             }
         }
     }
@@ -32,11 +34,13 @@ class QuizViewModel {
         Task {
             do {
                 let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
+                if fetchedQuizzes.isEmpty {
+                    quizError = QuizError.empty
+                }
                 quizzes = fetchedQuizzes
-                errorOccurred = false
             } catch {
                 quizzes.removeAll()
-                errorOccurred = true
+                quizError = QuizError.serverError
             }
         }
     }

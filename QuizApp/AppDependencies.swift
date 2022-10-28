@@ -3,12 +3,8 @@ import UIKit
 
 extension Container {
 
-    static let navigationController = Factory(scope: .singleton) {
-        UINavigationController() as UINavigationController
-    }
-
     static let appRouter = Factory(scope: .singleton) {
-        AppRouter(navigationController: navigationController()) as AppRouterProtocol
+        AppRouter() as AppRouterProtocol
     }
 
     static let apiClient = Factory(scope: .singleton) {
