@@ -5,7 +5,7 @@ class SectionHeaderReusableView: UICollectionReusableView {
 
     static var reuseIdentifier = String(describing: SectionHeaderReusableView.self)
 
-    var titleLabel: UILabel!
+    private var titleLabel: UILabel!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -15,6 +15,11 @@ class SectionHeaderReusableView: UICollectionReusableView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func setTitle(title: String, color: UIColor) {
+        self.titleLabel.text = title
+        self.titleLabel.textColor = color
     }
 
 }

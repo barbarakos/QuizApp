@@ -35,4 +35,12 @@ class AppRouter: AppRouterProtocol {
         navigationController.setViewControllers([tabBarController], animated: true)
     }
 
+    @MainActor
+    func showQuizDetails(quiz: QuizModel) {
+        let vc = Container.quizDetailsViewController(quiz)
+
+        navigationController.navigationBar.tintColor = .white
+        navigationController.pushViewController(vc, animated: true)
+    }
+
 }

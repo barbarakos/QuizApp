@@ -40,7 +40,6 @@ class QuizViewController: UIViewController {
         bindViewModel()
         configureCollectionView()
         didSelectCategory()
-        applySnapshot(allQuizzes: true, animatingDifferences: false)
     }
 
     @MainActor
@@ -56,13 +55,13 @@ class QuizViewController: UIViewController {
         }
     }
 
-    func handleNoQuizzesAvailable() {
+    func handleNoQuizzesAvailable(quizzes: [QuizModel]) {
         if errorOccurred {
             noQuizErrorView.set(
                 title: "Error",
                 errorDescripton: "Data can't be reached. Please try again.")
             noQuizErrorView.isHidden = false
-        } else if quizViewModel.quizzes.isEmpty {
+        } else if quizzes.isEmpty {
             noQuizErrorView.set(
                 title: "No data",
                 errorDescripton: "There are no available quizzes for this category.")
@@ -80,20 +79,19 @@ class QuizViewController: UIViewController {
 
                 self.errorOccurred = errorOccurred
                 if errorOccurred {
-                    self.applySnapshot(allQuizzes: true)
+                    self.applySnapshot(quizzes: self.quizViewModel.quizzes)
                 }
             }
             .store(in: &cancellables)
 
         quizViewModel
             .$quizzes
-            .sink { [weak self] _ in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
+            .sink { [weak self] quizzes in
+                guard let self = self else { return }
 
-                    self.applySnapshot(allQuizzes: true)
-                    self.handleNoQuizzesAvailable()
-                }
+                self.applySnapshot(quizzes: quizzes)
+                self.handleNoQuizzesAvailable(quizzes: quizzes)
+
             }
             .store(in: &cancellables)
     }
@@ -119,9 +117,9 @@ extension QuizViewController: ConstructViewsProtocol {
         categorySegmentedControl = UISegmentedControl(
             items: ["All",
                     CategorySection.geography.title,
+                    CategorySection.sport.title,
                     CategorySection.movies.title,
-                    CategorySection.music.title,
-                    CategorySection.sport.title])
+                    CategorySection.music.title])
         view.addSubview(categorySegmentedControl)
 
         quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
@@ -189,9 +187,11 @@ extension QuizViewController: ConstructViewsProtocol {
 
 }
 
-extension QuizViewController {
+extension QuizViewController: UICollectionViewDelegate {
 
     func configureCollectionView() {
+        quizListCollectionView.delegate = self
+
         quizListCollectionView.register(QuizListCollectionViewCell.self,
                                         forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
 
@@ -226,26 +226,16 @@ extension QuizViewController {
         return layout
     }
 
-    func applySnapshot(allQuizzes: Bool = false, animatingDifferences: Bool = true) {
+    func applySnapshot(quizzes: [QuizModel], animatingDifferences: Bool = true) {
         var snapshot = Snapshot()
-        if allQuizzes {
-            CategorySection.allCases.forEach { section in
-                let quizzes = quizViewModel.quizzes.filter { $0.category == section.rawValue.uppercased() }
-                if !quizzes.isEmpty {
-                    snapshot.appendSections([section])
-                    snapshot.appendItems(quizzes, toSection: section)
-                }
+        CategorySection.allCases.forEach { section in
+            let filteredQuizzes = quizzes.filter { $0.category == section.rawValue.uppercased() }
+            if !filteredQuizzes.isEmpty {
+                snapshot.appendSections([section])
+                snapshot.appendItems(filteredQuizzes, toSection: section)
             }
-        } else {
-            guard
-                let category = categorySegmentedControl.titleForSegment(
-                    at: categorySegmentedControl.selectedSegmentIndex)
-            else { return }
-
-            let section = CategorySection(rawValue: category)
-            snapshot.appendSections([section!])
-            snapshot.appendItems(quizViewModel.quizzes)
         }
+
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
     }
 
@@ -259,23 +249,29 @@ extension QuizViewController {
                 cell?.set(for: quiz)
                 return cell
             })
+
         dataSource.supplementaryViewProvider = { collectionView, kind, indexPath in
-            guard kind == UICollectionView.elementKindSectionHeader else {
+            guard kind == UICollectionView.elementKindSectionHeader,
+                  let view = collectionView.dequeueReusableSupplementaryView(
+                    ofKind: kind,
+                    withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
+                    for: indexPath) as? SectionHeaderReusableView
+            else {
                 return nil
             }
 
-            let view = collectionView.dequeueReusableSupplementaryView(
-                ofKind: kind,
-                withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier,
-                for: indexPath) as? SectionHeaderReusableView
-
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            view?.titleLabel.text = section.rawValue
-            view?.titleLabel.textColor = section.color()
+            view.setTitle(title: section.title, color: section.color)
             return view
         }
 
         return dataSource
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedQuiz = dataSource.itemIdentifier(for: indexPath) else { return }
+
+        quizViewModel.showQuizDetails(quiz: selectedQuiz)
     }
 
 }
