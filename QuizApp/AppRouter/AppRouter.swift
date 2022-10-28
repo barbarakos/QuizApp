@@ -3,10 +3,15 @@ import Factory
 
 class AppRouter: AppRouterProtocol {
 
-    private let navigationController: UINavigationController
+    let navigationController: UINavigationController
 
     init() {
         self.navigationController = UINavigationController()
+    }
+
+    func start(in window: UIWindow?) {
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
     }
 
     @MainActor

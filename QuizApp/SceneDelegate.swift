@@ -24,8 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             } catch {
                 router.showLogIn()
             }
-            window?.rootViewController = Container.navigationController()
-            window?.makeKeyAndVisible()
+            router.start(in: window)
         }
     }
 
