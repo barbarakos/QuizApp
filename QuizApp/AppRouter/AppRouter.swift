@@ -3,7 +3,7 @@ import Factory
 
 class AppRouter: AppRouterProtocol {
 
-    let navigationController: UINavigationController
+    private let navigationController: UINavigationController
 
     init() {
         self.navigationController = UINavigationController()
