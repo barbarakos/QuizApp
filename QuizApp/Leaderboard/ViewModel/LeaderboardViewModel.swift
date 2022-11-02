@@ -3,7 +3,7 @@ import Combine
 
 class LeaderboardViewModel {
 
-    @Published var leaderboard: [LeaderboardResponseModel] = []
+    @Published var leaderboard: [LeaderboardModel] = []
 
     private let router: AppRouterProtocol
     private let leaderboardUseCase: LeaderboardUseCaseProtocol
@@ -23,7 +23,7 @@ class LeaderboardViewModel {
                 let fetched = try await leaderboardUseCase.fetchLeaderboard(quizId: quizId)
 
                 await MainActor.run {
-                    leaderboard = fetched
+                    leaderboard = fetched.map { LeaderboardModel(from: $0) }
                 }
             } catch {
                 print(error)

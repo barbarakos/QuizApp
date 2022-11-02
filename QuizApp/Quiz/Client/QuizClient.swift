@@ -2,8 +2,8 @@ import Foundation
 
 protocol QuizClientProtocol {
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizModel]
-    func getAllQuizzes(accessToken: String) async throws -> [QuizModel]
+    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizResponseModel]
+    func getAllQuizzes(accessToken: String) async throws -> [QuizResponseModel]
 
 }
 
@@ -18,7 +18,7 @@ class QuizClient: QuizClientProtocol {
         self.apiClient = apiClient
     }
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizModel] {
+    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizResponseModel] {
         guard let URL = URL(string: "\(baseURL)\(quizzesPath)?category=\(category)") else {
             throw RequestError.invalidURL
         }
@@ -31,7 +31,7 @@ class QuizClient: QuizClientProtocol {
         return try await apiClient.executeURLRequest(URLRequest: URLRequest)
     }
 
-    func getAllQuizzes(accessToken: String) async throws -> [QuizModel] {
+    func getAllQuizzes(accessToken: String) async throws -> [QuizResponseModel] {
         guard let URL = URL(string: "\(baseURL)\(quizzesPath)") else {
             throw RequestError.invalidURL
         }

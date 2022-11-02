@@ -22,7 +22,7 @@ class LeaderboardTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func set(number: Int, leaderboardPlayer: LeaderboardResponseModel) {
+    func set(number: Int, leaderboardPlayer: LeaderboardModel) {
         rankLabel.text = "\(number)."
         nameLabel.text = "\(leaderboardPlayer.name)"
         pointsLabel.text = "\(leaderboardPlayer.points)"

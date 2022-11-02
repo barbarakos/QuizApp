@@ -1,6 +1,4 @@
-import Foundation
-
-struct QuizModel: Decodable, Hashable {
+struct QuizModel {
 
     let category: String
     let description: String
@@ -8,7 +6,19 @@ struct QuizModel: Decodable, Hashable {
     let id: Int
     let imageUrl: String
     let name: String
-    let numberOfQuestions: Int
+
+    init(from useCaseModel: QuizUseCaseModel) {
+        self.category = useCaseModel.category
+        self.description = useCaseModel.description
+        self.difficulty = useCaseModel.difficulty
+        self.id = useCaseModel.id
+        self.imageUrl = useCaseModel.imageUrl
+        self.name = useCaseModel.name
+    }
+
+}
+
+extension QuizModel: Hashable {
 
     func hash(into hasher: inout Hasher) {
       hasher.combine(id)

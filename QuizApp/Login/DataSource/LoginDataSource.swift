@@ -2,7 +2,7 @@ import Foundation
 
 protocol LoginDataSourceProtocol {
 
-    func login(username: String, password: String) async throws -> LoginResponseModel
+    func login(username: String, password: String) async throws -> LoginDataSourceModel
 
     func checkAccessToken() async throws
 
@@ -18,8 +18,9 @@ class LoginDataSource: LoginDataSourceProtocol {
         self.loginClient = loginClient
     }
 
-    func login(username: String, password: String) async throws -> LoginResponseModel {
-        return try await loginClient.login(password: password, username: username)
+    func login(username: String, password: String) async throws -> LoginDataSourceModel {
+        let model = LoginDataSourceModel(from: try await loginClient.login(password: password, username: username))
+        return model
     }
 
     func checkAccessToken() async throws {

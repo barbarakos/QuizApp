@@ -4,4 +4,3 @@ struct LeaderboardResponseModel: Decodable {
     let points: Int
 
 }
-

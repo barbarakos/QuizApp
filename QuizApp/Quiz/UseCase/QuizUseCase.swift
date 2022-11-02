@@ -1,7 +1,7 @@
 protocol QuizUseCaseProtocol {
 
-    func getQuizzes(for category: String) async throws -> [QuizModel]
-    func getAllQuizzes() async throws -> [QuizModel]
+    func getQuizzes(for category: String) async throws -> [QuizUseCaseModel]
+    func getAllQuizzes() async throws -> [QuizUseCaseModel]
 
 }
 
@@ -15,20 +15,22 @@ class QuizUseCase: QuizUseCaseProtocol {
         self.dataSource = dataSource
     }
 
-    func getQuizzes(for category: String) async throws -> [QuizModel] {
+    func getQuizzes(for category: String) async throws -> [QuizUseCaseModel] {
         guard let accessToken = tokenStorage.accessToken else {
             throw RequestError.dataError
         }
 
         return try await dataSource.getQuizzes(for: category, accessToken: accessToken)
+            .map { QuizUseCaseModel(from: $0) }
     }
 
-    func getAllQuizzes() async throws -> [QuizModel] {
+    func getAllQuizzes() async throws -> [QuizUseCaseModel] {
         guard let accessToken = tokenStorage.accessToken else {
             throw RequestError.dataError
         }
 
         return try await dataSource.getAllQuizzes(accessToken: accessToken)
+            .map { QuizUseCaseModel(from: $0) }
     }
 
 }

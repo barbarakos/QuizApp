@@ -17,7 +17,7 @@ class LoginUseCase: LoginUseCaseProtocol {
     }
 
     func login(username: String, password: String) async throws {
-        let response = try await dataSource.login(username: username, password: password)
+        let response = LoginUseCaseModel(from: try await dataSource.login(username: username, password: password))
         tokenStorage.save(accessToken: response.accessToken)
     }
 
