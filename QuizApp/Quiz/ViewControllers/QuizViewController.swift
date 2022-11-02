@@ -11,10 +11,12 @@ class QuizViewController: UIViewController {
     var titleLabel: UILabel!
     var categorySegmentedControl: UISegmentedControl!
     var quizListCollectionView: UICollectionView!
+    var quizErrorView: QuizErrorView!
 
     private let topOffset = 20
     private let margins = 10
     private let height = 30
+    private let errorViewConst = 200
 
     private lazy var dataSource = makeDataSource()
     private var cancellables = Set<AnyCancellable>()
@@ -52,11 +54,37 @@ class QuizViewController: UIViewController {
         }
     }
 
+    func handleNoQuizzesAvailable(error: QuizError) {
+        switch error {
+        case .serverError:
+            quizErrorView.set(
+                title: "Error",
+                description: "Data can't be reached. Please try again.")
+        case .empty:
+            quizErrorView.set(
+                title: "No data",
+                description: "There are no available quizzes for this category.")
+        }
+        quizErrorView.isHidden = false
+    }
+
     func bindViewModel() {
+        quizViewModel
+            .$quizError
+            .removeDuplicates()
+            .compactMap { $0 }
+            .sink { [weak self] error in
+                self?.handleNoQuizzesAvailable(error: error)
+            }
+            .store(in: &cancellables)
+
         quizViewModel
             .$quizzes
             .sink { [weak self] quizzes in
-                self?.applySnapshot(quizzes: quizzes)
+                guard let self = self else { return }
+
+                self.applySnapshot(quizzes: quizzes)
+                self.quizErrorView.isHidden = !quizzes.isEmpty
             }
             .store(in: &cancellables)
     }
@@ -85,6 +113,9 @@ extension QuizViewController: ConstructViewsProtocol {
 
         quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
         view.addSubview(quizListCollectionView)
+
+        quizErrorView = QuizErrorView()
+        view.addSubview(quizErrorView)
     }
 
     func styleViews() {
@@ -110,6 +141,8 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView.backgroundColor = .clear
         quizListCollectionView.isScrollEnabled = true
         quizListCollectionView.layer.cornerRadius = 7
+
+        quizErrorView.isHidden = true
     }
 
     func defineLayoutForViews() {
@@ -132,6 +165,12 @@ extension QuizViewController: ConstructViewsProtocol {
         quizListCollectionView.snp.makeConstraints {
             $0.top.equalTo(categorySegmentedControl.snp.bottom).offset(topOffset)
             $0.leading.trailing.bottom.equalToSuperview()
+        }
+
+        quizErrorView.snp.makeConstraints {
+            $0.width.equalTo(errorViewConst)
+            $0.height.equalTo(errorViewConst)
+            $0.center.equalToSuperview()
         }
     }
 

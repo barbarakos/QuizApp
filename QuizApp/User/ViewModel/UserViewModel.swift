@@ -8,9 +8,9 @@ class UserViewModel {
 
     private var useCase: UserUseCaseProtocol
     private var router: AppRouterProtocol
-    private var tokenStorage: SecureStorage
+    private var tokenStorage: SecureStorageProtocol
 
-    init(router: AppRouterProtocol, tokenStorage: SecureStorage, useCase: UserUseCaseProtocol) {
+    init(router: AppRouterProtocol, tokenStorage: SecureStorageProtocol, useCase: UserUseCaseProtocol) {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = useCase

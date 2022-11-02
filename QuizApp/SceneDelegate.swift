@@ -1,4 +1,5 @@
 import UIKit
+import Factory
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,20 +14,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let navigationController = UINavigationController()
-        let appDependencies = AppDependencies()
-        let router = AppRouter(navigationController: navigationController, appDependencies: appDependencies)
+        let router = Container.appRouter()
 
         Task {
             do {
-                let loginDatasource = appDependencies.loginDataSource
+                let loginDatasource = Container.loginDataSource()
                 try await loginDatasource.checkAccessToken()
                 router.showTabBarControllers()
             } catch {
                 router.showLogIn()
             }
-            window?.rootViewController = navigationController
-            window?.makeKeyAndVisible()
+            router.start(in: window)
         }
     }
 

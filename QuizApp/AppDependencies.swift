@@ -1,47 +1,93 @@
-class AppDependencies {
+import Factory
+import UIKit
 
-    lazy var tokenStorage: SecureStorage = {
-        SecureStorage()
-    }()
+extension Container {
 
-    lazy var apiClient: ApiClientProtocol = {
-        ApiClient()
-    }()
+    static let appRouter = Factory(scope: .singleton) {
+        AppRouter() as AppRouterProtocol
+    }
 
-    lazy var loginClient: LoginClientProtocol = {
-        LoginClient(apiClient: apiClient)
-    }()
+    static let apiClient = Factory(scope: .singleton) {
+        ApiClient() as ApiClientProtocol
+    }
 
-    lazy var userClient: UserClientProtocol = {
-        UserClient(apiClient: apiClient)
-    }()
+    static let tokenStorage = Factory(scope: .singleton) {
+        SecureStorage() as SecureStorageProtocol
+    }
 
-    lazy var quizClient: QuizClientProtocol = {
-        QuizClient(apiClient: apiClient)
-    }()
+}
 
-    lazy var loginDataSource: LoginDataSourceProtocol = {
-        LoginDataSource(storage: tokenStorage, loginClient: loginClient)
-    }()
+// MARK: Login
+extension Container {
 
-    lazy var userDataSource: UserDataSourceProtocol = {
-        UserDataSource(userClient: userClient)
-    }()
+    static let loginClient = Factory(scope: .singleton) {
+        LoginClient(apiClient: apiClient()) as LoginClientProtocol
+    }
 
-    lazy var quizDataSource: QuizDataSourceProtocol = {
-        QuizDataSource(quizClient: quizClient)
-    }()
+    static let loginDataSource = Factory(scope: .singleton) {
+        LoginDataSource(storage: tokenStorage(), loginClient: loginClient()) as LoginDataSourceProtocol
+    }
 
-    lazy var loginUseCase: LoginUseCaseProtocol = {
-        LoginUseCase(tokenStorage: tokenStorage, dataSource: loginDataSource)
-    }()
+    static let loginUseCase = Factory(scope: .singleton) {
+        LoginUseCase(tokenStorage: tokenStorage(), dataSource: loginDataSource()) as LoginUseCaseProtocol
+    }
 
-    lazy var userUseCase: UserUseCaseProtocol = {
-        UserUseCase(tokenStorage: tokenStorage, dataSource: userDataSource)
-    }()
+    static let loginViewModel = Factory {
+        LoginViewModel(router: appRouter(), tokenStorage: tokenStorage(), useCase: loginUseCase()) as LoginViewModel
+    }
 
-    lazy var quizUseCase: QuizUseCaseProtocol = {
-        QuizUseCase(tokenStorage: tokenStorage, dataSource: quizDataSource)
-    }()
+    static let loginViewController = Factory {
+        LoginViewController(viewModel: loginViewModel()) as LoginViewController
+    }
+
+}
+
+// MARK: User
+extension Container {
+
+    static let userClient = Factory(scope: .singleton) {
+        UserClient(apiClient: apiClient()) as UserClientProtocol
+    }
+
+    static let userDataSource = Factory(scope: .singleton) {
+        UserDataSource(userClient: userClient()) as UserDataSourceProtocol
+    }
+
+    static let userUseCase = Factory(scope: .singleton) {
+        UserUseCase(tokenStorage: tokenStorage(), dataSource: userDataSource()) as UserUseCaseProtocol
+    }
+
+    static let userViewModel = Factory {
+        UserViewModel(router: appRouter(), tokenStorage: tokenStorage(), useCase: userUseCase()) as UserViewModel
+    }
+
+    static let userViewController = Factory {
+        UserViewController(viewModel: userViewModel()) as UserViewController
+    }
+
+}
+
+// MARK: Quiz
+extension Container {
+
+    static let quizClient = Factory(scope: .singleton) {
+        QuizClient(apiClient: apiClient()) as QuizClientProtocol
+    }
+
+    static let quizDataSource = Factory(scope: .singleton) {
+        QuizDataSource(quizClient: quizClient()) as QuizDataSourceProtocol
+    }
+
+    static let quizUseCase = Factory(scope: .singleton) {
+        QuizUseCase(tokenStorage: tokenStorage(), dataSource: quizDataSource()) as QuizUseCaseProtocol
+    }
+
+    static let quizViewModel = Factory {
+        QuizViewModel(router: appRouter(), useCase: quizUseCase()) as QuizViewModel
+    }
+
+    static let quizViewController = Factory {
+        QuizViewController(viewModel: quizViewModel()) as QuizViewController
+    }
 
 }

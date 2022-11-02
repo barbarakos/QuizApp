@@ -1,7 +1,17 @@
 import Foundation
 import Keychain
 
-class SecureStorage {
+protocol SecureStorageProtocol {
+
+    var accessToken: String? { get }
+
+    func save(accessToken: String)
+
+    func deleteToken()
+
+}
+
+class SecureStorage: SecureStorageProtocol {
 
     private let keychain = Keychain()
     private let accessTokenKey = "accessToken"
