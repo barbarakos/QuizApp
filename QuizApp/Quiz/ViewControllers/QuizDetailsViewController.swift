@@ -40,7 +40,7 @@ class QuizDetailsViewController: UIViewController {
     }
 
     @objc func showLeaderboard() {
-        print("Pressed leaderboard!")
+        quizDetailsViewModel.showLeaderboard()
     }
 
 }

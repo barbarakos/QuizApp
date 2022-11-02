@@ -104,3 +104,31 @@ extension Container {
     }
 
 }
+
+// MARK: Quiz leaderboard
+
+extension Container {
+
+    static let leaderboardClient = Factory(scope: .singleton) {
+        LeaderboardClient(apiClient: apiClient()) as LeaderboardClientProtocol
+    }
+
+    static let leaderboardDataSource = Factory(scope: .singleton) {
+        LeaderboardDataSource(
+            storage: tokenStorage(),
+            leaderboardClient: leaderboardClient()) as LeaderboardDataSourceProtocol
+    }
+
+    static let leaderboardUseCase = Factory(scope: .singleton) {
+        LeaderboardUseCase(leaderboardDataSource: leaderboardDataSource()) as LeaderboardUseCaseProtocol
+    }
+
+    static let leaderboardViewModel = ParameterFactory<Int, LeaderboardViewModel> { quizId in
+        LeaderboardViewModel(router: appRouter(), leaderboardUseCase: leaderboardUseCase(), quizId: quizId)
+    }
+
+    static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
+        LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
+    }
+
+}

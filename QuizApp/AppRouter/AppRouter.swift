@@ -45,7 +45,18 @@ class AppRouter: AppRouterProtocol {
         let vc = Container.quizDetailsViewController(quiz)
 
         navigationController.navigationBar.tintColor = .white
+        navigationController.pushViewController(vc, animated: false)
+    }
+
+    @MainActor
+    func showLeaderboard(quizId: Int) {
+        let vc = Container.leaderboardViewController(quizId)
+
         navigationController.pushViewController(vc, animated: true)
+    }
+
+    func closeLeaderboard() {
+        navigationController.popViewController(animated: false)
     }
 
 }

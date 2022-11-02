@@ -10,4 +10,8 @@ protocol AppRouterProtocol {
 
     func showQuizDetails(quiz: QuizModel)
 
+    func showLeaderboard(quizId: Int)
+
+    func closeLeaderboard()
+
 }
