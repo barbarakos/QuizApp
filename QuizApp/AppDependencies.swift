@@ -106,7 +106,6 @@ extension Container {
 }
 
 // MARK: Quiz leaderboard
-
 extension Container {
 
     static let leaderboardClient = Factory(scope: .singleton) {
@@ -129,6 +128,25 @@ extension Container {
 
     static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
         LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
+    }
+
+}
+
+// MARK: QuizSession
+extension Container {
+
+    static let quizSessionClient = Factory(scope: .singleton) {
+        QuizSessionClient(apiClient: apiClient()) as QuizSessionClientProtocol
+    }
+
+    static let quizSessionDataSource = Factory(scope: .singleton) {
+        QuizSessionDataSource(
+            storage: tokenStorage(),
+            quizSessionClient: quizSessionClient()) as QuizSessionDataSourceProtocol
+    }
+
+    static let quizSessionUseCase = Factory(scope: .singleton) {
+        QuizSessionUseCase(quizSessionDataSource: quizSessionDataSource()) as QuizSessionUseCaseProtocol
     }
 
 }
