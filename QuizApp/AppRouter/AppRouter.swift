@@ -7,6 +7,8 @@ class AppRouter: AppRouterProtocol {
 
     init() {
         self.navigationController = UINavigationController()
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.barStyle = .black
     }
 
     func start(in window: UIWindow?) {
@@ -27,13 +29,19 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
+        let searchVC = Container.searchViewController()
+        searchVC.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass"),
+            selectedImage: UIImage(systemName: "magnifyingglass"))
+
         let quizVC = Container.quizViewController()
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(systemName: "stopwatch"),
             selectedImage: UIImage(systemName: "stopwatch.fill"))
 
-        let viewControllers: [UIViewController] = [quizVC, userVC]
+        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
         let tabBarController = TabBarController(viewControllers)
         tabBarController.selectedViewController = viewControllers[0]
 
@@ -44,7 +52,6 @@ class AppRouter: AppRouterProtocol {
     func showQuizDetails(quiz: QuizModel) {
         let vc = Container.quizDetailsViewController(quiz)
 
-        navigationController.navigationBar.tintColor = .white
         navigationController.pushViewController(vc, animated: false)
     }
 
