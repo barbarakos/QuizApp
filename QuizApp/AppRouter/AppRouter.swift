@@ -7,6 +7,8 @@ class AppRouter: AppRouterProtocol {
 
     init() {
         self.navigationController = UINavigationController()
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.barStyle = .black
     }
 
     func start(in window: UIWindow?) {
@@ -44,7 +46,6 @@ class AppRouter: AppRouterProtocol {
     func showQuizDetails(quiz: QuizModel) {
         let vc = Container.quizDetailsViewController(quiz)
 
-        navigationController.navigationBar.tintColor = .white
         navigationController.pushViewController(vc, animated: true)
     }
 
