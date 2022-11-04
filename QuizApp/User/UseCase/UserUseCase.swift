@@ -23,8 +23,7 @@ class UserUseCase: UserUseCaseProtocol {
             throw RequestError.dataError
         }
 
-        let user = UserUseCaseModel(from: try await dataSource.getUser(accessToken: accessToken))
-        return user
+        return UserUseCaseModel(from: try await dataSource.getUser(accessToken: accessToken))
     }
 
     func changeName(name: String) async throws {

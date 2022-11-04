@@ -20,7 +20,7 @@ class DifficultyStackView: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func setDifficulty(type: DifficultyEnum) {
+    func setDifficulty(type: DifficultyModel) {
         switch type {
         case .easy:
             difficultyView1.backgroundColor = .yellow
