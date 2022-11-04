@@ -29,7 +29,7 @@ class QuizListCollectionViewCell: UICollectionViewCell {
         titleLabel.text = quiz.name
         descriptionLabel.text = quiz.description
 
-        difficultyView.setDifficulty(type: DifficultyEnum(rawValue: quiz.difficulty) ?? .easy)
+        difficultyView.setDifficulty(type: quiz.difficulty)
 
         let imageUrl = URL(string: quiz.imageUrl)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))

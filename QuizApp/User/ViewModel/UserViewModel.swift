@@ -19,7 +19,7 @@ class UserViewModel {
     func getUser() {
         Task {
             do {
-                let user: UserModel = UserModel(from: try await useCase.getUser())
+                let user = UserModel(from: try await useCase.getUser())
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
 

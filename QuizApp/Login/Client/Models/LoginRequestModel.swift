@@ -1,5 +1,3 @@
-import Foundation
-
 struct LoginRequestModel: Codable {
 
     let password: String
