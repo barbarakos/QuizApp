@@ -37,7 +37,7 @@ class UserViewController: UIViewController {
         userViewModel.getUser()
     }
 
-    @objc func handleLogOut() {
+    func handleLogOut() {
         userViewModel.logout()
     }
 
@@ -121,7 +121,12 @@ extension UserViewController: ConstructViewsProtocol {
         logOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         logOutButton.layer.cornerRadius = 15
         logOutButton.backgroundColor = UIColor.white
-        logOutButton.addTarget(self, action: #selector(handleLogOut), for: .touchUpInside)
+        logOutButton
+            .tap
+            .sink { _ in
+                self.handleLogOut()
+            }
+            .store(in: &cancellables)
     }
 
     func defineLayoutForViews() {

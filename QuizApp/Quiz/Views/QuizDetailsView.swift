@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -7,6 +8,7 @@ class QuizDetailsView: UIView {
     private let startButtonHeight = 45
     private let insetFromSuperview = 30
 
+    private var cancellables = Set<AnyCancellable>()
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
     private var descriptionLabel: UILabel!
@@ -82,7 +84,12 @@ extension QuizDetailsView: ConstructViewsProtocol {
         startButton.layer.cornerRadius = 15
         startButton.isUserInteractionEnabled = true
         startButton.backgroundColor = .white
-        startButton.addTarget(self, action: #selector(startQuiz), for: .touchUpInside)
+        startButton
+            .tap
+            .sink { _ in
+                self.startQuiz()
+            }
+            .store(in: &cancellables)
 
         stackView.axis = .vertical
         stackView.spacing = 20

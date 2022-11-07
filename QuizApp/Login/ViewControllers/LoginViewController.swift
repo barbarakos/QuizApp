@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -10,6 +11,7 @@ class LoginViewController: UIViewController {
     var logInButton: UIButton!
     var stackView: UIStackView!
 
+    private var cancellables = Set<AnyCancellable>()
     private var loginViewModel: LoginViewModel!
 
     init(viewModel: LoginViewModel) {
@@ -28,7 +30,7 @@ class LoginViewController: UIViewController {
         buildViews()
     }
 
-    @objc func handleLogIn() {
+    func handleLogIn() {
         guard
             let username = emailTextField.text,
             let password = passwordTextField.text
@@ -39,7 +41,7 @@ class LoginViewController: UIViewController {
         loginViewModel.login(username: username, password: password)
     }
 
-    @objc func textFieldDidChange() {
+    func textFieldDidChange() {
         let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
         logInButton.isUserInteractionEnabled = inputFieldsValid
         let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
@@ -66,10 +68,20 @@ extension LoginViewController: ConstructViewsProtocol {
 
         emailTextField = UITextField()
         passwordTextField = UITextField()
-        emailTextField.delegate = self
-        emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        passwordTextField.delegate = self
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+
+        emailTextField
+            .textDidChange
+            .sink { _ in
+                self.textFieldDidChange()
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidChange
+            .sink { _ in
+                self.textFieldDidChange()
+            }
+            .store(in: &cancellables)
 
         logInButton = UIButton(type: .system)
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
@@ -120,7 +132,12 @@ extension LoginViewController: ConstructViewsProtocol {
         logInButton.isUserInteractionEnabled = inputFieldsValid
         let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
         logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
-        logInButton.addTarget(self, action: #selector(handleLogIn), for: .touchUpInside)
+        logInButton
+            .tap
+            .sink { _ in
+                self.handleLogIn()
+            }
+            .store(in: &cancellables)
         stackView.axis = .vertical
         stackView.spacing = 15
         stackView.distribution = .fillEqually

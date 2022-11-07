@@ -39,7 +39,7 @@ class QuizDetailsViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    @objc func showLeaderboard() {
+    func showLeaderboard() {
         quizDetailsViewModel.showLeaderboard()
     }
 
@@ -87,7 +87,12 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         leaderboardButton.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
         leaderboardButton.isUserInteractionEnabled = true
         leaderboardButton.contentHorizontalAlignment = .right
-        leaderboardButton.addTarget(self, action: #selector(showLeaderboard), for: .touchUpInside)
+        leaderboardButton
+            .tap
+            .sink { _ in
+                self.showLeaderboard()
+            }
+            .store(in: &cancellables)
     }
 
     func defineLayoutForViews() {
