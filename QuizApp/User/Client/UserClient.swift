@@ -2,9 +2,9 @@ import Foundation
 
 protocol UserClientProtocol {
 
-    func getUser(accessToken: String) async throws -> UserResponseModel
+    func getUser() async throws -> UserResponseModel
 
-    func changeName(name: String, accessToken: String) async throws
+    func changeName(name: String) async throws
 
 }
 
@@ -19,30 +19,17 @@ class UserClient: UserClientProtocol {
         self.apiClient = apiClient
     }
 
-    func getUser(accessToken: String) async throws -> UserResponseModel {
-        guard let URL = URL(string: "\(baseURL)\(userPath)") else {
-            throw RequestError.invalidURL
-        }
+    func getUser() async throws -> UserResponseModel {
+        let path = "\(baseURL)\(userPath)"
 
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.httpMethod = "GET"
-
-        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        return try await apiClient.get(path: path, query: nil)
     }
 
-    func changeName(name: String, accessToken: String) async throws {
-        guard let URL = URL(string: "\(baseURL)\(userPath)") else {
-            throw RequestError.invalidURL
-        }
+    func changeName(name: String) async throws {
+        let path = "\(baseURL)\(userPath)"
+        let body = ["name": name]
 
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLRequest.httpMethod = "PATCH"
-        URLRequest.httpBody = try? JSONEncoder().encode(UserRequestModel(name: name))
-
-        try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        try await apiClient.patch(path: path, body: body)
     }
 
 }

@@ -2,8 +2,8 @@ import Foundation
 
 protocol QuizClientProtocol {
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizResponseModel]
-    func getAllQuizzes(accessToken: String) async throws -> [QuizResponseModel]
+    func getQuizzes(for category: String) async throws -> [QuizResponseModel]
+    func getAllQuizzes() async throws -> [QuizResponseModel]
 
 }
 
@@ -18,30 +18,17 @@ class QuizClient: QuizClientProtocol {
         self.apiClient = apiClient
     }
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizResponseModel] {
-        guard let URL = URL(string: "\(baseURL)\(quizzesPath)?category=\(category)") else {
-            throw RequestError.invalidURL
-        }
+    func getQuizzes(for category: String) async throws -> [QuizResponseModel] {
+        let path = "\(baseURL)\(quizzesPath)"
+        let query = [URLQueryItem(name: "category", value: String(category))]
 
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLRequest.httpMethod = "GET"
-
-        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        return try await apiClient.get(path: path, query: query)
     }
 
-    func getAllQuizzes(accessToken: String) async throws -> [QuizResponseModel] {
-        guard let URL = URL(string: "\(baseURL)\(quizzesPath)") else {
-            throw RequestError.invalidURL
-        }
+    func getAllQuizzes() async throws -> [QuizResponseModel] {
+        let path = "\(baseURL)\(quizzesPath)"
 
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        URLRequest.httpMethod = "GET"
-
-        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        return try await apiClient.get(path: path, query: nil)
     }
 
 }

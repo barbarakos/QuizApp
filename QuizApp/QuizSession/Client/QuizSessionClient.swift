@@ -2,7 +2,7 @@ import Foundation
 
 protocol QuizSessionClientProtocol {
 
-    func fetchQuestions(quizId: Int, accessToken: String) async throws -> QuizSessionResponseModel
+    func fetchQuestions(quizId: Int) async throws -> QuizSessionResponseModel
 
 }
 
@@ -17,16 +17,10 @@ class QuizSessionClient: QuizSessionClientProtocol {
         self.apiClient = apiClient
     }
 
-    func fetchQuestions(quizId: Int, accessToken: String) async throws -> QuizSessionResponseModel {
-        guard let URL = URL(string: "\(baseURL)\(quizPath)\(quizId)/session/start") else {
-            throw RequestError.invalidURL
-        }
+    func fetchQuestions(quizId: Int) async throws -> QuizSessionResponseModel {
+        let path = "\(baseURL)\(quizPath)\(quizId)/session/start"
 
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.httpMethod = "POST"
-
-        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        return try await apiClient.post(path: path, body: nil)
     }
 
 }
