@@ -15,6 +15,13 @@ class QuizDetailsView: UIView {
     private var startButton: UIButton!
     private var stackView: UIStackView!
 
+    var startButtonTapped: AnyPublisher<Void, Never> {
+        startButton
+            .tap
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -30,10 +37,6 @@ class QuizDetailsView: UIView {
         descriptionLabel.text = quiz.description
         let imageUrl = URL(string: quiz.imageUrl)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))
-    }
-
-    @objc func startQuiz() {
-        print("Start button pressed!")
     }
 
 }
@@ -84,12 +87,6 @@ extension QuizDetailsView: ConstructViewsProtocol {
         startButton.layer.cornerRadius = 15
         startButton.isUserInteractionEnabled = true
         startButton.backgroundColor = .white
-        startButton
-            .tap
-            .sink { _ in
-                self.startQuiz()
-            }
-            .store(in: &cancellables)
 
         stackView.axis = .vertical
         stackView.spacing = 20

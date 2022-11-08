@@ -43,6 +43,10 @@ class QuizDetailsViewController: UIViewController {
         quizDetailsViewModel.showLeaderboard()
     }
 
+    func startQuiz() {
+        quizDetailsViewModel.startQuiz()
+    }
+
 }
 
 extension QuizDetailsViewController: ConstructViewsProtocol {
@@ -65,7 +69,12 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         view.addSubview(leaderboardButton)
 
         quizDetailsView = QuizDetailsView()
-        quizDetailsView.set(for: quizDetailsViewModel.quiz)
+        quizDetailsView
+            .startButtonTapped
+            .sink { _ in
+                self.startQuiz()
+            }
+            .store(in: &cancellables)
         view.addSubview(quizDetailsView)
     }
 

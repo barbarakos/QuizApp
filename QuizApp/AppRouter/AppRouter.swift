@@ -14,12 +14,10 @@ class AppRouter: AppRouterProtocol {
         window?.makeKeyAndVisible()
     }
 
-    @MainActor
     func showLogIn() {
         navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
-    @MainActor
     func showTabBarControllers() {
         let userVC = Container.userViewController()
         userVC.tabBarItem = UITabBarItem(
@@ -40,7 +38,6 @@ class AppRouter: AppRouterProtocol {
         navigationController.setViewControllers([tabBarController], animated: true)
     }
 
-    @MainActor
     func showQuizDetails(quiz: QuizModel) {
         let vc = Container.quizDetailsViewController(quiz)
 
@@ -48,7 +45,6 @@ class AppRouter: AppRouterProtocol {
         navigationController.pushViewController(vc, animated: false)
     }
 
-    @MainActor
     func showLeaderboard(quizId: Int) {
         let vc = Container.leaderboardViewController(quizId)
 
@@ -57,6 +53,12 @@ class AppRouter: AppRouterProtocol {
 
     func closeLeaderboard() {
         navigationController.popViewController(animated: false)
+    }
+
+    func showQuizSession(quiz: QuizModel) {
+        let vc = Container.quizSessionViewController(quiz)
+
+        navigationController.pushViewController(vc, animated: false)
     }
 
 }
