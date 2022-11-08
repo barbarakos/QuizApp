@@ -6,7 +6,7 @@ class AppRouter: AppRouterProtocol {
     private let navigationController: UINavigationController
 
     init() {
-        self.navigationController = UINavigationController()
+        navigationController = UINavigationController()
         navigationController.navigationBar.tintColor = .white
         navigationController.navigationBar.barStyle = .black
     }
