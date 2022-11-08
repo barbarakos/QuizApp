@@ -1,9 +1,7 @@
-import Foundation
-
 struct UserResponseModel: Decodable {
 
-    let email: String
     let id: Int
+    let email: String
     let name: String
 
 }

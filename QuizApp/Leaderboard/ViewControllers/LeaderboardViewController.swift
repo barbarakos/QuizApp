@@ -8,7 +8,7 @@ class LeaderboardViewController: UIViewController {
     private let insetToData = 50
 
     private var cacellables = Set<AnyCancellable>()
-    private var leaderboard: [LeaderboardResponseModel] = []
+    private var leaderboard: [LeaderboardModel] = []
     private var leaderboardViewModel: LeaderboardViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!

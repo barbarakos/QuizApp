@@ -1,6 +1,6 @@
 protocol LeaderboardUseCaseProtocol {
 
-    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel]
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardUseCaseModel]
 
 }
 
@@ -12,8 +12,9 @@ class LeaderboardUseCase: LeaderboardUseCaseProtocol {
         self.leaderboardDataSource = leaderboardDataSource
     }
 
-    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel] {
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardUseCaseModel] {
         try await leaderboardDataSource.fetchLeaderboard(quizId: quizId)
+            .map { LeaderboardUseCaseModel(from: $0) }
     }
 
 }

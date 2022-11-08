@@ -1,6 +1,6 @@
 protocol LeaderboardDataSourceProtocol {
 
-    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel]
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardDataModel]
 
 }
 
@@ -14,12 +14,13 @@ class LeaderboardDataSource: LeaderboardDataSourceProtocol {
         self.leaderboardClient = leaderboardClient
     }
 
-    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel] {
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardDataModel] {
         guard let accessToken = storage.accessToken else {
             throw RequestError.dataError
         }
 
         return try await leaderboardClient.fetchLeaderboard(accessToken: accessToken, quizId: quizId)
+                        .map { LeaderboardDataModel(from: $0) }
     }
 
 }
