@@ -41,4 +41,8 @@ class QuizViewModel {
         }
     }
 
+    func showQuizDetails(quiz: QuizModel) {
+        router.showQuizDetails(quiz: quiz)
+    }
+
 }

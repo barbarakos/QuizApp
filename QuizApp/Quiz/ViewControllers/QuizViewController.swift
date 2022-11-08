@@ -176,9 +176,11 @@ extension QuizViewController: ConstructViewsProtocol {
 
 }
 
-extension QuizViewController {
+extension QuizViewController: UICollectionViewDelegate {
 
     func configureCollectionView() {
+        quizListCollectionView.delegate = self
+
         quizListCollectionView.register(QuizListCollectionViewCell.self,
                                         forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
 
@@ -251,6 +253,12 @@ extension QuizViewController {
         }
 
         return dataSource
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let selectedQuiz = dataSource.itemIdentifier(for: indexPath) else { return }
+
+        quizViewModel.showQuizDetails(quiz: selectedQuiz)
     }
 
 }

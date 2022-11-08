@@ -8,4 +8,6 @@ protocol AppRouterProtocol {
 
     func showTabBarControllers()
 
+    func showQuizDetails(quiz: QuizModel)
+
 }

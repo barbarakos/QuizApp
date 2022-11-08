@@ -6,7 +6,9 @@ class AppRouter: AppRouterProtocol {
     private let navigationController: UINavigationController
 
     init() {
-        self.navigationController = UINavigationController()
+        navigationController = UINavigationController()
+        navigationController.navigationBar.tintColor = .white
+        navigationController.navigationBar.barStyle = .black
     }
 
     func start(in window: UIWindow?) {
@@ -38,6 +40,13 @@ class AppRouter: AppRouterProtocol {
         tabBarController.selectedViewController = viewControllers[0]
 
         navigationController.setViewControllers([tabBarController], animated: true)
+    }
+
+    @MainActor
+    func showQuizDetails(quiz: QuizModel) {
+        let vc = Container.quizDetailsViewController(quiz)
+
+        navigationController.pushViewController(vc, animated: true)
     }
 
 }

@@ -91,3 +91,16 @@ extension Container {
     }
 
 }
+
+// MARK: QuizDetails
+extension Container {
+
+    static let quizDetailsViewModel = ParameterFactory<QuizModel, QuizDetailsViewModel> { quiz in
+        QuizDetailsViewModel(router: appRouter(), quiz: quiz) as QuizDetailsViewModel
+    }
+
+    static let quizDetailsViewController = ParameterFactory<QuizModel, QuizDetailsViewController> { quiz in
+        QuizDetailsViewController(viewModel: quizDetailsViewModel(quiz)) as QuizDetailsViewController
+    }
+
+}
