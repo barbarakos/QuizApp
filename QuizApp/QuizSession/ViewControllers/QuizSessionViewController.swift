@@ -34,6 +34,7 @@ class QuizSessionViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindView()
         bindViewModel()
     }
 
@@ -45,8 +46,15 @@ class QuizSessionViewController: UIViewController {
 
     func nextQuestion() {
         currentQuestionNum+=1
-        let question = viewModel.nextQuestion()
-        setQuestionView(question: question)
+        if currentQuestionNum <= viewModel.questions.count {
+            let question = viewModel.nextQuestion()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                self?.setQuestionView(question: question)
+            }
+        } else {
+            // show quiz results
+        }
     }
 
     func bindViewModel() {
@@ -139,6 +147,23 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
 // MARK: ProgressBar functions
 extension QuizSessionViewController {
+
+    func bindView() {
+        questionView
+            .$isCorrectAnswer
+            .sink {  [weak self] isCorrect in
+                guard let self = self, let isCorrect = isCorrect else { return }
+
+                self.colorProgressViews(isCorrect: isCorrect)
+                self.nextQuestion()
+            }
+            .store(in: &cancellables)
+    }
+
+    func colorProgressViews(isCorrect: Bool) {
+        let progressView = progressBarViews[currentQuestionNum-1]
+        progressView.backgroundColor = isCorrect ? .correct : .incorrect
+    }
 
     func setProgressViewColor() {
         progressBarViews[currentQuestionNum-1].backgroundColor = .white
