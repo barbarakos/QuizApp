@@ -6,7 +6,7 @@ class AppRouter: AppRouterProtocol {
     private let navigationController: UINavigationController
 
     init() {
-        self.navigationController = UINavigationController()
+        navigationController = UINavigationController()
         navigationController.navigationBar.tintColor = .white
         navigationController.navigationBar.barStyle = .black
     }
@@ -58,7 +58,7 @@ class AppRouter: AppRouterProtocol {
     @MainActor
     func showLeaderboard(quizId: Int) {
         let vc = Container.leaderboardViewController(quizId)
-
+        
         navigationController.pushViewController(vc, animated: true)
     }
 
