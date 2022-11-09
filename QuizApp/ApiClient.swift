@@ -6,6 +6,8 @@ protocol ApiClientProtocol {
 
     func get<T: Decodable>(path: String, query: [URLQueryItem]?) async throws -> T
 
+    func post(path: String, body: [String: String]?) async throws
+
     func post<T: Decodable>(path: String, body: [String: String]?) async throws -> T
 
     func patch(path: String, body: [String: String]?) async throws
@@ -26,6 +28,10 @@ class ApiClient: ApiClientProtocol {
 
     func get<T: Decodable>(path: String, query: [URLQueryItem]?) async throws -> T {
         return try await execute(path: path, method: "GET", body: nil, query: query)
+    }
+
+    func post(path: String, body: [String: String]?) async throws {
+        try await execute(path: path, method: "POST", body: body)
     }
 
     func post<T: Decodable>(path: String, body: [String: String]?) async throws -> T {

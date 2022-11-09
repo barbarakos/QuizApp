@@ -61,4 +61,10 @@ class AppRouter: AppRouterProtocol {
         navigationController.pushViewController(vc, animated: false)
     }
 
+    func showQuizResult(numOfCorrectQuestions: Int, numOfQuestions: Int) {
+        let vc = Container.quizResultViewController((numOfCorrectQuestions, numOfQuestions))
+
+        navigationController.setViewControllers([vc], animated: false)
+    }
+
 }

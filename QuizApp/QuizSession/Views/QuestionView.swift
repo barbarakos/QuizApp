@@ -44,6 +44,7 @@ class QuestionView: UIView {
                              .foregroundColor: UIColor.white]
             )
             answerButton.setAttributedTitle(title, for: .normal)
+            answerButton.titleLabel?.numberOfLines = 0
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
             answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 0)
             answerButton.layer.cornerRadius = 30
@@ -62,7 +63,6 @@ class QuestionView: UIView {
                     }
 
                     self.isCorrectAnswer = isCorrect
-                    // update progress bar views color and go to next question
                 }
                 .store(in: &cancellables)
 

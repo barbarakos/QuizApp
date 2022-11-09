@@ -17,6 +17,7 @@ class QuizSessionViewController: UIViewController {
     private var stackView: UIStackView!
     private var progressBarViews: [UIView]!
     private var currentQuestionNum: Int = 1
+    private var numOfCorrectQuestions: Int = 0
 
     private var questionView: QuestionView!
 
@@ -53,7 +54,12 @@ class QuizSessionViewController: UIViewController {
                 self?.setQuestionView(question: question)
             }
         } else {
-            // show quiz results
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
+
+                self.viewModel.endQuiz(numberOfCorrectQuestions: self.numOfCorrectQuestions)
+                self.viewModel.goToQuizResult(numberOfCorrectQuestions: self.numOfCorrectQuestions)
+            }
         }
     }
 
@@ -155,6 +161,9 @@ extension QuizSessionViewController {
                 guard let self = self, let isCorrect = isCorrect else { return }
 
                 self.colorProgressViews(isCorrect: isCorrect)
+                if isCorrect {
+                    self.numOfCorrectQuestions+=1
+                }
                 self.nextQuestion()
             }
             .store(in: &cancellables)

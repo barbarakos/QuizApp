@@ -10,6 +10,8 @@ class QuizSessionViewModel {
     private let router: AppRouterProtocol
     private let useCase: QuizSessionUseCaseProtocol
 
+    private var sessionId: String!
+
     init(router: AppRouterProtocol, quizSessionUseCase: QuizSessionUseCaseProtocol, quiz: QuizModel) {
         self.router = router
         self.useCase = quizSessionUseCase
@@ -21,8 +23,10 @@ class QuizSessionViewModel {
         Task {
             do {
                 let quizSession = QuizSessionModel(from: try await useCase.fetchQuestions(quizId: quiz.id))
-                DispatchQueue.main.async { [weak self] in
-                    self?.questions = quizSession.questions
+
+                await MainActor.run {
+                    questions = quizSession.questions
+                    sessionId = quizSession.sessionId
                 }
             } catch {
                 print(error)
@@ -33,6 +37,20 @@ class QuizSessionViewModel {
     func nextQuestion() -> QuestionModel {
         currentQuestionIndex += 1
         return questions[currentQuestionIndex]
+    }
+
+    func endQuiz(numberOfCorrectQuestions: Int) {
+        Task {
+            do {
+                try await useCase.endQuiz(sessionId: sessionId, numberOfCorrectQuestions: numberOfCorrectQuestions)
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+    func goToQuizResult(numberOfCorrectQuestions: Int) {
+        router.showQuizResult(numOfCorrectQuestions: numberOfCorrectQuestions, numOfQuestions: questions.count)
     }
 
 }

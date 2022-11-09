@@ -158,4 +158,15 @@ extension Container {
         QuizSessionViewController(viewModel: quizSessionViewModel(quiz)) as QuizSessionViewController
     }
 
+    static let quizResultViewModel = ParameterFactory<(Int, Int), QuizResultViewModel> { (numberOfCorrectQuestions, numberOfQuestions) in
+        QuizResultViewModel(router: appRouter(),
+                            numberOfCorrectQuestions: numberOfCorrectQuestions,
+                            numberOfQuestions: numberOfQuestions) as QuizResultViewModel
+    }
+
+    static let quizResultViewController = ParameterFactory<(Int, Int), QuizResultViewController> { (numberOfCorrectQuestions, numberOfQuestions) in
+        QuizResultViewController(
+            viewModel: quizResultViewModel((numberOfCorrectQuestions, numberOfQuestions))) as QuizResultViewController
+    }
+
 }
