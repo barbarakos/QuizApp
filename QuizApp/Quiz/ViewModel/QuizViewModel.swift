@@ -19,7 +19,7 @@ class QuizViewModel {
             do {
                 let fetchedQuizzes = try await useCase.getAllQuizzes()
                 quizError = fetchedQuizzes.isEmpty ? .empty : nil
-                quizzes = fetchedQuizzes
+                quizzes = fetchedQuizzes.map { QuizModel(from: $0) }
             } catch {
                 quizzes.removeAll()
                 quizError = QuizError.serverError
@@ -31,9 +31,9 @@ class QuizViewModel {
     func getQuizzes(for category: String) {
         Task {
             do {
-                let fetchedQuizzes: [QuizModel] = try await useCase.getQuizzes(for: category)
+                let fetchedQuizzes = try await useCase.getQuizzes(for: category)
                 quizError = fetchedQuizzes.isEmpty ? .empty : nil
-                quizzes = fetchedQuizzes
+                quizzes = fetchedQuizzes.map { QuizModel(from: $0) }
             } catch {
                 quizzes.removeAll()
                 quizError = QuizError.serverError

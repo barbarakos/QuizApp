@@ -11,4 +11,8 @@ class QuizDetailsViewModel {
         self.quiz = quiz
     }
 
+    func showLeaderboard() {
+        router.showLeaderboard(quizId: quiz.id)
+    }
+
 }
