@@ -7,8 +7,7 @@ class AppRouter: AppRouterProtocol {
 
     init() {
         navigationController = UINavigationController()
-        navigationController.navigationBar.tintColor = .white
-        navigationController.navigationBar.barStyle = .black
+        editNavBar()
     }
 
     func start(in window: UIWindow?) {
@@ -58,12 +57,21 @@ class AppRouter: AppRouterProtocol {
     @MainActor
     func showLeaderboard(quizId: Int) {
         let vc = Container.leaderboardViewController(quizId)
-        
+
         navigationController.pushViewController(vc, animated: true)
     }
 
     func closeLeaderboard() {
         navigationController.popViewController(animated: false)
+    }
+
+    private func editNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.tintColor = .white
     }
 
 }

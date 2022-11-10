@@ -7,12 +7,6 @@ class SearchViewController: UIViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<CategorySection, QuizModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CategorySection, QuizModel>
 
-    var gradientLayer: CAGradientLayer!
-    var titleLabel: UILabel!
-    var collectionView: UICollectionView!
-    var quizErrorView: QuizErrorView!
-    var searchBar: SearchBarView!
-
     private let topOffset = 20
     private let margins = 10
     private let height = 30
@@ -21,8 +15,13 @@ class SearchViewController: UIViewController {
 
     private lazy var dataSource = makeDataSource()
     private var cancellables = Set<AnyCancellable>()
-    private var quizzes: [QuizModel]!
+
     private var quizViewModel: QuizViewModel
+    private var gradientLayer: CAGradientLayer!
+    private var titleLabel: UILabel!
+    private var collectionView: UICollectionView!
+    private var quizErrorView: QuizErrorView!
+    private var searchBar: SearchBarView!
 
     init(viewModel: QuizViewModel) {
         self.quizViewModel = viewModel
@@ -60,10 +59,9 @@ class SearchViewController: UIViewController {
     func bindViewModel() {
         quizViewModel
             .$quizError
+            .compactMap { $0 }
             .sink { [weak self] quizError in
-                if let error = quizError {
-                    self?.handleNoQuizzesAvailable(error: error)
-                }
+                self?.handleNoQuizzesAvailable(error: quizError)
             }
             .store(in: &cancellables)
 
@@ -73,9 +71,7 @@ class SearchViewController: UIViewController {
                 guard let self = self else { return }
 
                 self.applySnapshot(quizzes: quizzes)
-                if !quizzes.isEmpty {
-                    self.quizErrorView.isHidden = true
-                }
+                self.quizErrorView.isHidden = !quizzes.isEmpty
             }
             .store(in: &cancellables)
     }
@@ -114,7 +110,6 @@ extension SearchViewController: ConstructViewsProtocol {
         searchBar.textField.delegate = self
 
         collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = true
 
         quizErrorView.isHidden = true
     }
@@ -124,14 +119,14 @@ extension SearchViewController: ConstructViewsProtocol {
         gradientLayer.locations = [0, 1]
 
         searchBar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(-topOffset)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-topOffset)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(searchBarHeight)
         }
 
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(margins)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
 
         quizErrorView.snp.makeConstraints {
@@ -186,10 +181,10 @@ extension SearchViewController: UICollectionViewDelegate {
         var snapshot = Snapshot()
         CategorySection.allCases.forEach { section in
             let filteredQuizzes = quizzes.filter { $0.category == section.rawValue.uppercased() }
-            if !filteredQuizzes.isEmpty {
-                snapshot.appendSections([section])
-                snapshot.appendItems(filteredQuizzes, toSection: section)
-            }
+            guard !filteredQuizzes.isEmpty else { return }
+
+            snapshot.appendSections([section])
+            snapshot.appendItems(filteredQuizzes, toSection: section)
         }
 
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -233,7 +228,7 @@ extension SearchViewController: UICollectionViewDelegate {
 extension SearchViewController: UITextFieldDelegate {
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        quizzes = filteredQuizzes(for: textField.text)
+        let quizzes = filteredQuizzes(for: textField.text)
         applySnapshot(quizzes: quizzes)
     }
 
