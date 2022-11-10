@@ -40,7 +40,8 @@ class ApiClient: ApiClientProtocol {
                     path: String,
                     method: String,
                     body: [String: String]?,
-                    query: [URLQueryItem]?) async throws -> T {
+                    query: [URLQueryItem]?
+    ) async throws -> T {
         let URLRequest = try makeURLRequest(path: path, method: method, body: body, query: query)
 
         guard let (data, response) = try? await URLSession.shared.data(for: URLRequest) else {
