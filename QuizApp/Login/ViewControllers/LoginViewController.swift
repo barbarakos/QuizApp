@@ -165,29 +165,37 @@ extension LoginViewController {
 
         emailTextField
             .textDidBeginEditing
-            .sink { [weak self] field in
-                self?.textFieldDidBeginEditing(field)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidBeginEditing(self.emailTextField)
             }
             .store(in: &cancellables)
 
         emailTextField
             .textDidEndEditing
-            .sink { [weak self] field in
-                self?.textFieldDidEndEditing(field)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidEndEditing(self.emailTextField)
             }
             .store(in: &cancellables)
 
         passwordTextField
             .textDidBeginEditing
-            .sink { [weak self] field in
-                self?.textFieldDidBeginEditing(field)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidBeginEditing(self.passwordTextField)
             }
             .store(in: &cancellables)
 
         passwordTextField
             .textDidEndEditing
-            .sink { [weak self] field in
-                self?.textFieldDidEndEditing(field)
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidEndEditing(self.passwordTextField)
             }
             .store(in: &cancellables)
 
