@@ -6,11 +6,11 @@ protocol ApiClientProtocol {
 
     func get<T: Decodable>(path: String, query: [URLQueryItem]?) async throws -> T
 
-    func post(path: String, body: [String: String]?) async throws
+    func post(path: String, body: Encodable?) async throws
 
-    func post<T: Decodable>(path: String, body: [String: String]?) async throws -> T
+    func post<T: Decodable>(path: String, body: Encodable?) async throws -> T
 
-    func patch(path: String, body: [String: String]?) async throws
+    func patch(path: String, body: Encodable?) async throws
 
 }
 
@@ -30,23 +30,24 @@ class ApiClient: ApiClientProtocol {
         return try await execute(path: path, method: "GET", body: nil, query: query)
     }
 
-    func post(path: String, body: [String: String]?) async throws {
+    func post(path: String, body: Encodable?) async throws {
         try await execute(path: path, method: "POST", body: body)
     }
 
-    func post<T: Decodable>(path: String, body: [String: String]?) async throws -> T {
+    func post<T: Decodable>(path: String, body: Encodable?) async throws -> T {
         return try await execute(path: path, method: "POST", body: body, query: nil)
     }
 
-    func patch(path: String, body: [String: String]?) async throws {
+    func patch(path: String, body: Encodable?) async throws {
         try await execute(path: path, method: "PATCH", body: body)
     }
 
     func execute<T: Decodable>(
                     path: String,
                     method: String,
-                    body: [String: String]?,
-                    query: [URLQueryItem]?) async throws -> T {
+                    body: Encodable?,
+                    query: [URLQueryItem]?
+    ) async throws -> T {
         let URLRequest = try makeURLRequest(path: path, method: method, body: body, query: query)
 
         guard let (data, response) = try? await URLSession.shared.data(for: URLRequest) else {
@@ -75,7 +76,7 @@ class ApiClient: ApiClientProtocol {
         }
     }
 
-    func execute(path: String, method: String, body: [String: String]?) async throws {
+    func execute(path: String, method: String, body: Encodable?) async throws {
         let URLRequest = try makeURLRequest(path: path, method: method, body: body, query: nil)
 
         guard let (_, response) = try? await URLSession.shared.data(for: URLRequest) else {
@@ -101,7 +102,7 @@ class ApiClient: ApiClientProtocol {
     func makeURLRequest(
                     path: String,
                     method: String,
-                    body: [String: String]?,
+                    body: Encodable?,
                     query: [URLQueryItem]?) throws -> URLRequest {
         guard var URL = URL(string: path) else { throw RequestError.invalidURL }
 
