@@ -71,10 +71,9 @@ class QuizViewController: UIViewController {
     func bindViewModel() {
         quizViewModel
             .$quizError
+            .compactMap { $0 }
             .sink { [weak self] quizError in
-                if let error = quizError {
-                    self?.handleNoQuizzesAvailable(error: error)
-                }
+                self?.handleNoQuizzesAvailable(error: quizError)
             }
             .store(in: &cancellables)
 

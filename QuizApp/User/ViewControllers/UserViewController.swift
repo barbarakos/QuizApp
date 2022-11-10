@@ -123,8 +123,8 @@ extension UserViewController: ConstructViewsProtocol {
         logOutButton.backgroundColor = UIColor.white
         logOutButton
             .tap
-            .sink { _ in
-                self.handleLogOut()
+            .sink { [weak self] _ in
+                self?.handleLogOut()
             }
             .store(in: &cancellables)
     }

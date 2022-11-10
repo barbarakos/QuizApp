@@ -69,24 +69,11 @@ extension LoginViewController: ConstructViewsProtocol {
         emailTextField = UITextField()
         passwordTextField = UITextField()
 
-        emailTextField
-            .textDidChange
-            .sink { _ in
-                self.textFieldDidChange()
-            }
-            .store(in: &cancellables)
-
-        passwordTextField
-            .textDidChange
-            .sink { _ in
-                self.textFieldDidChange()
-            }
-            .store(in: &cancellables)
-
         logInButton = UIButton(type: .system)
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
 
         view.addSubview(stackView)
+        setUIControlAndGesture()
     }
 
     func styleViews() {
@@ -132,19 +119,14 @@ extension LoginViewController: ConstructViewsProtocol {
         logInButton.isUserInteractionEnabled = inputFieldsValid
         let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
         logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
-        logInButton
-            .tap
-            .sink { _ in
-                self.handleLogIn()
-            }
-            .store(in: &cancellables)
+
         stackView.axis = .vertical
         stackView.spacing = 15
         stackView.distribution = .fillEqually
     }
 
     func defineLayoutForViews() {
-        gradientLayer.frame = view.bounds
+        gradientLayer.frame = UIScreen.main.bounds
         gradientLayer.locations = [0, 1]
 
         titleLabel.snp.makeConstraints {
@@ -164,7 +146,58 @@ extension LoginViewController: ConstructViewsProtocol {
 
 }
 
-extension LoginViewController: UITextFieldDelegate {
+extension LoginViewController {
+
+    func setUIControlAndGesture() {
+        emailTextField
+            .textDidChange
+            .sink { [weak self] _ in
+                self?.textFieldDidChange()
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidChange
+            .sink { [weak self] _ in
+                self?.textFieldDidChange()
+            }
+            .store(in: &cancellables)
+
+        emailTextField
+            .textDidBeginEditing
+            .sink { [weak self] field in
+                self?.textFieldDidBeginEditing(field)
+            }
+            .store(in: &cancellables)
+
+        emailTextField
+            .textDidEndEditing
+            .sink { [weak self] field in
+                self?.textFieldDidEndEditing(field)
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidBeginEditing
+            .sink { [weak self] field in
+                self?.textFieldDidBeginEditing(field)
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidEndEditing
+            .sink { [weak self] field in
+                self?.textFieldDidEndEditing(field)
+            }
+            .store(in: &cancellables)
+
+        logInButton
+            .tap
+            .sink { [weak self] _ in
+                self?.handleLogIn()
+            }
+            .store(in: &cancellables)
+    }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.white.cgColor
@@ -173,10 +206,6 @@ extension LoginViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
-        let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
-        logInButton.isUserInteractionEnabled = inputFieldsValid
-        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
-        logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
     }
 
 }

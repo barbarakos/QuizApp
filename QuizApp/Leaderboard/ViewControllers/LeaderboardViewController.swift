@@ -7,7 +7,7 @@ class LeaderboardViewController: UIViewController {
     private let insetFromSuperview = 20
     private let insetToData = 50
 
-    private var cacellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     private var leaderboard: [LeaderboardModel] = []
     private var leaderboardViewModel: LeaderboardViewModel!
     private var gradientLayer: CAGradientLayer!
@@ -44,7 +44,7 @@ class LeaderboardViewController: UIViewController {
                 self.leaderboard = leaderboard
                 self.tableView.reloadData()
             }
-            .store(in: &cacellables)
+            .store(in: &cancellables)
     }
 
     @objc private func closeLeaderboard() {
@@ -132,11 +132,13 @@ extension LeaderboardViewController: ConstructViewsProtocol {
     }
 
     func setNavigationBar() {
-        let closeBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "xmark"),
-            style: .plain,
-            target: self,
-            action: #selector(closeLeaderboard))
+        let closeBarButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), menu: nil)
+        closeBarButton
+            .tap
+            .sink { [weak self] _ in
+                self?.closeLeaderboard()
+            }
+            .store(in: &cancellables)
 
         navigationItem.rightBarButtonItem = closeBarButton
         navigationItem.titleView = titleLabel

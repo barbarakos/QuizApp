@@ -12,11 +12,21 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 
-    var textDidBeginEditing: AnyPublisher<Void, Never> {
+    var textDidBeginEditing: AnyPublisher<UITextField, Never> {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidBeginEditingNotification, object: self)
-            .map { _ in }
+            .map { $0.object as? UITextField }
+            .compactMap { $0 }
+            .eraseToAnyPublisher()
+    }
+
+    var textDidEndEditing: AnyPublisher<UITextField, Never> {
+        NotificationCenter
+            .default
+            .publisher(for: UITextField.textDidEndEditingNotification, object: self)
+            .map { $0.object as? UITextField }
+            .compactMap { $0 }
             .eraseToAnyPublisher()
     }
 
