@@ -55,19 +55,29 @@ class QuestionView: UIView {
                 .sink { [weak self] _ in
                     guard let self = self else { return }
 
-                    let isCorrect = answer.id == self.correctAnswerId
-                    answerButton.backgroundColor = isCorrect ? .correct : .incorrect
-
-                    if !isCorrect {
-                        self.colorCorrectAnswer()
-                    }
-
-                    self.isCorrectAnswer = isCorrect
+                    self.answerButtonPressed(answerButton)
                 }
                 .store(in: &cancellables)
 
             stackView.addArrangedSubview(answerButton)
         }
+    }
+
+    private func answerButtonPressed(_ answerButton: Button) {
+        stackView.subviews.forEach { button in
+            guard let button = button as? Button else { return }
+
+            button.isEnabled = false
+        }
+
+        let isCorrect = answerButton.id == correctAnswerId
+        answerButton.backgroundColor = isCorrect ? .correct : .incorrect
+
+        if !isCorrect {
+            colorCorrectAnswer()
+        }
+
+        isCorrectAnswer = isCorrect
     }
 
     private func colorCorrectAnswer() {
