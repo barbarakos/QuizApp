@@ -1,8 +1,8 @@
 protocol QuizDataSourceProtocol {
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizDataModel]
+    func getQuizzes(for category: String) async throws -> [QuizDataModel]
 
-    func getAllQuizzes(accessToken: String) async throws -> [QuizDataModel]
+    func getAllQuizzes() async throws -> [QuizDataModel]
 
 }
 
@@ -14,13 +14,13 @@ class QuizDataSource: QuizDataSourceProtocol {
         self.quizClient = quizClient
     }
 
-    func getQuizzes(for category: String, accessToken: String) async throws -> [QuizDataModel] {
-        return try await quizClient.getQuizzes(for: category, accessToken: accessToken)
+    func getQuizzes(for category: String) async throws -> [QuizDataModel] {
+        return try await quizClient.getQuizzes(for: category)
             .map { QuizDataModel(from: $0) }
     }
 
-    func getAllQuizzes(accessToken: String) async throws -> [QuizDataModel] {
-        return try await quizClient.getAllQuizzes(accessToken: accessToken)
+    func getAllQuizzes() async throws -> [QuizDataModel] {
+        return try await quizClient.getAllQuizzes()
             .map { QuizDataModel(from: $0) }
     }
 
