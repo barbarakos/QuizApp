@@ -2,7 +2,7 @@ import Foundation
 
 protocol LeaderboardClientProtocol {
 
-    func fetchLeaderboard(accessToken: String, quizId: Int) async throws -> [LeaderboardResponseModel]
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel]
 
 }
 
@@ -17,17 +17,11 @@ class LeaderboardClient: LeaderboardClientProtocol {
         self.apiClient = apiClient
     }
 
-    func fetchLeaderboard(accessToken: String, quizId: Int) async throws -> [LeaderboardResponseModel] {
-        guard var URL = URL(string: "\(baseURL)\(leaderboardPath)") else {
-            throw RequestError.invalidURL
-        }
+    func fetchLeaderboard(quizId: Int) async throws -> [LeaderboardResponseModel] {
+        let path = "\(baseURL)\(leaderboardPath)"
+        let query = [URLQueryItem(name: "quizId", value: String(quizId))]
 
-        URL.append(queryItems: [URLQueryItem(name: "quizId", value: String(quizId))])
-        var URLRequest = URLRequest(url: URL)
-        URLRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        URLRequest.httpMethod = "GET"
-
-        return try await apiClient.executeURLRequest(URLRequest: URLRequest)
+        return try await apiClient.get(path: path, query: query)
     }
 
 }

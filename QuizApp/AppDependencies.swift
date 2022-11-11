@@ -7,12 +7,12 @@ extension Container {
         AppRouter() as AppRouterProtocol
     }
 
-    static let apiClient = Factory(scope: .singleton) {
-        ApiClient() as ApiClientProtocol
-    }
-
     static let tokenStorage = Factory(scope: .singleton) {
         SecureStorage() as SecureStorageProtocol
+    }
+
+    static let apiClient = Factory(scope: .singleton) {
+        ApiClient(storage: tokenStorage()) as ApiClientProtocol
     }
 
 }
@@ -25,7 +25,7 @@ extension Container {
     }
 
     static let loginDataSource = Factory(scope: .singleton) {
-        LoginDataSource(storage: tokenStorage(), loginClient: loginClient()) as LoginDataSourceProtocol
+        LoginDataSource(loginClient: loginClient()) as LoginDataSourceProtocol
     }
 
     static let loginUseCase = Factory(scope: .singleton) {
@@ -33,7 +33,7 @@ extension Container {
     }
 
     static let loginViewModel = Factory {
-        LoginViewModel(router: appRouter(), tokenStorage: tokenStorage(), useCase: loginUseCase()) as LoginViewModel
+        LoginViewModel(router: appRouter(), useCase: loginUseCase()) as LoginViewModel
     }
 
     static let loginViewController = Factory {
@@ -54,7 +54,7 @@ extension Container {
     }
 
     static let userUseCase = Factory(scope: .singleton) {
-        UserUseCase(tokenStorage: tokenStorage(), dataSource: userDataSource()) as UserUseCaseProtocol
+        UserUseCase(dataSource: userDataSource()) as UserUseCaseProtocol
     }
 
     static let userViewModel = Factory {
@@ -79,7 +79,7 @@ extension Container {
     }
 
     static let quizUseCase = Factory(scope: .singleton) {
-        QuizUseCase(tokenStorage: tokenStorage(), dataSource: quizDataSource()) as QuizUseCaseProtocol
+        QuizUseCase(dataSource: quizDataSource()) as QuizUseCaseProtocol
     }
 
     static let quizViewModel = Factory {
@@ -114,7 +114,6 @@ extension Container {
 
     static let leaderboardDataSource = Factory(scope: .singleton) {
         LeaderboardDataSource(
-            storage: tokenStorage(),
             leaderboardClient: leaderboardClient()) as LeaderboardDataSourceProtocol
     }
 
@@ -141,12 +140,20 @@ extension Container {
 
     static let quizSessionDataSource = Factory(scope: .singleton) {
         QuizSessionDataSource(
-            storage: tokenStorage(),
             quizSessionClient: quizSessionClient()) as QuizSessionDataSourceProtocol
     }
 
     static let quizSessionUseCase = Factory(scope: .singleton) {
         QuizSessionUseCase(quizSessionDataSource: quizSessionDataSource()) as QuizSessionUseCaseProtocol
+    }
+
+}
+
+// MARK: SearchController
+extension Container {
+
+    static let searchViewController = Factory {
+        SearchViewController(viewModel: quizViewModel()) as SearchViewController
     }
 
 }

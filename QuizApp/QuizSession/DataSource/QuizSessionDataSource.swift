@@ -9,21 +9,13 @@ protocol QuizSessionDataSourceProtocol {
 class QuizSessionDataSource: QuizSessionDataSourceProtocol {
 
     private let quizSessionClient: QuizSessionClientProtocol
-    private let storage: SecureStorageProtocol
 
-    init(storage: SecureStorageProtocol, quizSessionClient: QuizSessionClientProtocol) {
-        self.storage = storage
+    init(quizSessionClient: QuizSessionClientProtocol) {
         self.quizSessionClient = quizSessionClient
     }
 
     func fetchQuestions(quizId: Int) async throws -> QuizSessionDataModel {
-        guard let accessToken = storage.accessToken else {
-            throw RequestError.dataError
-        }
-
-        return QuizSessionDataModel(from: try await quizSessionClient.fetchQuestions(
-                                                            quizId: quizId,
-                                                            accessToken: accessToken))
+        return QuizSessionDataModel(from: try await quizSessionClient.fetchQuestions(quizId: quizId))
     }
 
 }

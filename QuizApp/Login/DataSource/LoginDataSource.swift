@@ -11,10 +11,8 @@ protocol LoginDataSourceProtocol {
 class LoginDataSource: LoginDataSourceProtocol {
 
     private var loginClient: LoginClientProtocol
-    private var storage: SecureStorageProtocol
 
-    init(storage: SecureStorageProtocol, loginClient: LoginClientProtocol) {
-        self.storage = storage
+    init(loginClient: LoginClientProtocol) {
         self.loginClient = loginClient
     }
 
@@ -23,7 +21,7 @@ class LoginDataSource: LoginDataSourceProtocol {
     }
 
     func checkAccessToken() async throws {
-        try await loginClient.checkAccessToken(accessToken: storage.accessToken ?? "")
+        try await loginClient.checkAccessToken()
     }
 
 }
