@@ -9,6 +9,7 @@ class QuizDetailsView: UIView {
     private let insetFromSuperview = 30
 
     private var cancellables = Set<AnyCancellable>()
+
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
     private var descriptionLabel: UILabel!
@@ -19,6 +20,7 @@ class QuizDetailsView: UIView {
         super.init(frame: frame)
 
         buildViews()
+        bindViews()
     }
 
     required init?(coder: NSCoder) {
@@ -32,8 +34,17 @@ class QuizDetailsView: UIView {
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))
     }
 
-    @objc func startQuiz() {
+    func startQuiz() {
         print("Start button pressed!")
+    }
+
+    private func bindViews() {
+        startButton
+            .tap
+            .sink { _ in
+                self.startQuiz()
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -84,12 +95,6 @@ extension QuizDetailsView: ConstructViewsProtocol {
         startButton.layer.cornerRadius = 15
         startButton.isUserInteractionEnabled = true
         startButton.backgroundColor = .white
-        startButton
-            .tap
-            .sink { _ in
-                self.startQuiz()
-            }
-            .store(in: &cancellables)
 
         stackView.axis = .vertical
         stackView.spacing = 20

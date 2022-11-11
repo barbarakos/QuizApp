@@ -4,15 +4,15 @@ import SnapKit
 
 class LoginViewController: UIViewController {
 
-    var gradientLayer: CAGradientLayer!
-    var titleLabel: UILabel!
-    var emailTextField: UITextField!
-    var passwordTextField: UITextField!
-    var logInButton: UIButton!
-    var stackView: UIStackView!
-
     private var cancellables = Set<AnyCancellable>()
+
     private var loginViewModel: LoginViewModel!
+    private var gradientLayer: CAGradientLayer!
+    private var titleLabel: UILabel!
+    private var emailTextField: UITextField!
+    private var passwordTextField: UITextField!
+    private var logInButton: UIButton!
+    private var stackView: UIStackView!
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
@@ -28,15 +28,14 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindViews()
     }
 
-    func handleLogIn() {
+    private func handleLogIn() {
         guard
             let username = emailTextField.text,
             let password = passwordTextField.text
-        else {
-            return
-        }
+        else { return }
 
         loginViewModel.login(username: username, password: password)
     }
@@ -73,7 +72,6 @@ extension LoginViewController: ConstructViewsProtocol {
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
 
         view.addSubview(stackView)
-        setUIControlAndGesture()
     }
 
     func styleViews() {
@@ -148,7 +146,7 @@ extension LoginViewController: ConstructViewsProtocol {
 
 extension LoginViewController {
 
-    func setUIControlAndGesture() {
+    func bindViews() {
         emailTextField
             .textDidChange
             .sink { [weak self] _ in

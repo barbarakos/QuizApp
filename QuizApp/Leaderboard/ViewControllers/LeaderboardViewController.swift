@@ -9,6 +9,7 @@ class LeaderboardViewController: UIViewController {
 
     private var cancellables = Set<AnyCancellable>()
     private var leaderboard: [LeaderboardModel] = []
+
     private var leaderboardViewModel: LeaderboardViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
@@ -47,7 +48,7 @@ class LeaderboardViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    @objc private func closeLeaderboard() {
+    private func closeLeaderboard() {
         leaderboardViewModel.closeLeaderboard()
     }
 

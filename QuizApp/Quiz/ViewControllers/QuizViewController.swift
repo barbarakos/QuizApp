@@ -7,12 +7,6 @@ class QuizViewController: UIViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<CategorySection, QuizModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CategorySection, QuizModel>
 
-    var gradientLayer: CAGradientLayer!
-    var titleLabel: UILabel!
-    var categorySegmentedControl: UISegmentedControl!
-    var quizListCollectionView: UICollectionView!
-    var quizErrorView: QuizErrorView!
-
     private let topOffset = 20
     private let margins = 10
     private let height = 30
@@ -20,7 +14,13 @@ class QuizViewController: UIViewController {
 
     private lazy var dataSource = makeDataSource()
     private var cancellables = Set<AnyCancellable>()
+
     private var quizViewModel: QuizViewModel
+    private var gradientLayer: CAGradientLayer!
+    private var titleLabel: UILabel!
+    private var categorySegmentedControl: UISegmentedControl!
+    private var quizListCollectionView: UICollectionView!
+    private var quizErrorView: QuizErrorView!
 
     init(viewModel: QuizViewModel) {
         self.quizViewModel = viewModel
