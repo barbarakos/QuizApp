@@ -1,11 +1,11 @@
-import UIKit
 import Combine
+import UIKit
 import SnapKit
 
 class LeaderboardViewController: UIViewController {
 
     private let insetFromSuperview = 20
-    private let insetToData = 50
+    private let topInset = 50
 
     private var cancellables = Set<AnyCancellable>()
     private var leaderboard: [LeaderboardModel] = []
@@ -117,12 +117,12 @@ extension LeaderboardViewController: ConstructViewsProtocol {
         gradientLayer.locations = [0, 1]
 
         playerLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(insetToData)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(topInset)
             $0.leading.equalToSuperview().inset(insetFromSuperview)
         }
 
         pointsLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(insetToData)
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(topInset)
             $0.trailing.equalToSuperview().inset(insetFromSuperview)
         }
 

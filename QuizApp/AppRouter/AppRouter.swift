@@ -6,7 +6,8 @@ class AppRouter: AppRouterProtocol {
     private let navigationController: UINavigationController
 
     init() {
-        self.navigationController = UINavigationController()
+        navigationController = UINavigationController()
+        editNavBar()
     }
 
     func start(in window: UIWindow?) {
@@ -14,12 +15,10 @@ class AppRouter: AppRouterProtocol {
         window?.makeKeyAndVisible()
     }
 
-    @MainActor
     func showLogIn() {
         navigationController.setViewControllers([Container.loginViewController()], animated: true)
     }
 
-    @MainActor
     func showTabBarControllers() {
         let userVC = Container.userViewController()
         userVC.tabBarItem = UITabBarItem(
@@ -27,28 +26,31 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
+        let searchVC = Container.searchViewController()
+        searchVC.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass"),
+            selectedImage: UIImage(systemName: "magnifyingglass"))
+
         let quizVC = Container.quizViewController()
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(systemName: "stopwatch"),
             selectedImage: UIImage(systemName: "stopwatch.fill"))
 
-        let viewControllers: [UIViewController] = [quizVC, userVC]
+        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
         let tabBarController = TabBarController(viewControllers)
         tabBarController.selectedViewController = viewControllers[0]
 
         navigationController.setViewControllers([tabBarController], animated: true)
     }
 
-    @MainActor
     func showQuizDetails(quiz: QuizModel) {
         let vc = Container.quizDetailsViewController(quiz)
 
-        navigationController.navigationBar.tintColor = .white
         navigationController.pushViewController(vc, animated: false)
     }
 
-    @MainActor
     func showLeaderboard(quizId: Int) {
         let vc = Container.leaderboardViewController(quizId)
 
@@ -57,6 +59,15 @@ class AppRouter: AppRouterProtocol {
 
     func closeLeaderboard() {
         navigationController.popViewController(animated: false)
+    }
+
+    private func editNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.tintColor = .white
     }
 
 }
