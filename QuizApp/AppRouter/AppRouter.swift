@@ -7,8 +7,7 @@ class AppRouter: AppRouterProtocol {
 
     init() {
         navigationController = UINavigationController()
-        navigationController.navigationBar.tintColor = .white
-        navigationController.navigationBar.barStyle = .black
+        editNavBar()
     }
 
     func start(in window: UIWindow?) {
@@ -27,13 +26,19 @@ class AppRouter: AppRouterProtocol {
             image: UIImage(systemName: "gearshape"),
             selectedImage: UIImage(systemName: "gearshape.fill"))
 
+        let searchVC = Container.searchViewController()
+        searchVC.tabBarItem = UITabBarItem(
+            title: "Search",
+            image: UIImage(systemName: "magnifyingglass"),
+            selectedImage: UIImage(systemName: "magnifyingglass"))
+
         let quizVC = Container.quizViewController()
         quizVC.tabBarItem = UITabBarItem(
             title: "Quiz",
             image: UIImage(systemName: "stopwatch"),
             selectedImage: UIImage(systemName: "stopwatch.fill"))
 
-        let viewControllers: [UIViewController] = [quizVC, userVC]
+        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
         let tabBarController = TabBarController(viewControllers)
         tabBarController.selectedViewController = viewControllers[0]
 
@@ -54,6 +59,15 @@ class AppRouter: AppRouterProtocol {
 
     func closeLeaderboard() {
         navigationController.popViewController(animated: false)
+    }
+
+    private func editNavBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .clear
+        navigationController.navigationBar.standardAppearance = appearance
+        navigationController.navigationBar.scrollEdgeAppearance = appearance
+        navigationController.navigationBar.tintColor = .white
     }
 
 }
