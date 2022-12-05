@@ -2,7 +2,7 @@ import Combine
 import UIKit
 import SnapKit
 
-class QuizViewController: UIViewController {
+class SearchViewController: UIViewController {
 
     typealias DataSource = UICollectionViewDiffableDataSource<CategorySection, QuizModel>
     typealias Snapshot = NSDiffableDataSourceSnapshot<CategorySection, QuizModel>
@@ -10,6 +10,7 @@ class QuizViewController: UIViewController {
     private let topOffset = 20
     private let margins = 10
     private let height = 30
+    private let searchBarHeight = 45
     private let errorViewConst = 200
 
     private lazy var dataSource = makeDataSource()
@@ -18,9 +19,9 @@ class QuizViewController: UIViewController {
     private var quizViewModel: QuizViewModel
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
-    private var categorySegmentedControl: UISegmentedControl!
-    private var quizListCollectionView: UICollectionView!
+    private var collectionView: UICollectionView!
     private var quizErrorView: QuizErrorView!
+    private var searchBar: SearchBarView!
 
     init(viewModel: QuizViewModel) {
         self.quizViewModel = viewModel
@@ -37,35 +38,41 @@ class QuizViewController: UIViewController {
 
         buildViews()
         bindViewModel()
+        bindViews()
         configureCollectionView()
-        didSelectCategory()
-    }
-
-    @objc func didSelectCategory() {
-        guard
-            let category = categorySegmentedControl.titleForSegment(at: categorySegmentedControl.selectedSegmentIndex)
-        else { return }
-
-        let allCategories = CategorySection.allCases.map { $0.rawValue }
-        if allCategories.contains(category) {
-            quizViewModel.getQuizzes(for: category.uppercased())
-        } else {
-            quizViewModel.getAllQuizzes()
-        }
+        quizViewModel.getAllQuizzes()
     }
 
     func handleNoQuizzesAvailable(error: QuizError) {
-        switch error {
-        case .serverError:
+        if error == .serverError {
             quizErrorView.set(
                 title: "Error",
                 description: "Data can't be reached. Please try again.")
-        case .empty:
+            quizErrorView.isHidden = false
+        } else {
             quizErrorView.set(
                 title: "No data",
-                description: "There are no available quizzes for this category.")
+                description: "There are no available quizzes.")
+            quizErrorView.isHidden = false
         }
-        quizErrorView.isHidden = false
+    }
+
+    func bindViews() {
+        searchBar
+            .textField
+            .textDidBeginEditing
+            .sink { [weak self] _ in
+                self?.searchBar.textField.layer.borderWidth = 1
+            }
+            .store(in: &cancellables)
+
+        searchBar
+            .textField
+            .textDidEndEditing
+            .sink { [weak self] _ in
+                self?.searchBar.textField.layer.borderWidth = 0
+            }
+            .store(in: &cancellables)
     }
 
     func bindViewModel() {
@@ -90,7 +97,7 @@ class QuizViewController: UIViewController {
 
 }
 
-extension QuizViewController: ConstructViewsProtocol {
+extension SearchViewController: ConstructViewsProtocol {
 
     func buildViews() {
         createViews()
@@ -103,15 +110,11 @@ extension QuizViewController: ConstructViewsProtocol {
         gradientLayer.type = .axial
         view.layer.addSublayer(gradientLayer)
 
-        titleLabel = UILabel()
-        view.addSubview(titleLabel)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
+        view.addSubview(collectionView)
 
-        let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
-        categorySegmentedControl = UISegmentedControl(items: items)
-        view.addSubview(categorySegmentedControl)
-
-        quizListCollectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
-        view.addSubview(quizListCollectionView)
+        searchBar = SearchBarView()
+        view.addSubview(searchBar)
 
         quizErrorView = QuizErrorView()
         view.addSubview(quizErrorView)
@@ -123,23 +126,9 @@ extension QuizViewController: ConstructViewsProtocol {
             UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
         ]
 
-        titleLabel.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
-        titleLabel.text = "PopQuiz"
-        titleLabel.textColor = .white
+        searchBar.textField.delegate = self
 
-        categorySegmentedControl.addTarget(self, action: #selector(didSelectCategory), for: .valueChanged)
-        categorySegmentedControl.layer.cornerRadius = 10
-        categorySegmentedControl.selectedSegmentIndex = 0
-        let titleAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        categorySegmentedControl.setTitleTextAttributes(titleAttributes, for: .normal)
-        categorySegmentedControl.setTitleTextAttributes(titleAttributes, for: .selected)
-        categorySegmentedControl.apportionsSegmentWidthsByContent = true
-        categorySegmentedControl.selectedSegmentTintColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1)
-        categorySegmentedControl.backgroundColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 0.5)
-
-        quizListCollectionView.backgroundColor = .clear
-        quizListCollectionView.isScrollEnabled = true
-        quizListCollectionView.layer.cornerRadius = 7
+        collectionView.backgroundColor = .clear
 
         quizErrorView.isHidden = true
     }
@@ -148,21 +137,14 @@ extension QuizViewController: ConstructViewsProtocol {
         gradientLayer.frame = view.bounds
         gradientLayer.locations = [0, 1]
 
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-height)
-            $0.height.equalTo(height)
+        searchBar.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-topOffset)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(searchBarHeight)
         }
 
-        categorySegmentedControl.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(topOffset)
-            $0.leading.equalTo(view.safeAreaLayoutGuide).offset(margins)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide).inset(margins)
-            $0.height.equalTo(height)
-        }
-
-        quizListCollectionView.snp.makeConstraints {
-            $0.top.equalTo(categorySegmentedControl.snp.bottom).offset(topOffset)
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(margins)
             $0.leading.trailing.bottom.equalToSuperview()
         }
 
@@ -175,15 +157,15 @@ extension QuizViewController: ConstructViewsProtocol {
 
 }
 
-extension QuizViewController: UICollectionViewDelegate {
+extension SearchViewController: UICollectionViewDelegate {
 
     func configureCollectionView() {
-        quizListCollectionView.delegate = self
+        collectionView.delegate = self
 
-        quizListCollectionView.register(QuizListCollectionViewCell.self,
-                                        forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
+        collectionView.register(QuizListCollectionViewCell.self,
+                                forCellWithReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier)
 
-        quizListCollectionView.register(
+        collectionView.register(
             SectionHeaderReusableView.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: SectionHeaderReusableView.reuseIdentifier)
@@ -218,10 +200,10 @@ extension QuizViewController: UICollectionViewDelegate {
         var snapshot = Snapshot()
         CategorySection.allCases.forEach { section in
             let filteredQuizzes = quizzes.filter { $0.category == section.rawValue.uppercased() }
-            if !filteredQuizzes.isEmpty {
-                snapshot.appendSections([section])
-                snapshot.appendItems(filteredQuizzes, toSection: section)
-            }
+            guard !filteredQuizzes.isEmpty else { return }
+
+            snapshot.appendSections([section])
+            snapshot.appendItems(filteredQuizzes, toSection: section)
         }
 
         dataSource.apply(snapshot, animatingDifferences: animatingDifferences)
@@ -229,7 +211,7 @@ extension QuizViewController: UICollectionViewDelegate {
 
     func makeDataSource() -> DataSource {
         let dataSource = DataSource(
-            collectionView: quizListCollectionView,
+            collectionView: collectionView,
             cellProvider: { (collectionView, indexPath, quiz) -> UICollectionViewCell? in
                 let cell = collectionView.dequeueReusableCell(
                     withReuseIdentifier: QuizListCollectionViewCell.reuseIdentifier,
@@ -258,6 +240,25 @@ extension QuizViewController: UICollectionViewDelegate {
         guard let selectedQuiz = dataSource.itemIdentifier(for: indexPath) else { return }
 
         quizViewModel.showQuizDetails(quiz: selectedQuiz)
+    }
+
+}
+
+extension SearchViewController: UITextFieldDelegate {
+
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        let quizzes = filteredQuizzes(for: textField.text)
+        applySnapshot(quizzes: quizzes)
+    }
+
+    func filteredQuizzes(for text: String?) -> [QuizModel] {
+        let quizzes = quizViewModel.quizzes
+        guard let text = text, !text.isEmpty else {
+            return quizzes
+        }
+
+        let filteredQuizzes = quizzes.filter { $0.name.lowercased().contains(text.lowercased()) }
+        return filteredQuizzes
     }
 
 }

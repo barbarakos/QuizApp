@@ -34,23 +34,16 @@ class QuizSessionViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
-        bindView()
+        bindViews()
         bindViewModel()
     }
 
-    private func setQuestionView(question: QuestionModel) {
-        setProgressViewColor()
-        questionNumberLabel.text = "\(currentQuestionNum)/\(viewModel.quiz.numberOfQuestions)"
-        questionView.setQuestion(question: question)
-    }
-
     func nextQuestion() {
-        currentQuestionNum+=1
+        currentQuestionNum += 1
         if currentQuestionNum <= viewModel.questions.count {
-            let question = viewModel.nextQuestion()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.setQuestionView(question: question)
+                self?.viewModel.nextQuestion()
             }
         } else {
             // show quiz results
@@ -59,13 +52,19 @@ class QuizSessionViewController: UIViewController {
 
     func bindViewModel() {
         viewModel
-            .$questions
-            .sink { [weak self] questions in
-                if !questions.isEmpty {
-                    self?.setQuestionView(question: questions[0])
-                }
+            .$currentQuestion
+            .sink { [weak self] currentQuestion in
+                guard let question = currentQuestion else { return }
+
+                self?.setQuestionView(question: question)
             }
             .store(in: &cancellables)
+    }
+
+    private func setQuestionView(question: QuestionModel) {
+        setProgressViewColor()
+        questionNumberLabel.text = "\(currentQuestionNum)/\(viewModel.quiz.numberOfQuestions)"
+        questionView.setQuestion(question: question)
     }
 
 }
@@ -148,7 +147,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 // MARK: ProgressBar functions
 extension QuizSessionViewController {
 
-    func bindView() {
+    func bindViews() {
         questionView
             .$isCorrectAnswer
             .sink {  [weak self] isCorrect in
@@ -160,12 +159,12 @@ extension QuizSessionViewController {
             .store(in: &cancellables)
     }
 
-    func colorProgressViews(isCorrect: Bool) {
+    private func colorProgressViews(isCorrect: Bool) {
         let progressView = progressBarViews[currentQuestionNum-1]
         progressView.backgroundColor = isCorrect ? .correct : .incorrect
     }
 
-    func setProgressViewColor() {
+    private func setProgressViewColor() {
         progressBarViews[currentQuestionNum-1].backgroundColor = .white
     }
 

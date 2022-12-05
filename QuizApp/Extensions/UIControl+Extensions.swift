@@ -20,6 +20,14 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 
+    var textDidEndEditing: AnyPublisher<Void, Never> {
+        NotificationCenter
+            .default
+            .publisher(for: UITextField.textDidEndEditingNotification, object: self)
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
+
     func notifyTextChanged() {
         NotificationCenter
             .default

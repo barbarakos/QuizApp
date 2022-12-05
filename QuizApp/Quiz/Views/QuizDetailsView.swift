@@ -9,6 +9,7 @@ class QuizDetailsView: UIView {
     private let insetFromSuperview = 30
 
     private var cancellables = Set<AnyCancellable>()
+
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
     private var descriptionLabel: UILabel!
@@ -26,6 +27,7 @@ class QuizDetailsView: UIView {
         super.init(frame: frame)
 
         buildViews()
+        bindViews()
     }
 
     required init?(coder: NSCoder) {
@@ -37,6 +39,19 @@ class QuizDetailsView: UIView {
         descriptionLabel.text = quiz.description
         let imageUrl = URL(string: quiz.imageUrl)
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))
+    }
+
+    func startQuiz() {
+        print("Start button pressed!")
+    }
+
+    private func bindViews() {
+        startButton
+            .tap
+            .sink { [weak self] _ in
+                self?.startQuiz()
+            }
+            .store(in: &cancellables)
     }
 
 }

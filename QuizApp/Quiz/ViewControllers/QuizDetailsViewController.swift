@@ -7,6 +7,7 @@ class QuizDetailsViewController: UIViewController {
     private let insetFromSuperview = 20
 
     private var cancellables = Set<AnyCancellable>()
+
     private var quizDetailsViewModel: QuizDetailsViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
@@ -28,6 +29,15 @@ class QuizDetailsViewController: UIViewController {
 
         buildViews()
         bindViewModel()
+        bindViews()
+    }
+
+    func showLeaderboard() {
+        quizDetailsViewModel.showLeaderboard()
+    }
+
+    func startQuiz() {
+        quizDetailsViewModel.startQuiz()
     }
 
     private func bindViewModel() {
@@ -39,12 +49,20 @@ class QuizDetailsViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    func showLeaderboard() {
-        quizDetailsViewModel.showLeaderboard()
-    }
+    private func bindViews() {
+        quizDetailsView
+            .startButtonTapped
+            .sink { [weak self] _ in
+                self?.startQuiz()
+            }
+            .store(in: &cancellables)
 
-    func startQuiz() {
-        quizDetailsViewModel.startQuiz()
+        leaderboardButton
+            .tap
+            .sink { [weak self] _ in
+                self?.showLeaderboard()
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -69,12 +87,6 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         view.addSubview(leaderboardButton)
 
         quizDetailsView = QuizDetailsView()
-        quizDetailsView
-            .startButtonTapped
-            .sink { _ in
-                self.startQuiz()
-            }
-            .store(in: &cancellables)
         view.addSubview(quizDetailsView)
     }
 
@@ -96,12 +108,6 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         leaderboardButton.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
         leaderboardButton.isUserInteractionEnabled = true
         leaderboardButton.contentHorizontalAlignment = .right
-        leaderboardButton
-            .tap
-            .sink { _ in
-                self.showLeaderboard()
-            }
-            .store(in: &cancellables)
     }
 
     func defineLayoutForViews() {

@@ -5,19 +5,19 @@ import SnapKit
 
 class UserViewController: UIViewController {
 
-    var gradientLayer: CAGradientLayer!
-    var usernameTitleLabel: UILabel!
-    var usernameLabel: UILabel!
-    var nameTitleLabel: UILabel!
-    var nameTextField: UITextField!
-    var logOutButton: UIButton!
-
     private let logoutConstant = 40
     private let margins = 20
     private let height = 30
 
     private var cancellables = Set<AnyCancellable>()
+
     private var userViewModel: UserViewModel!
+    private var gradientLayer: CAGradientLayer!
+    private var usernameTitleLabel: UILabel!
+    private var usernameLabel: UILabel!
+    private var nameTitleLabel: UILabel!
+    private var nameTextField: UITextField!
+    private var logOutButton: UIButton!
 
     init(viewModel: UserViewModel) {
         super.init(nibName: nil, bundle: nil)
@@ -34,10 +34,11 @@ class UserViewController: UIViewController {
 
         buildViews()
         bindViewModel()
+        bindViews()
         userViewModel.getUser()
     }
 
-    func handleLogOut() {
+    private func handleLogOut() {
         userViewModel.logout()
     }
 
@@ -59,6 +60,15 @@ class UserViewController: UIViewController {
             .$name
             .sink { [weak self] name in
                 self?.nameTextField.text = name
+            }
+            .store(in: &cancellables)
+    }
+
+    func bindViews() {
+        logOutButton
+            .tap
+            .sink { [weak self] _ in
+                self?.handleLogOut()
             }
             .store(in: &cancellables)
     }
@@ -121,12 +131,6 @@ extension UserViewController: ConstructViewsProtocol {
         logOutButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: UIFont.Weight.semibold)
         logOutButton.layer.cornerRadius = 15
         logOutButton.backgroundColor = UIColor.white
-        logOutButton
-            .tap
-            .sink { _ in
-                self.handleLogOut()
-            }
-            .store(in: &cancellables)
     }
 
     func defineLayoutForViews() {

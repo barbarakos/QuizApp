@@ -3,8 +3,9 @@ import UIKit
 
 class QuizSessionViewModel {
 
-    @Published var questions: [QuestionModel] = []
+    @Published var currentQuestion: QuestionModel!
     var quiz: QuizModel
+    var questions: [QuestionModel] = []
     var currentQuestionIndex: Int = 0
 
     private let router: AppRouterProtocol
@@ -21,8 +22,12 @@ class QuizSessionViewModel {
         Task {
             do {
                 let quizSession = QuizSessionModel(from: try await useCase.fetchQuestions(quizId: quiz.id))
+
                 DispatchQueue.main.async { [weak self] in
-                    self?.questions = quizSession.questions
+                    guard let self = self else { return }
+
+                    self.questions = quizSession.questions
+                    self.currentQuestion = self.questions[0]
                 }
             } catch {
                 print(error)
@@ -30,9 +35,9 @@ class QuizSessionViewModel {
         }
     }
 
-    func nextQuestion() -> QuestionModel {
+    func nextQuestion() {
         currentQuestionIndex += 1
-        return questions[currentQuestionIndex]
+        currentQuestion = questions[currentQuestionIndex]
     }
 
 }
