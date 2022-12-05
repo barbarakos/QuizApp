@@ -41,8 +41,8 @@ class QuizDetailsView: UIView {
     private func bindViews() {
         startButton
             .tap
-            .sink { _ in
-                self.startQuiz()
+            .sink { [weak self] _ in
+                self?.startQuiz()
             }
             .store(in: &cancellables)
     }

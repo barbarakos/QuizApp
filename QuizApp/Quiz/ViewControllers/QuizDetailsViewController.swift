@@ -44,8 +44,8 @@ class QuizDetailsViewController: UIViewController {
     private func bindViews() {
         leaderboardButton
             .tap
-            .sink { _ in
-                self.showLeaderboard()
+            .sink { [weak self] _ in
+                self?.showLeaderboard()
             }
             .store(in: &cancellables)
     }

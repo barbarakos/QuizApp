@@ -57,23 +57,17 @@ class SearchViewController: UIViewController {
         }
     }
 
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
-    }
-
     func bindViews() {
-        searchBar.textField
+        searchBar
+            .textField
             .textDidBeginEditing
             .sink { [weak self] _ in
                 self?.searchBar.textField.layer.borderWidth = 1
             }
             .store(in: &cancellables)
 
-        searchBar.textField
+        searchBar
+            .textField
             .textDidEndEditing
             .sink { [weak self] _ in
                 self?.searchBar.textField.layer.borderWidth = 0
