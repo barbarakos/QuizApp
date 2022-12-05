@@ -37,27 +37,26 @@ class QuizSessionViewController: UIViewController {
         bindViewModel()
     }
 
-    private func setQuestionView(question: QuestionModel) {
-        setProgressViewColor()
-        questionNumberLabel.text = "\(currentQuestionNum)/\(viewModel.quiz.numberOfQuestions)"
-        questionView.setQuestion(question: question)
-    }
-
     func nextQuestion() {
-        currentQuestionNum+=1
-        let question = viewModel.nextQuestion()
-        setQuestionView(question: question)
+        currentQuestionNum += 1
+        viewModel.nextQuestion()
     }
 
     func bindViewModel() {
         viewModel
-            .$questions
-            .sink { [weak self] questions in
-                if !questions.isEmpty {
-                    self?.setQuestionView(question: questions[0])
-                }
+            .$currentQuestion
+            .sink { [weak self] currentQuestion in
+                guard let question = currentQuestion else { return }
+
+                self?.setQuestionView(question: question)
             }
             .store(in: &cancellables)
+    }
+
+    private func setQuestionView(question: QuestionModel) {
+        setProgressViewColor()
+        questionNumberLabel.text = "\(currentQuestionNum)/\(viewModel.quiz.numberOfQuestions)"
+        questionView.setQuestion(question: question)
     }
 
 }
@@ -140,7 +139,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 // MARK: ProgressBar functions
 extension QuizSessionViewController {
 
-    func setProgressViewColor() {
+    private func setProgressViewColor() {
         progressBarViews[currentQuestionNum-1].backgroundColor = .white
     }
 
