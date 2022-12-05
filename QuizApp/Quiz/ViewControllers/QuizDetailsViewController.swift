@@ -53,17 +53,18 @@ class QuizDetailsViewController: UIViewController {
         quizDetailsView
             .startButtonTapped
             .sink { [weak self] _ in
-                self.startQuiz()
+                self?.startQuiz()
             }
             .store(in: &cancellables)
 
         leaderboardButton
             .tap
             .sink { [weak self] _ in
-                self.showLeaderboard()
+                self?.showLeaderboard()
             }
             .store(in: &cancellables)
     }
+
 }
 
 extension QuizDetailsViewController: ConstructViewsProtocol {
