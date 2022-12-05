@@ -3,8 +3,9 @@ import UIKit
 
 class QuizSessionViewModel {
 
-    @Published var questions: [QuestionModel] = []
+    @Published var currentQuestion: QuestionModel!
     var quiz: QuizModel
+    var questions: [QuestionModel] = []
     var currentQuestionIndex: Int = 0
 
     private let router: AppRouterProtocol
@@ -27,6 +28,7 @@ class QuizSessionViewModel {
                 await MainActor.run {
                     questions = quizSession.questions
                     sessionId = quizSession.sessionId
+                    currentQuestion = questions[0]
                 }
             } catch {
                 print(error)
@@ -34,9 +36,9 @@ class QuizSessionViewModel {
         }
     }
 
-    func nextQuestion() -> QuestionModel {
+    func nextQuestion() {
         currentQuestionIndex += 1
-        return questions[currentQuestionIndex]
+        currentQuestion = questions[currentQuestionIndex]
     }
 
     func endQuiz(numberOfCorrectQuestions: Int) {

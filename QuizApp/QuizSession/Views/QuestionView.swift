@@ -27,8 +27,8 @@ class QuestionView: UIView {
     }
 
     func setQuestion(question: QuestionModel) {
-        self.answers = question.answers
-        self.correctAnswerId = question.correctAnswerId
+        answers = question.answers
+        correctAnswerId = question.correctAnswerId
         questionLabel.text = question.question
         setAnswerButtons()
     }
@@ -84,9 +84,7 @@ class QuestionView: UIView {
         stackView
             .subviews
             .forEach { button in
-                guard let button = button as? Button, button.id == correctAnswerId else {
-                    return
-                }
+                guard let button = button as? Button, button.id == correctAnswerId else { return }
 
                 button.backgroundColor = .correct
             }
