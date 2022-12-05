@@ -7,6 +7,7 @@ class QuizDetailsViewController: UIViewController {
     private let insetFromSuperview = 20
 
     private var cancellables = Set<AnyCancellable>()
+
     private var quizDetailsViewModel: QuizDetailsViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
@@ -51,19 +52,18 @@ class QuizDetailsViewController: UIViewController {
     private func bindViews() {
         quizDetailsView
             .startButtonTapped
-            .sink { _ in
+            .sink { [weak self] _ in
                 self.startQuiz()
             }
             .store(in: &cancellables)
 
         leaderboardButton
             .tap
-            .sink { _ in
+            .sink { [weak self] _ in
                 self.showLeaderboard()
             }
             .store(in: &cancellables)
     }
-
 }
 
 extension QuizDetailsViewController: ConstructViewsProtocol {
