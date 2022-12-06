@@ -13,6 +13,7 @@ class QuestionView: UIView {
     private var correctAnswerId: Int!
     private var questionLabel: UILabel!
     private var stackView: UIStackView!
+    private var scrollView: UIScrollView!
 
     @Published var isCorrectAnswer: Bool?
 
@@ -104,8 +105,11 @@ extension QuestionView: ConstructViewsProtocol {
         questionLabel = UILabel()
         addSubview(questionLabel)
 
+        scrollView = UIScrollView()
+        addSubview(scrollView)
+
         stackView = UIStackView()
-        addSubview(stackView)
+        scrollView.addSubview(stackView)
     }
 
     func styleViews() {
@@ -125,9 +129,14 @@ extension QuestionView: ConstructViewsProtocol {
             $0.leading.trailing.equalToSuperview().inset(questionInsets)
         }
 
-        stackView.snp.makeConstraints {
+        scrollView.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom).offset(buttonTopOffset)
-            $0.leading.trailing.equalToSuperview().inset(margins)
+            $0.leading.trailing.bottom.equalToSuperview().inset(margins)
+        }
+
+        stackView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+            $0.centerX.equalToSuperview()
         }
     }
 

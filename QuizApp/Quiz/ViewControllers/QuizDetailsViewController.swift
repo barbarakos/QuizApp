@@ -4,7 +4,7 @@ import SnapKit
 
 class QuizDetailsViewController: UIViewController {
 
-    private let insetFromSuperview = 20
+    private let insetFromSuperview = 40
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -13,6 +13,8 @@ class QuizDetailsViewController: UIViewController {
     private var titleLabel: UILabel!
     private var quizDetailsView: QuizDetailsView!
     private var leaderboardButton: UIButton!
+    private var scrollView: UIScrollView!
+    private var contentView: UIView!
 
     init(viewModel: QuizDetailsViewModel) {
         self.quizDetailsViewModel = viewModel
@@ -80,14 +82,20 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         gradientLayer.type = .axial
         view.layer.addSublayer(gradientLayer)
 
+        scrollView = UIScrollView()
+        view.addSubview(scrollView)
+
+        contentView = UIView()
+        scrollView.addSubview(contentView)
+
         titleLabel = UILabel()
-        view.addSubview(titleLabel)
+        contentView.addSubview(titleLabel)
 
         leaderboardButton = UIButton()
-        view.addSubview(leaderboardButton)
+        contentView.addSubview(leaderboardButton)
 
         quizDetailsView = QuizDetailsView()
-        view.addSubview(quizDetailsView)
+        contentView.addSubview(quizDetailsView)
     }
 
     func styleViews() {
@@ -114,19 +122,28 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         gradientLayer.frame = view.bounds
         gradientLayer.locations = [0, 1]
 
+        scrollView.snp.makeConstraints {
+            $0.top.leading.bottom.trailing.equalToSuperview()
+        }
+
+        contentView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.leading.bottom.trailing.equalToSuperview()
+        }
+
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-40)
+            $0.top.equalToSuperview().inset(-40)
         }
 
         quizDetailsView.snp.makeConstraints {
-            $0.top.equalTo(leaderboardButton.snp.bottom).offset(10)
-            $0.center.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(insetFromSuperview)
+            $0.top.equalTo(leaderboardButton.snp.bottom).offset(insetFromSuperview)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview().inset(insetFromSuperview)
         }
 
         leaderboardButton.snp.makeConstraints {
-            $0.trailing.leading.equalToSuperview().inset(insetFromSuperview)
+            $0.top.trailing.leading.equalToSuperview().inset(insetFromSuperview)
         }
     }
 

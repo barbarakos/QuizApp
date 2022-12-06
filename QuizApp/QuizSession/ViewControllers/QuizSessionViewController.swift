@@ -5,8 +5,8 @@ import SnapKit
 class QuizSessionViewController: UIViewController {
 
     private let titleInset = 40
-    private let margins = 20
-    private let questionInsets = 10
+    private let margins = 40
+    private let questionInsets = 30
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -143,7 +143,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
         }
 
         questionView.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.bottom).offset(50)
+            $0.top.equalTo(stackView.snp.bottom).offset(questionInsets)
             $0.leading.trailing.bottom.equalToSuperview().inset(questionInsets)
         }
     }

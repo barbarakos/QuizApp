@@ -110,6 +110,7 @@ extension QuizDetailsView: ConstructViewsProtocol {
     func defineLayoutForViews() {
         imageView.snp.makeConstraints {
             $0.height.equalTo(imageHeight)
+            $0.centerX.equalToSuperview()
         }
 
         startButton.snp.makeConstraints {
