@@ -7,6 +7,7 @@ class QuizDetailsViewController: UIViewController {
     private let insetFromSuperview = 20
 
     private var cancellables = Set<AnyCancellable>()
+
     private var quizDetailsViewModel: QuizDetailsViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
@@ -28,6 +29,7 @@ class QuizDetailsViewController: UIViewController {
 
         buildViews()
         bindViewModel()
+        bindViews()
     }
 
     private func bindViewModel() {
@@ -39,7 +41,16 @@ class QuizDetailsViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    @objc func showLeaderboard() {
+    private func bindViews() {
+        leaderboardButton
+            .tap
+            .sink { [weak self] _ in
+                self?.showLeaderboard()
+            }
+            .store(in: &cancellables)
+    }
+
+    func showLeaderboard() {
         quizDetailsViewModel.showLeaderboard()
     }
 
@@ -87,7 +98,6 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         leaderboardButton.titleLabel?.font = UIFont.systemFont(ofSize: 22, weight: UIFont.Weight.bold)
         leaderboardButton.isUserInteractionEnabled = true
         leaderboardButton.contentHorizontalAlignment = .right
-        leaderboardButton.addTarget(self, action: #selector(showLeaderboard), for: .touchUpInside)
     }
 
     func defineLayoutForViews() {

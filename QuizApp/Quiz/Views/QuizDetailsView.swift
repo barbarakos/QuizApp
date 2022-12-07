@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 import SnapKit
 
@@ -6,6 +7,8 @@ class QuizDetailsView: UIView {
     private let imageHeight = 300
     private let startButtonHeight = 45
     private let insetFromSuperview = 30
+
+    private var cancellables = Set<AnyCancellable>()
 
     private var imageView: UIImageView!
     private var titleLabel: UILabel!
@@ -17,6 +20,7 @@ class QuizDetailsView: UIView {
         super.init(frame: frame)
 
         buildViews()
+        bindViews()
     }
 
     required init?(coder: NSCoder) {
@@ -30,8 +34,17 @@ class QuizDetailsView: UIView {
         imageView.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "photo"))
     }
 
-    @objc func startQuiz() {
+    func startQuiz() {
         print("Start button pressed!")
+    }
+
+    private func bindViews() {
+        startButton
+            .tap
+            .sink { [weak self] _ in
+                self?.startQuiz()
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -82,7 +95,6 @@ extension QuizDetailsView: ConstructViewsProtocol {
         startButton.layer.cornerRadius = 15
         startButton.isUserInteractionEnabled = true
         startButton.backgroundColor = .white
-        startButton.addTarget(self, action: #selector(startQuiz), for: .touchUpInside)
 
         stackView.axis = .vertical
         stackView.spacing = 20

@@ -9,6 +9,7 @@ class LeaderboardViewController: UIViewController {
 
     private var cancellables = Set<AnyCancellable>()
     private var leaderboard: [LeaderboardModel] = []
+
     private var leaderboardViewModel: LeaderboardViewModel!
     private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
@@ -47,7 +48,7 @@ class LeaderboardViewController: UIViewController {
             .store(in: &cancellables)
     }
 
-    @objc private func closeLeaderboard() {
+    private func closeLeaderboard() {
         leaderboardViewModel.closeLeaderboard()
     }
 
@@ -132,11 +133,13 @@ extension LeaderboardViewController: ConstructViewsProtocol {
     }
 
     func setNavigationBar() {
-        let closeBarButton = UIBarButtonItem(
-            image: UIImage(systemName: "xmark"),
-            style: .plain,
-            target: self,
-            action: #selector(closeLeaderboard))
+        let closeBarButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), menu: nil)
+        closeBarButton
+            .tap
+            .sink { [weak self] _ in
+                self?.closeLeaderboard()
+            }
+            .store(in: &cancellables)
 
         navigationItem.rightBarButtonItem = closeBarButton
         navigationItem.titleView = titleLabel

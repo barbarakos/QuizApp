@@ -1,16 +1,18 @@
+import Combine
 import UIKit
 import SnapKit
 
 class LoginViewController: UIViewController {
 
-    var gradientLayer: CAGradientLayer!
-    var titleLabel: UILabel!
-    var emailTextField: UITextField!
-    var passwordTextField: UITextField!
-    var logInButton: UIButton!
-    var stackView: UIStackView!
+    private var cancellables = Set<AnyCancellable>()
 
     private var loginViewModel: LoginViewModel!
+    private var gradientLayer: CAGradientLayer!
+    private var titleLabel: UILabel!
+    private var emailTextField: UITextField!
+    private var passwordTextField: UITextField!
+    private var logInButton: UIButton!
+    private var stackView: UIStackView!
 
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
@@ -26,20 +28,19 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindViews()
     }
 
-    @objc func handleLogIn() {
+    private func handleLogIn() {
         guard
             let username = emailTextField.text,
             let password = passwordTextField.text
-        else {
-            return
-        }
+        else { return }
 
         loginViewModel.login(username: username, password: password)
     }
 
-    @objc func textFieldDidChange() {
+    func textFieldDidChange() {
         let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
         logInButton.isUserInteractionEnabled = inputFieldsValid
         let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
@@ -66,10 +67,6 @@ extension LoginViewController: ConstructViewsProtocol {
 
         emailTextField = UITextField()
         passwordTextField = UITextField()
-        emailTextField.delegate = self
-        emailTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        passwordTextField.delegate = self
-        passwordTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
         logInButton = UIButton(type: .system)
         stackView = UIStackView(arrangedSubviews: [emailTextField, passwordTextField, logInButton])
@@ -120,14 +117,14 @@ extension LoginViewController: ConstructViewsProtocol {
         logInButton.isUserInteractionEnabled = inputFieldsValid
         let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
         logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
-        logInButton.addTarget(self, action: #selector(handleLogIn), for: .touchUpInside)
+
         stackView.axis = .vertical
         stackView.spacing = 15
         stackView.distribution = .fillEqually
     }
 
     func defineLayoutForViews() {
-        gradientLayer.frame = view.bounds
+        gradientLayer.frame = UIScreen.main.bounds
         gradientLayer.locations = [0, 1]
 
         titleLabel.snp.makeConstraints {
@@ -147,7 +144,66 @@ extension LoginViewController: ConstructViewsProtocol {
 
 }
 
-extension LoginViewController: UITextFieldDelegate {
+extension LoginViewController {
+
+    func bindViews() {
+        emailTextField
+            .textDidChange
+            .sink { [weak self] _ in
+                self?.textFieldDidChange()
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidChange
+            .sink { [weak self] _ in
+                self?.textFieldDidChange()
+            }
+            .store(in: &cancellables)
+
+        emailTextField
+            .textDidBeginEditing
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidBeginEditing(self.emailTextField)
+            }
+            .store(in: &cancellables)
+
+        emailTextField
+            .textDidEndEditing
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidEndEditing(self.emailTextField)
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidBeginEditing
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidBeginEditing(self.passwordTextField)
+            }
+            .store(in: &cancellables)
+
+        passwordTextField
+            .textDidEndEditing
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+
+                self.textFieldDidEndEditing(self.passwordTextField)
+            }
+            .store(in: &cancellables)
+
+        logInButton
+            .tap
+            .sink { [weak self] _ in
+                self?.handleLogIn()
+            }
+            .store(in: &cancellables)
+    }
 
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.white.cgColor
@@ -156,10 +212,6 @@ extension LoginViewController: UITextFieldDelegate {
 
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderWidth = 0
-        let inputFieldsValid = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
-        logInButton.isUserInteractionEnabled = inputFieldsValid
-        let alpha: CGFloat = inputFieldsValid ? 1 : 0.6
-        logInButton.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: alpha)
     }
 
 }

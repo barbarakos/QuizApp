@@ -38,6 +38,7 @@ class SearchViewController: UIViewController {
 
         buildViews()
         bindViewModel()
+        bindViews()
         configureCollectionView()
         quizViewModel.getAllQuizzes()
     }
@@ -54,6 +55,24 @@ class SearchViewController: UIViewController {
                 description: "There are no available quizzes.")
             quizErrorView.isHidden = false
         }
+    }
+
+    func bindViews() {
+        searchBar
+            .textField
+            .textDidBeginEditing
+            .sink { [weak self] _ in
+                self?.searchBar.textField.layer.borderWidth = 1
+            }
+            .store(in: &cancellables)
+
+        searchBar
+            .textField
+            .textDidEndEditing
+            .sink { [weak self] _ in
+                self?.searchBar.textField.layer.borderWidth = 0
+            }
+            .store(in: &cancellables)
     }
 
     func bindViewModel() {
@@ -240,14 +259,6 @@ extension SearchViewController: UITextFieldDelegate {
 
         let filteredQuizzes = quizzes.filter { $0.name.lowercased().contains(text.lowercased()) }
         return filteredQuizzes
-    }
-
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 1
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderWidth = 0
     }
 
 }
