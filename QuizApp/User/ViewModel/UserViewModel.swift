@@ -1,10 +1,11 @@
 import Foundation
+import SwiftUI
 import Combine
 
-class UserViewModel {
+class UserViewModel: ObservableObject {
 
-    @Published var username: String!
-    @Published var name: String!
+    @Published var username: String = ""
+    @Published var name: String = ""
 
     private var useCase: UserUseCaseProtocol
     private var router: AppRouterProtocol
@@ -14,6 +15,7 @@ class UserViewModel {
         self.router = router
         self.tokenStorage = tokenStorage
         self.useCase = useCase
+        getUser()
     }
 
     func getUser() {
@@ -32,7 +34,7 @@ class UserViewModel {
         }
     }
 
-    func changeName(name: String) {
+    func changeName() {
         Task {
             do {
                 try await useCase.changeName(name: name)

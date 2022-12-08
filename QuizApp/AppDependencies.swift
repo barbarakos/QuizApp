@@ -65,6 +65,10 @@ extension Container {
         UserViewController(viewModel: userViewModel()) as UserViewController
     }
 
+    static let userView = Factory {
+        UserView(viewModel: userViewModel()) as UserView
+    }
+
 }
 
 // MARK: Quiz
@@ -88,6 +92,10 @@ extension Container {
 
     static let quizViewController = Factory {
         QuizViewController(viewModel: quizViewModel()) as QuizViewController
+    }
+
+    static let quizView = Factory {
+        QuizView(viewModel: quizViewModel()) as QuizView
     }
 
 }
