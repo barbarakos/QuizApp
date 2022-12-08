@@ -5,7 +5,7 @@ struct QuizSessionModel {
 
     init(from model: QuizSessionUseCaseModel) {
         sessionId = model.sessionId
-        questions = model.questions.map { QuestionModel(from: $0) }
+        questions = model.questions.map { QuestionModel(from: $0, index: model.questions.firstIndex(of: $0)!) }
     }
 
 }

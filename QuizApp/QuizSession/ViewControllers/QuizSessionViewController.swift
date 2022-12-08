@@ -16,7 +16,6 @@ class QuizSessionViewController: UIViewController {
     private var questionNumberLabel: UILabel!
     private var stackView: UIStackView!
     private var progressBarViews: [UIView]!
-    private var currentQuestionNum: Int = 1
 
     private var questionView: QuestionView!
 
@@ -38,7 +37,6 @@ class QuizSessionViewController: UIViewController {
     }
 
     func nextQuestion() {
-        currentQuestionNum += 1
         viewModel.nextQuestion()
     }
 
@@ -54,9 +52,9 @@ class QuizSessionViewController: UIViewController {
     }
 
     private func setQuestionView(question: QuestionModel) {
-        setProgressViewColor()
-        questionNumberLabel.text = "\(currentQuestionNum)/\(viewModel.quiz.numberOfQuestions)"
+        questionNumberLabel.text = "\(question.index+1)/\(viewModel.quiz.numberOfQuestions)"
         questionView.setQuestion(question: question)
+        setProgressViewColor(question: question)
     }
 
 }
@@ -139,8 +137,8 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 // MARK: ProgressBar functions
 extension QuizSessionViewController {
 
-    private func setProgressViewColor() {
-        progressBarViews[currentQuestionNum-1].backgroundColor = .white
+    private func setProgressViewColor(question: QuestionModel) {
+        progressBarViews[question.index].backgroundColor = .white
     }
 
     private func setProgressStackView() {

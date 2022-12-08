@@ -48,15 +48,9 @@ class QuestionView: UIView {
             answerButton.titleLabel?.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
-            answerButton.addConstraint(
-                NSLayoutConstraint(
-                    item: answerButton,
-                    attribute: .height,
-                    relatedBy: .equal,
-                    toItem: answerButton.titleLabel,
-                    attribute: .height,
-                    multiplier: 1.0,
-                    constant: 40))
+            answerButton.snp.makeConstraints {
+                $0.height.equalTo(answerButton.titleLabel!.snp.height).offset(40)
+            }
             answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
             answerButton.layer.cornerRadius = 30
             answerButton.backgroundColor = .white.withAlphaComponent(0.3)
@@ -79,14 +73,13 @@ class QuestionView: UIView {
 
     private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {
         selectedAnswer.backgroundColor = isCorrect ? .green : .red
-        if !isCorrect {
+        guard isCorrect else {
             stackView
                 .subviews
-                .forEach { button in
-                    guard let button = button as? IdentifiableButton, button.id == correctAnswerId else { return }
-
-                    button.backgroundColor = .green
-                }
+                .compactMap { $0 as? IdentifiableButton }
+                .filter { $0.id == correctAnswerId }
+                .forEach { $0.backgroundColor = .green }
+            return
         }
     }
 

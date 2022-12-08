@@ -1,9 +1,13 @@
-struct QuestionUseCaseModel {
+struct QuestionUseCaseModel: Equatable {
 
     let id: Int
     let answers: [AnswerUseCaseModel]
     let correctAnswerId: Int
     let question: String
+
+    static func == (lhs: QuestionUseCaseModel, rhs: QuestionUseCaseModel) -> Bool {
+        return lhs.id == rhs.id
+    }
 
 }
 
