@@ -1,4 +1,5 @@
 import Factory
+import SwiftUI
 import UIKit
 
 extension Container {
@@ -38,6 +39,10 @@ extension Container {
 
     static let loginViewController = Factory {
         LoginViewController(viewModel: loginViewModel()) as LoginViewController
+    }
+
+    static let loginView = Factory {
+        UIHostingController(rootView: LoginView(viewModel: loginViewModel())) as UIHostingController
     }
 
 }
