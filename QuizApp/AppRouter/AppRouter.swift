@@ -22,7 +22,7 @@ class AppRouter: AppRouterProtocol {
 
     func showTabBarControllers() {
         let vc = UIHostingController(rootView: TabBarView(
-            quizView: Container.quizView(),
+            quizListView: Container.quizListView(),
             userView: Container.userView()))
         navigationController.setViewControllers([vc], animated: true)
     }

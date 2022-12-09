@@ -1,4 +1,6 @@
+import SwiftUI
 import UIKit
+
 
 enum CategorySection: String, CaseIterable {
 
@@ -17,6 +19,19 @@ enum CategorySection: String, CaseIterable {
             return UIColor.systemRed
         case .sport:
             return UIColor.systemBlue
+        }
+    }
+
+    var colorSwiftUI: Color {
+        switch self {
+        case .geography:
+            return Color.green
+        case .movies:
+            return Color.yellow
+        case .music:
+            return Color.red
+        case .sport:
+            return Color.blue
         }
     }
 
