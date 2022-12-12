@@ -5,12 +5,11 @@ struct QuizSessionModel {
 
     init(from model: QuizSessionUseCaseModel) {
         sessionId = model.sessionId
-        questions = model.questions.map { (ucModel) -> QuestionModel in
-            QuestionModel(
-                from: ucModel,
-                index: model.questions.enumerated()
-                    .first(where: { $0.element == ucModel})
-                    .map { $0.offset }!)}
+        questions = model.questions
+            .enumerated()
+            .map { index, model in
+                QuestionModel(from: model, index: index)
+            }
     }
 
 }

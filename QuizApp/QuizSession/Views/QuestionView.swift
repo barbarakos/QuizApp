@@ -45,16 +45,14 @@ class QuestionView: UIView {
                              .foregroundColor: UIColor.white]
             )
 
-            guard let answerTitleLabel = answerButton.titleLabel else {
-                return
-            }
+            guard let answerTitleLabel = answerButton.titleLabel else { return }
 
             answerTitleLabel.numberOfLines = 0
             answerTitleLabel.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
             answerButton.snp.makeConstraints {
-                $0.height.equalTo(answerButton.titleLabel!.snp.height).offset(40)
+                $0.height.equalTo(answerTitleLabel.snp.height).offset(40)
             }
             answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
             answerButton.layer.cornerRadius = 30
