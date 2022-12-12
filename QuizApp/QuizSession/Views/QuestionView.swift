@@ -44,8 +44,13 @@ class QuestionView: UIView {
                 attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .semibold),
                              .foregroundColor: UIColor.white]
             )
-            answerButton.titleLabel?.numberOfLines = 0
-            answerButton.titleLabel?.lineBreakMode = .byWordWrapping
+
+            guard let answerTitleLabel = answerButton.titleLabel else {
+                return
+            }
+
+            answerTitleLabel.numberOfLines = 0
+            answerTitleLabel.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
             answerButton.snp.makeConstraints {
