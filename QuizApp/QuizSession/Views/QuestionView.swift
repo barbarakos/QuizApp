@@ -51,10 +51,9 @@ class QuestionView: UIView {
             answerTitleLabel.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
-            answerButton.snp.makeConstraints {
-                $0.height.equalTo(answerTitleLabel.snp.height).offset(40)
-            }
-            answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
+            var config = IdentifiableButton.Configuration.plain()
+            config.contentInsets  = NSDirectionalEdgeInsets(top: 25, leading: 25, bottom: 25, trailing: 25)
+            answerButton.configuration = config
             answerButton.layer.cornerRadius = 30
             answerButton.backgroundColor = .white.withAlphaComponent(0.3)
 
@@ -63,16 +62,25 @@ class QuestionView: UIView {
                 .sink { [weak self] _ in
                     guard let self = self else { return }
 
-                    let isCorrect = answer.id == self.correctAnswerId
-                    self.colorAnswers(selectedAnswer: answerButton, isCorrect: isCorrect)
-
-                    self.isCorrectAnswer = isCorrect
-                    // update progress bar views color and go to next question
+                    self.answerButtonPressed(answerButton)
                 }
                 .store(in: &cancellables)
 
             stackView.addArrangedSubview(answerButton)
         }
+    }
+
+    private func answerButtonPressed(_ answerButton: IdentifiableButton) {
+        stackView.subviews.forEach { button in
+            guard let button = button as? IdentifiableButton else { return }
+
+            button.isEnabled = false
+        }
+
+        let isCorrect = answerButton.id == correctAnswerId
+        colorAnswers(selectedAnswer: answerButton, isCorrect: isCorrect)
+
+        isCorrectAnswer = isCorrect
     }
 
     private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {

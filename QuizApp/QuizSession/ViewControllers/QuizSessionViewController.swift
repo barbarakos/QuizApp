@@ -16,6 +16,7 @@ class QuizSessionViewController: UIViewController {
     private var questionNumberLabel: UILabel!
     private var stackView: UIStackView!
     private var progressBarViews: [UIView]!
+    private var numOfCorrectQuestions: Int = 0
 
     private var questionView: QuestionView!
 
@@ -38,7 +39,7 @@ class QuizSessionViewController: UIViewController {
     }
 
     func nextQuestion() {
-        viewModel.nextQuestion()
+        viewModel.nextQuestion(numOfCorrectQuestions: numOfCorrectQuestions)
     }
 
     func bindViewModel() {
@@ -146,6 +147,9 @@ extension QuizSessionViewController {
                 guard let self = self else { return }
 
                 self.colorProgressViews(isCorrect: isCorrect)
+                if isCorrect {
+                    self.numOfCorrectQuestions += 1
+                }
                 self.nextQuestion()
             }
             .store(in: &cancellables)

@@ -16,4 +16,6 @@ protocol AppRouterProtocol {
 
     func showQuizSession(quiz: QuizModel)
 
+    func showQuizResult(result: Result)
+
 }

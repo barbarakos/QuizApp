@@ -158,6 +158,16 @@ extension Container {
         QuizSessionViewController(viewModel: quizSessionViewModel(quiz)) as QuizSessionViewController
     }
 
+    static let quizResultViewModel = ParameterFactory<Result, QuizResultViewModel> { result in
+        QuizResultViewModel(router: appRouter(),
+                            result: result) as QuizResultViewModel
+    }
+
+    static let quizResultViewController = ParameterFactory<Result, QuizResultViewController> { result in
+        QuizResultViewController(
+            viewModel: quizResultViewModel(result)) as QuizResultViewController
+    }
+
 }
 
 // MARK: SearchController
