@@ -6,7 +6,6 @@ class QuizSessionViewModel {
     @Published var currentQuestion: QuestionModel!
     var quiz: QuizModel
     var questions: [QuestionModel] = []
-    var currentQuestionIndex: Int = 0
 
     private let router: AppRouterProtocol
     private let useCase: QuizSessionUseCaseProtocol
@@ -37,8 +36,7 @@ class QuizSessionViewModel {
     }
 
     func nextQuestion() {
-        currentQuestionIndex += 1
-        currentQuestion = questions[currentQuestionIndex]
+        currentQuestion = questions[currentQuestion.index+1]
     }
 
     func endQuiz(numberOfCorrectQuestions: Int) {

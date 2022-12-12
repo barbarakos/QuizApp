@@ -44,20 +44,17 @@ class QuestionView: UIView {
                 attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .semibold),
                              .foregroundColor: UIColor.white]
             )
-            answerButton.titleLabel?.numberOfLines = 0
-            answerButton.titleLabel?.lineBreakMode = .byWordWrapping
+
+            guard let answerTitleLabel = answerButton.titleLabel else { return }
+
+            answerTitleLabel.numberOfLines = 0
+            answerTitleLabel.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
             answerButton.titleLabel?.numberOfLines = 0
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
-            answerButton.addConstraint(
-                NSLayoutConstraint(
-                    item: answerButton,
-                    attribute: .height,
-                    relatedBy: .equal,
-                    toItem: answerButton.titleLabel,
-                    attribute: .height,
-                    multiplier: 1.0,
-                    constant: 40))
+            answerButton.snp.makeConstraints {
+                $0.height.equalTo(answerTitleLabel.snp.height).offset(40)
+            }
             answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 25)
             answerButton.layer.cornerRadius = 30
             answerButton.backgroundColor = .white.withAlphaComponent(0.3)
@@ -90,14 +87,13 @@ class QuestionView: UIView {
 
     private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {
         selectedAnswer.backgroundColor = isCorrect ? .correct : .incorrect
-        if !isCorrect {
+        guard isCorrect else {
             stackView
                 .subviews
-                .forEach { button in
-                    guard let button = button as? IdentifiableButton, button.id == correctAnswerId else { return }
-
-                    button.backgroundColor = .correct
-                }
+                .compactMap { $0 as? IdentifiableButton }
+                .filter { $0.id == correctAnswerId }
+                .forEach { $0.backgroundColor = .correct }
+            return
         }
     }
 
