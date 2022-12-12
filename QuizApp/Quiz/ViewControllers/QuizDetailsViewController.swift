@@ -32,6 +32,14 @@ class QuizDetailsViewController: UIViewController {
         bindViews()
     }
 
+    func showLeaderboard() {
+        quizDetailsViewModel.showLeaderboard()
+    }
+
+    func startQuiz() {
+        quizDetailsViewModel.startQuiz()
+    }
+
     private func bindViewModel() {
         quizDetailsViewModel
             .$quiz
@@ -42,16 +50,19 @@ class QuizDetailsViewController: UIViewController {
     }
 
     private func bindViews() {
+        quizDetailsView
+            .startButtonTapped
+            .sink { [weak self] _ in
+                self?.startQuiz()
+            }
+            .store(in: &cancellables)
+
         leaderboardButton
             .tap
             .sink { [weak self] _ in
                 self?.showLeaderboard()
             }
             .store(in: &cancellables)
-    }
-
-    func showLeaderboard() {
-        quizDetailsViewModel.showLeaderboard()
     }
 
 }
@@ -76,7 +87,6 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
         view.addSubview(leaderboardButton)
 
         quizDetailsView = QuizDetailsView()
-        quizDetailsView.set(for: quizDetailsViewModel.quiz)
         view.addSubview(quizDetailsView)
     }
 

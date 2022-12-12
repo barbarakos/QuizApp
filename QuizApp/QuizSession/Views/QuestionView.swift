@@ -1,0 +1,139 @@
+import Combine
+import UIKit
+import SnapKit
+
+class QuestionView: UIView {
+
+    private let margins = 10
+    private let questionInsets = 20
+    private let buttonTopOffset = 30
+
+    private var cancellables = Set<AnyCancellable>()
+    private var answers: [AnswerModel]!
+    private var correctAnswerId: Int!
+    private var questionLabel: UILabel!
+    private var stackView: UIStackView!
+
+    @Published var isCorrectAnswer: Bool?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        buildViews()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func setQuestion(question: QuestionModel) {
+        answers = question.answers
+        correctAnswerId = question.correctAnswerId
+        questionLabel.text = question.question
+        cancellables.removeAll()
+        setAnswerButtons()
+    }
+
+    func setAnswerButtons() {
+        stackView.subviews.forEach { $0.removeFromSuperview() }
+
+        answers.forEach { answer in
+            let answerButton = IdentifiableButton(id: answer.id)
+            let title = NSAttributedString(
+                string: answer.answer,
+                attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .semibold),
+                             .foregroundColor: UIColor.white]
+            )
+
+            guard let answerTitleLabel = answerButton.titleLabel else { return }
+
+            answerTitleLabel.numberOfLines = 0
+            answerTitleLabel.lineBreakMode = .byWordWrapping
+            answerButton.setAttributedTitle(title, for: .normal)
+            answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
+            var config = IdentifiableButton.Configuration.plain()
+            config.contentInsets  = NSDirectionalEdgeInsets(top: 25, leading: 25, bottom: 25, trailing: 25)
+            answerButton.configuration = config
+            answerButton.layer.cornerRadius = 30
+            answerButton.backgroundColor = .white.withAlphaComponent(0.3)
+
+            answerButton
+                .tap
+                .sink { [weak self] _ in
+                    guard let self = self else { return }
+
+                    self.answerButtonPressed(answerButton)
+                }
+                .store(in: &cancellables)
+
+            stackView.addArrangedSubview(answerButton)
+        }
+    }
+
+    private func answerButtonPressed(_ answerButton: IdentifiableButton) {
+        stackView.subviews.forEach { button in
+            guard let button = button as? IdentifiableButton else { return }
+
+            button.isEnabled = false
+        }
+
+        let isCorrect = answerButton.id == correctAnswerId
+        colorAnswers(selectedAnswer: answerButton, isCorrect: isCorrect)
+
+        isCorrectAnswer = isCorrect
+    }
+
+    private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {
+        selectedAnswer.backgroundColor = isCorrect ? .correct : .incorrect
+        guard isCorrect else {
+            stackView
+                .subviews
+                .compactMap { $0 as? IdentifiableButton }
+                .filter { $0.id == correctAnswerId }
+                .forEach { $0.backgroundColor = .correct }
+            return
+        }
+    }
+
+}
+
+extension QuestionView: ConstructViewsProtocol {
+
+    func buildViews() {
+        createViews()
+        styleViews()
+        defineLayoutForViews()
+    }
+
+    func createViews() {
+        questionLabel = UILabel()
+        addSubview(questionLabel)
+
+        stackView = UIStackView()
+        addSubview(stackView)
+    }
+
+    func styleViews() {
+        questionLabel.font = UIFont.systemFont(ofSize: 24, weight: UIFont.Weight.bold)
+        questionLabel.textColor = .white
+        questionLabel.numberOfLines = 0
+
+        stackView.axis = .vertical
+        stackView.spacing = 15
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+    }
+
+    func defineLayoutForViews() {
+        questionLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(margins)
+            $0.leading.trailing.equalToSuperview().inset(questionInsets)
+        }
+
+        stackView.snp.makeConstraints {
+            $0.top.equalTo(questionLabel.snp.bottom).offset(buttonTopOffset)
+            $0.leading.trailing.equalToSuperview().inset(margins)
+        }
+    }
+
+}

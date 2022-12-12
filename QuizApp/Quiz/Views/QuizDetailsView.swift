@@ -16,6 +16,13 @@ class QuizDetailsView: UIView {
     private var startButton: UIButton!
     private var stackView: UIStackView!
 
+    var startButtonTapped: AnyPublisher<Void, Never> {
+        startButton
+            .tap
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
