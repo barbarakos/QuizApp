@@ -66,7 +66,7 @@ class AppRouter: AppRouterProtocol {
 
         navigationController.pushViewController(vc, animated: false)
     }
-    
+
     private func editNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
