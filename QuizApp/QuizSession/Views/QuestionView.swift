@@ -31,6 +31,7 @@ class QuestionView: UIView {
         answers = question.answers
         correctAnswerId = question.correctAnswerId
         questionLabel.text = question.question
+        cancellables.removeAll()
         setAnswerButtons()
     }
 
@@ -38,16 +39,22 @@ class QuestionView: UIView {
         stackView.subviews.forEach { $0.removeFromSuperview() }
 
         answers.forEach { answer in
-            let answerButton = Button(id: answer.id)
+            let answerButton = IdentifiableButton(id: answer.id)
             let title = NSAttributedString(
                 string: answer.answer,
                 attributes: [.font: UIFont.systemFont(ofSize: 20, weight: .semibold),
                              .foregroundColor: UIColor.white]
             )
+
+            guard let answerTitleLabel = answerButton.titleLabel else { return }
+
+            answerTitleLabel.numberOfLines = 0
+            answerTitleLabel.lineBreakMode = .byWordWrapping
             answerButton.setAttributedTitle(title, for: .normal)
-            answerButton.titleLabel?.numberOfLines = 0
             answerButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.leading
-            answerButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 0)
+            var config = IdentifiableButton.Configuration.plain()
+            config.contentInsets  = NSDirectionalEdgeInsets(top: 25, leading: 25, bottom: 25, trailing: 25)
+            answerButton.configuration = config
             answerButton.layer.cornerRadius = 30
             answerButton.backgroundColor = .white.withAlphaComponent(0.3)
 
@@ -64,31 +71,29 @@ class QuestionView: UIView {
         }
     }
 
-    private func answerButtonPressed(_ answerButton: Button) {
+    private func answerButtonPressed(_ answerButton: IdentifiableButton) {
         stackView.subviews.forEach { button in
-            guard let button = button as? Button else { return }
+            guard let button = button as? IdentifiableButton else { return }
 
             button.isEnabled = false
         }
 
         let isCorrect = answerButton.id == correctAnswerId
-        answerButton.backgroundColor = isCorrect ? .correct : .incorrect
-
-        if !isCorrect {
-            colorCorrectAnswer()
-        }
+        colorAnswers(selectedAnswer: answerButton, isCorrect: isCorrect)
 
         isCorrectAnswer = isCorrect
     }
 
-    private func colorCorrectAnswer() {
-        stackView
-            .subviews
-            .forEach { button in
-                guard let button = button as? Button, button.id == correctAnswerId else { return }
-
-                button.backgroundColor = .correct
-            }
+    private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {
+        selectedAnswer.backgroundColor = isCorrect ? .correct : .incorrect
+        guard isCorrect else {
+            stackView
+                .subviews
+                .compactMap { $0 as? IdentifiableButton }
+                .filter { $0.id == correctAnswerId }
+                .forEach { $0.backgroundColor = .correct }
+            return
+        }
     }
 
 }

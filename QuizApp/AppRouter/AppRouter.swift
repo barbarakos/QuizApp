@@ -66,7 +66,7 @@ class AppRouter: AppRouterProtocol {
 
         navigationController.pushViewController(vc, animated: false)
     }
-    
+
     private func editNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -76,8 +76,8 @@ class AppRouter: AppRouterProtocol {
         navigationController.navigationBar.tintColor = .white
     }
 
-    func showQuizResult(numOfCorrectQuestions: Int, numOfQuestions: Int) {
-        let vc = Container.quizResultViewController((numOfCorrectQuestions, numOfQuestions))
+    func showQuizResult(result: Result) {
+        let vc = Container.quizResultViewController(result)
 
         navigationController.setViewControllers([vc], animated: false)
     }

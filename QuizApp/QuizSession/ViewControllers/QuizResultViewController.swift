@@ -27,6 +27,16 @@ class QuizResultViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindViews()
+    }
+
+    private func bindViews() {
+        finishQuizButton
+            .tap
+            .sink { [weak self] _ in
+                self?.viewModel.finishQuiz()
+            }
+            .store(in: &cancellables)
     }
 
 }
@@ -66,12 +76,6 @@ extension QuizResultViewController: ConstructViewsProtocol {
         finishQuizButton.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: UIFont.Weight.bold)
         finishQuizButton.layer.cornerRadius = 25
         finishQuizButton.backgroundColor = .white
-        finishQuizButton
-            .tap
-            .sink { [weak self] _ in
-                self?.viewModel.finishQuiz()
-            }
-            .store(in: &cancellables)
     }
 
     func defineLayoutForViews() {
