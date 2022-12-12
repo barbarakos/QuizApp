@@ -161,7 +161,7 @@ extension QuizSessionViewController {
 
                 self.colorProgressViews(isCorrect: isCorrect)
                 if isCorrect {
-                    self.numOfCorrectQuestions+=1
+                    self.numOfCorrectQuestions += 1
                 }
                 self.nextQuestion()
             }
