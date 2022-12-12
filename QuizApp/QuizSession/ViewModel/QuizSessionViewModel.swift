@@ -35,22 +35,36 @@ class QuizSessionViewModel {
         }
     }
 
-    func nextQuestion() {
-        currentQuestion = questions[currentQuestion.index+1]
+    func nextQuestion(numOfCorrectQuestions: Int) {
+        if currentQuestion.index+1 < questions.count {
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
+
+                self.currentQuestion = self.questions[self.currentQuestion.index+1]
+            }
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
+
+                self.endQuiz(numOfCorrectQuestions: numOfCorrectQuestions)
+                self.goToQuizResult(numOfCorrectQuestions: numOfCorrectQuestions)
+            }
+        }
     }
 
-    func endQuiz(numberOfCorrectQuestions: Int) {
+    func endQuiz(numOfCorrectQuestions: Int) {
         Task {
             do {
-                try await useCase.endQuiz(sessionId: sessionId, numberOfCorrectQuestions: numberOfCorrectQuestions)
+                try await useCase.endQuiz(sessionId: sessionId, numberOfCorrectQuestions: numOfCorrectQuestions)
             } catch {
                 print(error)
             }
         }
     }
 
-    func goToQuizResult(numberOfCorrectQuestions: Int) {
-        router.showQuizResult(numOfCorrectQuestions: numberOfCorrectQuestions, numOfQuestions: questions.count)
+    func goToQuizResult(numOfCorrectQuestions: Int) {
+        router.showQuizResult(numOfCorrectQuestions: numOfCorrectQuestions, numOfQuestions: questions.count)
     }
 
 }

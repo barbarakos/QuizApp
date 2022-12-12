@@ -39,19 +39,7 @@ class QuizSessionViewController: UIViewController {
     }
 
     func nextQuestion() {
-        if viewModel.currentQuestion.index+1 < viewModel.questions.count {
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                self?.viewModel.nextQuestion()
-            }
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-                guard let self = self else { return }
-
-                self.viewModel.endQuiz(numberOfCorrectQuestions: self.numOfCorrectQuestions)
-                self.viewModel.goToQuizResult(numberOfCorrectQuestions: self.numOfCorrectQuestions)
-            }
-        }
+        viewModel.nextQuestion(numOfCorrectQuestions: numOfCorrectQuestions)
     }
 
     func bindViewModel() {
@@ -154,8 +142,9 @@ extension QuizSessionViewController {
     func bindViews() {
         questionView
             .$isCorrectAnswer
-            .sink {  [weak self] isCorrect in
-                guard let self = self, let isCorrect = isCorrect else { return }
+            .compactMap { $0 }
+            .sink { [weak self] isCorrect in
+                guard let self = self else { return }
 
                 self.colorProgressViews(isCorrect: isCorrect)
                 if isCorrect {
