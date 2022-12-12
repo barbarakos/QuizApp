@@ -35,7 +35,16 @@ class QuizSessionViewModel {
     }
 
     func nextQuestion() {
-        currentQuestion = questions[currentQuestion.index+1]
+        if currentQuestion.index+1 < questions.count {
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+                guard let self = self else { return }
+
+                self.currentQuestion = self.questions[self.currentQuestion.index+1]
+            }
+        } else {
+            // show quiz results
+        }
     }
 
 }
