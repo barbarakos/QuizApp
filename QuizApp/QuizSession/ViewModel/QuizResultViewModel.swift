@@ -5,10 +5,10 @@ class QuizResultViewModel {
 
     private let router: AppRouterProtocol
 
-    init(router: AppRouterProtocol, numberOfCorrectQuestions: Int, numberOfQuestions: Int) {
+    init(router: AppRouterProtocol, result: Result) {
         self.router = router
-        self.numberOfCorrectQuestions = numberOfCorrectQuestions
-        self.numberOfQuestions = numberOfQuestions
+        self.numberOfCorrectQuestions = result.numOfCorrectQuestions
+        self.numberOfQuestions = result.numOfQuestions
     }
 
     func finishQuiz() {

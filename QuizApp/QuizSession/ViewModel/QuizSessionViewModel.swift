@@ -64,7 +64,7 @@ class QuizSessionViewModel {
     }
 
     func goToQuizResult(numOfCorrectQuestions: Int) {
-        router.showQuizResult(numOfCorrectQuestions: numOfCorrectQuestions, numOfQuestions: questions.count)
+        router.showQuizResult(result: Result(numOfCorrectQuestions: numOfCorrectQuestions, numOfQuestions: questions.count))
     }
 
 }
