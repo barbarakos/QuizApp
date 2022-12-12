@@ -14,7 +14,7 @@ class QuestionView: UIView {
     private var questionLabel: UILabel!
     private var stackView: UIStackView!
 
-    @Published private var isCorrectAnswer: Bool = false
+    @Published var isCorrectAnswer: Bool?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -66,6 +66,7 @@ class QuestionView: UIView {
                     let isCorrect = answer.id == self.correctAnswerId
                     self.colorAnswers(selectedAnswer: answerButton, isCorrect: isCorrect)
 
+                    self.isCorrectAnswer = isCorrect
                     // update progress bar views color and go to next question
                 }
                 .store(in: &cancellables)
@@ -75,13 +76,13 @@ class QuestionView: UIView {
     }
 
     private func colorAnswers(selectedAnswer: IdentifiableButton, isCorrect: Bool) {
-        selectedAnswer.backgroundColor = isCorrect ? .green : .red
+        selectedAnswer.backgroundColor = isCorrect ? .correct : .incorrect
         guard isCorrect else {
             stackView
                 .subviews
                 .compactMap { $0 as? IdentifiableButton }
                 .filter { $0.id == correctAnswerId }
-                .forEach { $0.backgroundColor = .green }
+                .forEach { $0.backgroundColor = .correct }
             return
         }
     }

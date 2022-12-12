@@ -33,6 +33,7 @@ class QuizSessionViewController: UIViewController {
         super.viewDidLoad()
 
         buildViews()
+        bindViews()
         bindViewModel()
     }
 
@@ -136,6 +137,24 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
 // MARK: ProgressBar functions
 extension QuizSessionViewController {
+
+    func bindViews() {
+        questionView
+            .$isCorrectAnswer
+            .compactMap { $0 }
+            .sink { [weak self] isCorrect in
+                guard let self = self else { return }
+
+                self.colorProgressViews(isCorrect: isCorrect)
+                self.nextQuestion()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func colorProgressViews(isCorrect: Bool) {
+        let progressView = progressBarViews[viewModel.currentQuestion.index]
+        progressView.backgroundColor = isCorrect ? .correct : .incorrect
+    }
 
     private func setProgressViewColor(question: QuestionModel) {
         progressBarViews[question.index].backgroundColor = .white
