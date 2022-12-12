@@ -141,8 +141,9 @@ extension QuizSessionViewController {
     func bindViews() {
         questionView
             .$isCorrectAnswer
+            .compactMap { $0 }
             .sink { [weak self] isCorrect in
-                guard let self = self, let isCorrect = isCorrect else { return }
+                guard let self = self else { return }
 
                 self.colorProgressViews(isCorrect: isCorrect)
                 self.nextQuestion()
