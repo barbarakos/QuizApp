@@ -61,6 +61,12 @@ class AppRouter: AppRouterProtocol {
         navigationController.popViewController(animated: false)
     }
 
+    func showQuizSession(quiz: QuizModel) {
+        let vc = Container.quizSessionViewController(quiz)
+
+        navigationController.pushViewController(vc, animated: false)
+    }
+    
     private func editNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()

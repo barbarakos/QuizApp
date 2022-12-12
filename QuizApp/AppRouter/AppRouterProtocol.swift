@@ -14,4 +14,6 @@ protocol AppRouterProtocol {
 
     func closeLeaderboard()
 
+    func showQuizSession(quiz: QuizModel)
+
 }
