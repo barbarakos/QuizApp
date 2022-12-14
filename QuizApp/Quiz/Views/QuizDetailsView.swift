@@ -4,7 +4,7 @@ import SnapKit
 
 class QuizDetailsView: UIView {
 
-    private let imageHeight = 300
+    private let imageHeight = 250
     private let startButtonHeight = 45
     private let insetFromSuperview = 30
 

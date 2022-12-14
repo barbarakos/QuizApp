@@ -4,13 +4,14 @@ import SnapKit
 
 class QuizDetailsViewController: UIViewController {
 
-    private let insetFromSuperview = 40
+    private let insetFromSuperview = 20
+    private let topOffset = 10
 
     private var cancellables = Set<AnyCancellable>()
 
     private var quizDetailsViewModel: QuizDetailsViewModel!
-    private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
+    private var gradientLayer: BackgroundGradient!
     private var quizDetailsView: QuizDetailsView!
     private var leaderboardButton: UIButton!
     private var scrollView: UIScrollView!
@@ -32,6 +33,14 @@ class QuizDetailsViewController: UIViewController {
         buildViews()
         bindViewModel()
         bindViews()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        guard let gradient = gradientLayer else { return }
+
+        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     func showLeaderboard() {
@@ -78,31 +87,23 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
         scrollView = UIScrollView()
         view.addSubview(scrollView)
 
-        contentView = UIView()
-        scrollView.addSubview(contentView)
-
         titleLabel = UILabel()
-        contentView.addSubview(titleLabel)
 
         leaderboardButton = UIButton()
-        contentView.addSubview(leaderboardButton)
+        scrollView.addSubview(leaderboardButton)
 
         quizDetailsView = QuizDetailsView()
-        contentView.addSubview(quizDetailsView)
+        scrollView.addSubview(quizDetailsView)
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
+        gradientLayer.setBackground()
 
         titleLabel.font = UIFont.systemFont(ofSize: 28, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
@@ -120,30 +121,23 @@ extension QuizDetailsViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
+        navigationItem.titleView = titleLabel
+
+        leaderboardButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.trailing.leading.equalToSuperview().inset(insetFromSuperview)
+        }
 
         scrollView.snp.makeConstraints {
-            $0.top.leading.bottom.trailing.equalToSuperview()
-        }
-
-        contentView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.leading.bottom.trailing.equalToSuperview()
-        }
-
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(-40)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(insetFromSuperview)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
+            $0.bottom.equalToSuperview()
         }
 
         quizDetailsView.snp.makeConstraints {
-            $0.top.equalTo(leaderboardButton.snp.bottom).offset(insetFromSuperview)
+            $0.top.equalTo(leaderboardButton.snp.bottom).offset(topOffset)
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.bottom.equalToSuperview().inset(insetFromSuperview)
-        }
-
-        leaderboardButton.snp.makeConstraints {
-            $0.top.trailing.leading.equalToSuperview().inset(insetFromSuperview)
+            $0.bottom.leading.trailing.equalToSuperview().inset(insetFromSuperview)
         }
     }
 

@@ -11,7 +11,7 @@ class LeaderboardViewController: UIViewController {
     private var leaderboard: [LeaderboardModel] = []
 
     private var leaderboardViewModel: LeaderboardViewModel!
-    private var gradientLayer: CAGradientLayer!
+    private var gradientLayer: BackgroundGradient!
     private var titleLabel: UILabel!
     private var playerLabel: UILabel!
     private var pointsLabel: UILabel!
@@ -34,6 +34,14 @@ class LeaderboardViewController: UIViewController {
         bindViewModel()
         configureTableView()
         setNavigationBar()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        guard let gradient = gradientLayer else { return }
+
+        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     private func bindViewModel() {
@@ -73,8 +81,7 @@ extension LeaderboardViewController: ConstructViewsProtocol {
     func createViews() {
         titleLabel = UILabel()
 
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
         playerLabel = UILabel()
@@ -88,10 +95,7 @@ extension LeaderboardViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
+        gradientLayer.setBackground()
 
         titleLabel.text = "Leaderboard"
         titleLabel.font = .systemFont(ofSize: 25, weight: UIFont.Weight.bold)
@@ -114,7 +118,6 @@ extension LeaderboardViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
 
         playerLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(topInset)

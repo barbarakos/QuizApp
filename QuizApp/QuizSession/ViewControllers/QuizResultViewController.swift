@@ -9,7 +9,7 @@ class QuizResultViewController: UIViewController {
 
     private var cancellables = Set<AnyCancellable>()
 
-    private var gradientLayer: CAGradientLayer!
+    private var gradientLayer: BackgroundGradient!
     private var resultLabel: UILabel!
     private var finishQuizButton: UIButton!
 
@@ -28,6 +28,14 @@ class QuizResultViewController: UIViewController {
 
         buildViews()
         bindViews()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        guard let gradient = gradientLayer else { return }
+
+        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     private func bindViews() {
@@ -50,8 +58,7 @@ extension QuizResultViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
         resultLabel = UILabel()
@@ -62,10 +69,7 @@ extension QuizResultViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
+        gradientLayer.setBackground()
 
         resultLabel.font = UIFont.systemFont(ofSize: 100, weight: .bold)
         resultLabel.text = "\(viewModel.numberOfCorrectQuestions)/\(viewModel.numberOfQuestions)"
@@ -80,7 +84,6 @@ extension QuizResultViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
 
         resultLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()

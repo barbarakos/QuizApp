@@ -110,11 +110,8 @@ extension QuestionView: ConstructViewsProtocol {
         questionLabel = UILabel()
         addSubview(questionLabel)
 
-        scrollView = UIScrollView()
-        addSubview(scrollView)
-
         stackView = UIStackView()
-        scrollView.addSubview(stackView)
+        addSubview(stackView)
     }
 
     func styleViews() {
@@ -134,14 +131,9 @@ extension QuestionView: ConstructViewsProtocol {
             $0.leading.trailing.equalToSuperview().inset(questionInsets)
         }
 
-        scrollView.snp.makeConstraints {
+        stackView.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom).offset(buttonTopOffset)
             $0.leading.trailing.bottom.equalToSuperview().inset(margins)
-        }
-
-        stackView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-            $0.centerX.equalToSuperview()
         }
     }
 
