@@ -142,6 +142,10 @@ extension Container {
         LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
     }
 
+    static let leaderboardView = ParameterFactory<Int, UIHostingController> { quizId in
+        UIHostingController(rootView: LeaderboardView(viewModel: leaderboardViewModel(quizId))) as UIHostingController
+    }
+
 }
 
 // MARK: QuizSession

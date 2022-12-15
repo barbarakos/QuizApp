@@ -1,7 +1,7 @@
 import Combine
 import UIKit
 
-class LeaderboardViewModel {
+class LeaderboardViewModel: ObservableObject {
 
     @Published var leaderboard: [LeaderboardModel] = []
 
@@ -23,7 +23,11 @@ class LeaderboardViewModel {
                 let fetched = try await leaderboardUseCase.fetchLeaderboard(quizId: quizId)
 
                 await MainActor.run {
-                    leaderboard = fetched.map { LeaderboardModel(from: $0) }
+                    leaderboard = fetched
+                        .enumerated()
+                        .map { index, model in
+                            LeaderboardModel(from: model, index: index)
+                        }
                 }
             } catch {
                 print(error)

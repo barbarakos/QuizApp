@@ -34,7 +34,7 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showLeaderboard(quizId: Int) {
-        let vc = Container.leaderboardViewController(quizId)
+        let vc = Container.leaderboardView(quizId)
 
         navigationController.pushViewController(vc, animated: true)
     }

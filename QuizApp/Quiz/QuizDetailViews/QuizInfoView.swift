@@ -31,10 +31,10 @@ struct QuizInfoView: View {
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
+                    .padding([.leading, .trailing], 30)
                     .frame(width: 300, height: 300)
                     .cornerRadius(20)
                     .clipped()
-                    .padding([.leading, .trailing], 30)
 
                 Button("Start Quiz") {
                     print("Tapped start button!")
