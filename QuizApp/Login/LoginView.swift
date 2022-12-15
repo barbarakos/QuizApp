@@ -10,10 +10,6 @@ struct LoginView: View {
 
     private var viewModel: LoginViewModel!
 
-    init(viewModel: LoginViewModel) {
-        self.viewModel = viewModel
-    }
-
     var body: some View {
         NavigationView {
             ZStack {
