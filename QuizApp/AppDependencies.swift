@@ -1,4 +1,5 @@
 import Factory
+import SwiftUI
 import UIKit
 
 extension Container {
@@ -65,6 +66,10 @@ extension Container {
         UserViewController(viewModel: userViewModel()) as UserViewController
     }
 
+    static let userView = Factory {
+        UserView(viewModel: userViewModel()) as UserView
+    }
+
 }
 
 // MARK: Quiz
@@ -90,6 +95,10 @@ extension Container {
         QuizViewController(viewModel: quizViewModel()) as QuizViewController
     }
 
+    static let quizListView = Factory {
+        QuizListView(viewModel: quizViewModel()) as QuizListView
+    }
+
 }
 
 // MARK: QuizDetails
@@ -101,6 +110,10 @@ extension Container {
 
     static let quizDetailsViewController = ParameterFactory<QuizModel, QuizDetailsViewController> { quiz in
         QuizDetailsViewController(viewModel: quizDetailsViewModel(quiz)) as QuizDetailsViewController
+    }
+
+    static let quizDetailView = ParameterFactory<QuizModel, UIHostingController> { quiz in
+        UIHostingController(rootView: QuizDetailView(viewModel: quizDetailsViewModel(quiz))) as UIHostingController
     }
 
 }

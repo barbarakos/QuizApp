@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 import Factory
 
@@ -20,33 +21,14 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showTabBarControllers() {
-        let userVC = Container.userViewController()
-        userVC.tabBarItem = UITabBarItem(
-            title: "Settings",
-            image: UIImage(systemName: "gearshape"),
-            selectedImage: UIImage(systemName: "gearshape.fill"))
-
-        let searchVC = Container.searchViewController()
-        searchVC.tabBarItem = UITabBarItem(
-            title: "Search",
-            image: UIImage(systemName: "magnifyingglass"),
-            selectedImage: UIImage(systemName: "magnifyingglass"))
-
-        let quizVC = Container.quizViewController()
-        quizVC.tabBarItem = UITabBarItem(
-            title: "Quiz",
-            image: UIImage(systemName: "stopwatch"),
-            selectedImage: UIImage(systemName: "stopwatch.fill"))
-
-        let viewControllers: [UIViewController] = [quizVC, searchVC, userVC]
-        let tabBarController = TabBarController(viewControllers)
-        tabBarController.selectedViewController = viewControllers[0]
-
-        navigationController.setViewControllers([tabBarController], animated: true)
+        let vc = UIHostingController(rootView: TabBarView(
+            quizListView: Container.quizListView(),
+            userView: Container.userView()))
+        navigationController.setViewControllers([vc], animated: true)
     }
 
     func showQuizDetails(quiz: QuizModel) {
-        let vc = Container.quizDetailsViewController(quiz)
+        let vc = Container.quizDetailView(quiz)
 
         navigationController.pushViewController(vc, animated: false)
     }

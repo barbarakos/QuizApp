@@ -1,6 +1,7 @@
 import Combine
+import SwiftUI
 
-class QuizViewModel {
+class QuizViewModel: ObservableObject {
 
     @Published var quizError: QuizError?
     @Published var quizzes: [QuizModel] = []
