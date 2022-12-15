@@ -1,7 +1,6 @@
 import SwiftUI
 import UIKit
 
-
 enum CategorySection: String, CaseIterable {
 
     case geography = "Geography"

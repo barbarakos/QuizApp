@@ -43,7 +43,7 @@ class UserViewController: UIViewController {
     }
 
     func changeName() {
-        guard let name = nameTextField.text else { return }
+//        guard let name = nameTextField.text else { return }
 
 //        userViewModel.changeName(name: name)
     }

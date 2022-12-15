@@ -87,7 +87,8 @@ struct QuizListView: View {
     }
 
     func setSegmentedControlAppearance() {
-        UISegmentedControl.appearance().selectedSegmentTintColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1)
+        UISegmentedControl.appearance()
+            .selectedSegmentTintColor = UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1)
         UISegmentedControl.appearance().backgroundColor = UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 0.5)
         UISegmentedControl.appearance().apportionsSegmentWidthsByContent = true
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)

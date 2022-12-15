@@ -1,4 +1,5 @@
 import Factory
+import SwiftUI
 import UIKit
 
 extension Container {
@@ -109,6 +110,10 @@ extension Container {
 
     static let quizDetailsViewController = ParameterFactory<QuizModel, QuizDetailsViewController> { quiz in
         QuizDetailsViewController(viewModel: quizDetailsViewModel(quiz)) as QuizDetailsViewController
+    }
+
+    static let quizDetailView = ParameterFactory<QuizModel, UIHostingController> { quiz in
+        UIHostingController(rootView: QuizDetailView(viewModel: quizDetailsViewModel(quiz))) as UIHostingController
     }
 
 }
