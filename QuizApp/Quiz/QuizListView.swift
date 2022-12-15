@@ -17,6 +17,12 @@ struct QuizListView: View {
                 .quizAppGradient
                 .ignoresSafeArea()
             ScrollView {
+                Text("Pop Quiz")
+                    .foregroundColor(.white)
+                    .fontWeight(.bold)
+                    .font(.title)
+                    .padding(.top, -30)
+
                 VStack(alignment: .leading, spacing: 20) {
                     Picker("", selection: $segmentationSelection) {
                         let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
@@ -66,10 +72,9 @@ struct QuizListView: View {
                 .onAppear {
                     getQuizzes()
                 }
-                .padding()
+                .padding(.horizontal, 10)
             }
         }
-
     }
 
     func getQuizzes() {
