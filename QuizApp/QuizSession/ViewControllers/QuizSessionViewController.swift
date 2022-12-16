@@ -40,9 +40,7 @@ class QuizSessionViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        guard let gradient = gradientLayer else { return }
-
-        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     func nextQuestion() {
@@ -98,7 +96,7 @@ extension QuizSessionViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.setBackground()
+        navigationItem.titleView = titleLabel
 
         titleLabel.font = UIFont.systemFont(ofSize: 28, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
@@ -115,7 +113,6 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        navigationItem.titleView = titleLabel
 
         scrollView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)

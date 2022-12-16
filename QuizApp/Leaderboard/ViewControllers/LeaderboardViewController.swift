@@ -39,9 +39,7 @@ class LeaderboardViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        guard let gradient = gradientLayer else { return }
-
-        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     private func bindViewModel() {
@@ -95,8 +93,6 @@ extension LeaderboardViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.setBackground()
-
         titleLabel.text = "Leaderboard"
         titleLabel.font = .systemFont(ofSize: 25, weight: UIFont.Weight.bold)
         titleLabel.textColor = .white

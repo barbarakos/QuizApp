@@ -46,9 +46,7 @@ class SearchViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        guard let gradient = gradientLayer else { return }
-
-        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     func handleNoQuizzesAvailable(error: QuizError) {
@@ -128,8 +126,6 @@ extension SearchViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.setBackground()
-
         searchBar.textField.delegate = self
 
         collectionView.backgroundColor = .clear
