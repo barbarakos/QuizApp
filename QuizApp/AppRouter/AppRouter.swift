@@ -44,7 +44,7 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showQuizSession(quiz: QuizModel) {
-        let vc = Container.quizSessionViewController(quiz)
+        let vc = Container.quizSessionView(quiz)
 
         navigationController.pushViewController(vc, animated: false)
     }

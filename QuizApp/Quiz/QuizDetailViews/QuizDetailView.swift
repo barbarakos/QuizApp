@@ -20,7 +20,9 @@ struct QuizDetailView: View {
 
                         HStack {
                             Spacer()
-                            Button(action: { viewModel.showLeaderboard() }) {
+                            Button {
+                                viewModel.showLeaderboard()
+                            } label: {
                                 Text("Leaderboard")
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
@@ -31,8 +33,10 @@ struct QuizDetailView: View {
                         }
                         .padding(.top, 30)
 
-                        QuizInfoView(quiz: viewModel.quiz)
-                            .padding(.horizontal, 40)
+                        QuizInfoView(quiz: viewModel.quiz) {
+                            viewModel.startQuiz()
+                        }
+                        .padding(.horizontal, 40)
                     }
                 }
             }

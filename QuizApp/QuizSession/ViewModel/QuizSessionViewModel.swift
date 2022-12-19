@@ -1,7 +1,8 @@
 import Combine
+import SwiftUI
 import UIKit
 
-class QuizSessionViewModel {
+class QuizSessionViewModel: ObservableObject {
 
     @Published var currentQuestion: QuestionModel!
     var quiz: QuizModel
