@@ -25,7 +25,7 @@ struct QuizListView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .cornerRadius(10)
-                
+
                 let allCategories = CategorySection.allCases.map { $0.rawValue }
                 if allCategories.contains(segmentationSelection) {
                     let section = CategorySection(rawValue: segmentationSelection)!
