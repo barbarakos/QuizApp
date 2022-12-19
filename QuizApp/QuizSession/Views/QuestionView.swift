@@ -13,6 +13,7 @@ class QuestionView: UIView {
     private var correctAnswerId: Int!
     private var questionLabel: UILabel!
     private var stackView: UIStackView!
+    private var scrollView: UIScrollView!
 
     @Published var isCorrectAnswer: Bool?
 
@@ -132,7 +133,7 @@ extension QuestionView: ConstructViewsProtocol {
 
         stackView.snp.makeConstraints {
             $0.top.equalTo(questionLabel.snp.bottom).offset(buttonTopOffset)
-            $0.leading.trailing.equalToSuperview().inset(margins)
+            $0.leading.trailing.bottom.equalToSuperview().inset(margins)
         }
     }
 

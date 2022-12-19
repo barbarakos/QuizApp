@@ -4,14 +4,13 @@ import SnapKit
 
 class QuizSessionViewController: UIViewController {
 
-    private let titleInset = 40
-    private let margins = 20
-    private let questionInsets = 10
+    private let margins = 10
 
     private var cancellables = Set<AnyCancellable>()
 
     private var viewModel: QuizSessionViewModel!
-    private var gradientLayer: CAGradientLayer!
+    private var gradientLayer: BackgroundGradient!
+    private var scrollView: UIScrollView!
     private var titleLabel: UILabel!
     private var questionNumberLabel: UILabel!
     private var stackView: UIStackView!
@@ -36,6 +35,12 @@ class QuizSessionViewController: UIViewController {
         buildViews()
         bindViews()
         bindViewModel()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     func nextQuestion() {
@@ -70,30 +75,28 @@ extension QuizSessionViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        titleLabel = UILabel()
+
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
-        titleLabel = UILabel()
-        view.addSubview(titleLabel)
+        scrollView = UIScrollView()
+        view.addSubview(scrollView)
 
         questionNumberLabel = UILabel()
-        view.addSubview(questionNumberLabel)
+        scrollView.addSubview(questionNumberLabel)
 
         stackView = UIStackView()
-        view.addSubview(stackView)
+        scrollView.addSubview(stackView)
 
         setProgressStackView()
 
         questionView = QuestionView()
-        view.addSubview(questionView)
+        scrollView.addSubview(questionView)
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
+        navigationItem.titleView = titleLabel
 
         titleLabel.font = UIFont.systemFont(ofSize: 28, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
@@ -110,16 +113,14 @@ extension QuizSessionViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
 
-        titleLabel.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(-titleInset)
+        scrollView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
 
         questionNumberLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(margins)
-            $0.top.equalTo(titleLabel.snp.bottom).offset(margins)
+            $0.top.equalToSuperview().offset(margins)
         }
 
         stackView.snp.makeConstraints {
@@ -129,8 +130,9 @@ extension QuizSessionViewController: ConstructViewsProtocol {
         }
 
         questionView.snp.makeConstraints {
-            $0.top.equalTo(stackView.snp.bottom).offset(50)
-            $0.leading.trailing.bottom.equalToSuperview().inset(questionInsets)
+            $0.top.equalTo(stackView.snp.bottom).offset(margins)
+            $0.leading.trailing.bottom.equalToSuperview().inset(margins)
+            $0.centerX.equalToSuperview()
         }
     }
 
