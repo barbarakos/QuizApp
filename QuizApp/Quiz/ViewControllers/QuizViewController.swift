@@ -44,9 +44,7 @@ class QuizViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
 
-        guard let gradient = gradientLayer else { return }
-
-        gradient.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     @objc func didSelectCategory() {
@@ -125,8 +123,6 @@ extension QuizViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.setBackground()
-
         titleLabel.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
         titleLabel.textColor = .white

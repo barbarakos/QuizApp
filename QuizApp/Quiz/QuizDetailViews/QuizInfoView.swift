@@ -32,10 +32,9 @@ struct QuizInfoView: View {
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 300, height: 300)
+                    .frame(maxWidth: 280, minHeight: 300)
                     .cornerRadius(20)
                     .clipped()
-                    .padding([.leading, .trailing], 30)
 
                 Button("Start Quiz") {
                     startQuiz()
@@ -49,7 +48,7 @@ struct QuizInfoView: View {
                 .foregroundColor(Color(red: 0.453, green: 0.308, blue: 0.637))
 
             }
-            .padding()
+            .padding(.horizontal, 15)
         }
     }
 

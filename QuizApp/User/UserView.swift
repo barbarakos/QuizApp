@@ -5,10 +5,6 @@ struct UserView: View {
 
     @ObservedObject var viewModel: UserViewModel
 
-    init(viewModel: UserViewModel) {
-        self.viewModel = viewModel
-    }
-
     var body: some View {
         ZStack {
             LinearGradient
