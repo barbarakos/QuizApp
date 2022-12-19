@@ -11,12 +11,6 @@ struct LeaderboardView: View {
                 .quizAppGradient
                 .ignoresSafeArea()
             VStack {
-                Text("Leaderboard")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.top, -30)
-
                 HStack {
                     Text("Player")
                         .font(.system(size: 18))
