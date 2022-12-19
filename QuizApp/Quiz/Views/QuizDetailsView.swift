@@ -4,7 +4,7 @@ import SnapKit
 
 class QuizDetailsView: UIView {
 
-    private let imageHeight = 300
+    private let imageHeight = 250
     private let startButtonHeight = 45
     private let insetFromSuperview = 30
 
@@ -15,6 +15,13 @@ class QuizDetailsView: UIView {
     private var descriptionLabel: UILabel!
     private var startButton: UIButton!
     private var stackView: UIStackView!
+
+    var startButtonTapped: AnyPublisher<Void, Never> {
+        startButton
+            .tap
+            .map { _ in }
+            .eraseToAnyPublisher()
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -103,6 +110,7 @@ extension QuizDetailsView: ConstructViewsProtocol {
     func defineLayoutForViews() {
         imageView.snp.makeConstraints {
             $0.height.equalTo(imageHeight)
+            $0.centerX.equalToSuperview()
         }
 
         startButton.snp.makeConstraints {

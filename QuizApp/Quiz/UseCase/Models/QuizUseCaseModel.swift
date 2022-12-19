@@ -6,6 +6,7 @@ struct QuizUseCaseModel {
     let difficulty: DifficultyUseCaseModel
     let imageUrl: String
     let name: String
+    let numberOfQuestions: Int
 
 }
 
@@ -18,6 +19,7 @@ extension QuizUseCaseModel {
         difficulty = DifficultyUseCaseModel(from: model.difficulty)
         imageUrl = model.imageUrl
         name = model.name
+        numberOfQuestions = model.numberOfQuestions
     }
 
 }
