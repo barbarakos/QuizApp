@@ -12,24 +12,22 @@ struct QuizListView: View {
     }
 
     var body: some View {
-        ZStack {
-            LinearGradient
-                .quizAppGradient
-                .ignoresSafeArea()
+        VStack {
+            Picker("", selection: $segmentationSelection) {
+                let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
+                ForEach(items, id: \.self) { option in
+                    Text(option)
+                }
+            }
+            .onChange(of: segmentationSelection) { _ in
+                getQuizzes()
+            }
+            .padding(10)
+            .pickerStyle(SegmentedPickerStyle())
+            .cornerRadius(10)
+
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    Picker("", selection: $segmentationSelection) {
-                        let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
-                        ForEach(items, id: \.self) { option in
-                            Text(option)
-                        }
-                    }
-                    .onChange(of: segmentationSelection) { _ in
-                        getQuizzes()
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .cornerRadius(10)
-
                     let allCategories = CategorySection.allCases.map { $0.rawValue }
                     if allCategories.contains(segmentationSelection) {
                         let section = CategorySection(rawValue: segmentationSelection)!
@@ -63,12 +61,13 @@ struct QuizListView: View {
                         }
                     }
                 }
-                .onAppear {
-                    getQuizzes()
-                }
-                .padding(.horizontal, 10)
             }
+            .onAppear {
+                getQuizzes()
+            }
+            .padding(.horizontal, 10)
         }
+        .background(LinearGradient.quizAppGradient)
     }
 
     func getQuizzes() {
