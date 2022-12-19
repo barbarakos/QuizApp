@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private var quizViewModel: QuizViewModel
-    private var gradientLayer: CAGradientLayer!
+    private var gradientLayer: BackgroundGradient!
     private var titleLabel: UILabel!
     private var collectionView: UICollectionView!
     private var quizErrorView: QuizErrorView!
@@ -41,6 +41,12 @@ class SearchViewController: UIViewController {
         bindViews()
         configureCollectionView()
         quizViewModel.getAllQuizzes()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     func handleNoQuizzesAvailable(error: QuizError) {
@@ -106,8 +112,7 @@ extension SearchViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: configureLayout())
@@ -121,11 +126,6 @@ extension SearchViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
-
         searchBar.textField.delegate = self
 
         collectionView.backgroundColor = .clear
@@ -135,7 +135,6 @@ extension SearchViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
 
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(-topOffset)

@@ -16,8 +16,8 @@ class QuizViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private var quizViewModel: QuizViewModel
-    private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
+    private var gradientLayer: BackgroundGradient!
     private var categorySegmentedControl: UISegmentedControl!
     private var quizListCollectionView: UICollectionView!
     private var quizErrorView: QuizErrorView!
@@ -39,6 +39,12 @@ class QuizViewController: UIViewController {
         bindViewModel()
         configureCollectionView()
         didSelectCategory()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     @objc func didSelectCategory() {
@@ -99,8 +105,7 @@ extension QuizViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
+        gradientLayer = BackgroundGradient()
         view.layer.addSublayer(gradientLayer)
 
         titleLabel = UILabel()
@@ -118,11 +123,6 @@ extension QuizViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
-
         titleLabel.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
         titleLabel.textColor = .white
@@ -146,7 +146,6 @@ extension QuizViewController: ConstructViewsProtocol {
 
     func defineLayoutForViews() {
         gradientLayer.frame = view.bounds
-        gradientLayer.locations = [0, 1]
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()

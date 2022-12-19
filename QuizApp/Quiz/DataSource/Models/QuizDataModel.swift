@@ -6,6 +6,7 @@ struct QuizDataModel {
     let difficulty: DifficultyDataModel
     let imageUrl: String
     let name: String
+    let numberOfQuestions: Int
 
 }
 
@@ -18,6 +19,7 @@ extension QuizDataModel {
         difficulty = DifficultyDataModel(from: model.difficulty)
         imageUrl = model.imageUrl
         name = model.name
+        numberOfQuestions = model.numberOfQuestions
     }
 
 }

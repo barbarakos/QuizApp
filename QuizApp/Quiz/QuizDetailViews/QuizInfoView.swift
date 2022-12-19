@@ -34,7 +34,6 @@ struct QuizInfoView: View {
                     .frame(width: 300, height: 300)
                     .cornerRadius(20)
                     .clipped()
-                    .padding([.leading, .trailing], 30)
 
                 Button("Start Quiz") {
                     print("Tapped start button!")
@@ -48,7 +47,7 @@ struct QuizInfoView: View {
                 .foregroundColor(Color(red: 0.453, green: 0.308, blue: 0.637))
 
             }
-            .padding()
+            .padding(30)
         }
     }
 
@@ -63,7 +62,8 @@ struct QuizInfoView_Previews: PreviewProvider {
             description: "Description",
             difficulty: DifficultyModel.normal,
             imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Football_Pallo_valmiina-cropped.jpg",
-            name: "Football"))
+            name: "Football",
+        numberOfQuestions: 5))
     }
 
 }

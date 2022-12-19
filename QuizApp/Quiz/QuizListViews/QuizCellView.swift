@@ -65,7 +65,8 @@ struct QuizCellView_Previews: PreviewProvider {
             description: "description",
             difficulty: DifficultyModel.normal,
             imageUrl: "",
-            name: "Quiz Name"))
+            name: "Quiz Name",
+        numberOfQuestions: 5))
     }
 
 }
