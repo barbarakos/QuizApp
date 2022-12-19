@@ -15,4 +15,8 @@ class QuizDetailsViewModel: ObservableObject {
         router.showLeaderboard(quizId: quiz.id)
     }
 
+    func startQuiz() {
+        router.showQuizSession(quiz: quiz)
+    }
+
 }

@@ -53,7 +53,7 @@ struct LeaderboardView: View {
                                     .padding(.horizontal)
                             }
                             Divider()
-                                .overlay(.black)
+                                .overlay(.white)
                                 .frame(height: 3)
                         }
                     }

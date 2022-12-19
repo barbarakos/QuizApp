@@ -164,6 +164,27 @@ extension Container {
         QuizSessionUseCase(quizSessionDataSource: quizSessionDataSource()) as QuizSessionUseCaseProtocol
     }
 
+    static let quizSessionViewModel = ParameterFactory<QuizModel, QuizSessionViewModel> { quiz in
+        QuizSessionViewModel(
+            router: appRouter(),
+            quizSessionUseCase: quizSessionUseCase(),
+            quiz: quiz) as QuizSessionViewModel
+    }
+
+    static let quizSessionViewController = ParameterFactory<QuizModel, QuizSessionViewController> { quiz in
+        QuizSessionViewController(viewModel: quizSessionViewModel(quiz)) as QuizSessionViewController
+    }
+
+    static let quizResultViewModel = ParameterFactory<Result, QuizResultViewModel> { result in
+        QuizResultViewModel(router: appRouter(),
+                            result: result) as QuizResultViewModel
+    }
+
+    static let quizResultViewController = ParameterFactory<Result, QuizResultViewController> { result in
+        QuizResultViewController(
+            viewModel: quizResultViewModel(result)) as QuizResultViewController
+    }
+
 }
 
 // MARK: SearchController
