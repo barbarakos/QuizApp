@@ -2,11 +2,11 @@ import SwiftUI
 
 struct AnswersView: View {
 
-    @Binding var numberOfCorrectQuestions: Int
-    @Binding var answers: [AnswerModel]
-
     let correctAnswerIndex: Int
     let nextQuestion: (Int, Color) -> Void
+
+    @Binding var numberOfCorrectQuestions: Int
+    @Binding var answers: [AnswerModel]
 
     var body: some View {
         VStack(spacing: 10) {

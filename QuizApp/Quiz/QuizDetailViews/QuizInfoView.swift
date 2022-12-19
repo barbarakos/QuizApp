@@ -32,7 +32,7 @@ struct QuizInfoView: View {
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(maxWidth: 280, minHeight: 300)
+                    .frame(width: 280, height: 300)
                     .cornerRadius(20)
                     .clipped()
 
