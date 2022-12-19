@@ -12,63 +12,59 @@ struct QuizListView: View {
     }
 
     var body: some View {
-        ZStack {
-            LinearGradient
-                .quizAppGradient
-                .ignoresSafeArea()
-            ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
-                    Picker("", selection: $segmentationSelection) {
-                        let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
-                        ForEach(items, id: \.self) { option in
-                            Text(option)
-                        }
-                    }
-                    .onChange(of: segmentationSelection) { _ in
-                        getQuizzes()
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .cornerRadius(10)
-
-                    let allCategories = CategorySection.allCases.map { $0.rawValue }
-                    if allCategories.contains(segmentationSelection) {
-                        let section = CategorySection(rawValue: segmentationSelection)!
-                        Section(header: Text(section.rawValue)
-                            .sectionHeaderStyle(section)) {
-                                ForEach(viewModel.quizzes, id: \.self) { quiz in
-                                    QuizCellView(quiz: quiz)
-                                        .onTapGesture {
-                                            viewModel.showQuizDetails(quiz: quiz)
-                                        }
-                                }
-                                .cornerRadius(30)
-                            }
-                    } else {
-                        ForEach(CategorySection.allCases, id: \.self) { section in
-                            let filteredQuizzes = viewModel
-                                .quizzes
-                                .filter { $0.category == section.rawValue.uppercased() }
-                            if !filteredQuizzes.isEmpty {
-                                Section(header: Text(section.rawValue)
-                                    .sectionHeaderStyle(section)) {
-                                        ForEach(filteredQuizzes, id: \.self) { quiz in
-                                            QuizCellView(quiz: quiz)
-                                                .onTapGesture {
-                                                    viewModel.showQuizDetails(quiz: quiz)
-                                                }
-                                        }
-                                        .cornerRadius(30)
-                                    }
-                            }
-                        }
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Picker("", selection: $segmentationSelection) {
+                    let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
+                    ForEach(items, id: \.self) { option in
+                        Text(option)
                     }
                 }
-                .onAppear {
+                .onChange(of: segmentationSelection) { _ in
                     getQuizzes()
                 }
-                .padding(.horizontal, 10)
+                .pickerStyle(SegmentedPickerStyle())
+                .cornerRadius(10)
+
+                let allCategories = CategorySection.allCases.map { $0.rawValue }
+                if allCategories.contains(segmentationSelection) {
+                    let section = CategorySection(rawValue: segmentationSelection)!
+                    Section(header: Text(section.rawValue)
+                        .sectionHeaderStyle(section)) {
+                            ForEach(viewModel.quizzes, id: \.self) { quiz in
+                                QuizCellView(quiz: quiz)
+                                    .onTapGesture {
+                                        viewModel.showQuizDetails(quiz: quiz)
+                                    }
+                            }
+                            .cornerRadius(30)
+                        }
+                } else {
+                    ForEach(CategorySection.allCases, id: \.self) { section in
+                        let filteredQuizzes = viewModel
+                            .quizzes
+                            .filter { $0.category == section.rawValue.uppercased() }
+                        if !filteredQuizzes.isEmpty {
+                            Section(header: Text(section.rawValue)
+                                .sectionHeaderStyle(section)) {
+                                    ForEach(filteredQuizzes, id: \.self) { quiz in
+                                        QuizCellView(quiz: quiz)
+                                            .onTapGesture {
+                                                viewModel.showQuizDetails(quiz: quiz)
+                                            }
+                                    }
+                                    .cornerRadius(30)
+                                }
+                        }
+                    }
+                }
             }
+            .onAppear {
+                getQuizzes()
+            }
+            .padding(.horizontal, 10)
         }
+        .background(LinearGradient.quizAppGradient)
     }
 
     func getQuizzes() {
