@@ -8,23 +8,23 @@ struct LoginView: View {
     @State private var usernameFieldBorder = 0
     @State private var passwordFieldBorder = 0
 
-    private var viewModel: LoginViewModel!
+    var viewModel: LoginViewModel
 
     var body: some View {
-        NavigationView {
-            ZStack {
-                LinearGradient(gradient:
-                                Gradient(colors:
-                                            [Color(red: 0.453, green: 0.308, blue: 0.637),
-                                             Color(red: 0.154, green: 0.185, blue: 0.463)]),
-                               startPoint: .top,
-                               endPoint: .bottom)
-                .ignoresSafeArea()
+        ZStack {
+            LinearGradient(gradient:
+                            Gradient(colors:
+                                        [Color(red: 0.453, green: 0.308, blue: 0.637),
+                                         Color(red: 0.154, green: 0.185, blue: 0.463)]),
+                           startPoint: .top,
+                           endPoint: .bottom)
+            .ignoresSafeArea()
+            ScrollView(.vertical) {
                 VStack {
                     Text("Pop Quiz")
                         .font(.largeTitle)
                         .bold()
-                        .padding([.bottom, .top], 100)
+                        .padding()
                         .foregroundColor(.white)
 
                     TextField(
@@ -38,17 +38,18 @@ struct LoginView: View {
                                 usernameFieldBorder = 0
                             }
                         })
-                        .padding()
-                        .disableAutocorrection(true)
-                        .autocapitalization(.none)
-                        .foregroundColor(.white)
-                        .frame(width: 300, height: 50)
-                        .background(Color.white.opacity(0.3))
-                        .cornerRadius(15)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 15)
-                                .stroke(.white, lineWidth: CGFloat(usernameFieldBorder))
-                        )
+                    .padding()
+                    .disableAutocorrection(true)
+                    .autocapitalization(.none)
+                    .foregroundColor(.white)
+                    .frame(width: 300, height: 50)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(15)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(.white, lineWidth: CGFloat(usernameFieldBorder))
+                    )
+                    .padding(.top, 60)
 
                     SecureField("Password", text: $password)
                         .padding()
@@ -80,8 +81,8 @@ struct LoginView: View {
 
                     Spacer()
                 }
+                .padding(.bottom, 60)
             }
-            .navigationBarHidden(true)
         }
     }
 
