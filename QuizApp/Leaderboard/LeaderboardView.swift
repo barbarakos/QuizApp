@@ -6,55 +6,51 @@ struct LeaderboardView: View {
     @ObservedObject var viewModel: LeaderboardViewModel
 
     var body: some View {
-        ZStack {
-            LinearGradient
-                .quizAppGradient
-                .ignoresSafeArea()
-            VStack {
-                HStack {
-                    Text("Player")
-                        .font(.system(size: 18))
-                        .foregroundColor(.white)
-                        .fontWeight(.light)
-                        .padding()
-                    Spacer()
-                    Text("Points")
-                        .font(.system(size: 18))
-                        .foregroundColor(.white)
-                        .fontWeight(.light)
-                        .padding()
+        VStack {
+            HStack {
+                Text("Player")
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .fontWeight(.light)
+                    .padding()
+                Spacer()
+                Text("Points")
+                    .font(.system(size: 18))
+                    .foregroundColor(.white)
+                    .fontWeight(.light)
+                    .padding()
 
-                }
+            }
 
-                ScrollView {
-                    ForEach(viewModel.leaderboard, id: \.index) { model in
-                        VStack {
-                            HStack {
-                                Text("\(model.index+1)")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 20))
-                                    .fontWeight(.heavy)
-                                    .padding(.horizontal)
-                                Text(model.name)
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 18))
-                                    .padding(.horizontal)
-                                Spacer()
-                                Text("\(model.points)")
-                                    .foregroundColor(.white)
-                                    .font(.system(size: 25))
-                                    .fontWeight(.heavy)
-                                    .padding(.horizontal)
-                            }
-                            Divider()
-                                .overlay(.white)
-                                .frame(height: 3)
+            ScrollView {
+                ForEach(viewModel.leaderboard, id: \.index) { model in
+                    VStack {
+                        HStack {
+                            Text("\(model.index+1)")
+                                .foregroundColor(.white)
+                                .font(.system(size: 20))
+                                .fontWeight(.heavy)
+                                .padding(.horizontal)
+                            Text(model.name)
+                                .foregroundColor(.white)
+                                .font(.system(size: 18))
+                                .padding(.horizontal)
+                            Spacer()
+                            Text("\(model.points)")
+                                .foregroundColor(.white)
+                                .font(.system(size: 25))
+                                .fontWeight(.heavy)
+                                .padding(.horizontal)
                         }
+                        Divider()
+                            .overlay(.white)
+                            .frame(height: 3)
                     }
                 }
-                Spacer()
             }
+            Spacer()
         }
+        .background(LinearGradient.quizAppGradient)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
