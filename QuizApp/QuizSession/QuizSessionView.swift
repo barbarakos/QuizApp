@@ -49,10 +49,10 @@ struct QuizSessionView: View {
                                 answers: viewModel.currentQuestion.answers)
 
                             AnswersView(
-                                numberOfCorrectQuestions: $numberOfCorrectQuestions,
-                                answers: $viewModel.currentQuestion.answers,
                                 correctAnswerIndex: correctAnswerIndex,
-                                nextQuestion: { nextQuestion($0, $1) })
+                                nextQuestion: { nextQuestion($0, $1) },
+                                numberOfCorrectQuestions: $numberOfCorrectQuestions,
+                                answers: $viewModel.currentQuestion.answers)
                         }
                     }
 

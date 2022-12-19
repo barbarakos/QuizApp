@@ -185,6 +185,10 @@ extension Container {
             viewModel: quizResultViewModel(result)) as QuizResultViewController
     }
 
+    static let quizResultView = ParameterFactory<Result, UIHostingController> { result in
+        UIHostingController(rootView: QuizResultView(viewModel: quizResultViewModel(result))) as UIHostingController
+    }
+
 }
 
 // MARK: SearchController

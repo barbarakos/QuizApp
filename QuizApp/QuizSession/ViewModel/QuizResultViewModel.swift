@@ -1,4 +1,6 @@
-class QuizResultViewModel {
+import SwiftUI
+
+class QuizResultViewModel: ObservableObject {
 
     let numberOfCorrectQuestions: Int
     let numberOfQuestions: Int
