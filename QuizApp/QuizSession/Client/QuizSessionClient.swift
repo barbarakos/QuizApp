@@ -4,6 +4,8 @@ protocol QuizSessionClientProtocol {
 
     func fetchQuestions(quizId: Int) async throws -> QuizSessionResponseModel
 
+    func endQuiz(sessionId: String, numberOfCorrectQuestions: Int) async throws
+
 }
 
 class QuizSessionClient: QuizSessionClientProtocol {
@@ -21,6 +23,13 @@ class QuizSessionClient: QuizSessionClientProtocol {
         let path = "\(baseURL)\(quizPath)\(quizId)/session/start"
 
         return try await apiClient.post(path: path, body: nil)
+    }
+
+    func endQuiz(sessionId: String, numberOfCorrectQuestions: Int) async throws {
+        let path = "\(baseURL)\(quizPath)session/\(sessionId)/end"
+        let body = ["numberOfCorrectQuestions": String(numberOfCorrectQuestions)]
+
+        try await apiClient.post(path: path, body: body)
     }
 
 }
