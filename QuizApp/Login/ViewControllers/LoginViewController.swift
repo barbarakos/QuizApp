@@ -7,8 +7,8 @@ class LoginViewController: UIViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private var loginViewModel: LoginViewModel!
-    private var gradientLayer: CAGradientLayer!
     private var titleLabel: UILabel!
+    private var gradientLayer: BackgroundGradient!
     private var emailTextField: UITextField!
     private var passwordTextField: UITextField!
     private var logInButton: UIButton!
@@ -29,6 +29,12 @@ class LoginViewController: UIViewController {
 
         buildViews()
         bindViews()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        gradientLayer?.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
     }
 
     private func handleLogIn() {
@@ -58,12 +64,11 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func createViews() {
-        gradientLayer = CAGradientLayer()
-        gradientLayer.type = .axial
-        view.layer.addSublayer(gradientLayer)
-
         titleLabel = UILabel()
         view.addSubview(titleLabel)
+
+        gradientLayer = BackgroundGradient()
+        view.layer.addSublayer(gradientLayer)
 
         emailTextField = UITextField()
         passwordTextField = UITextField()
@@ -75,11 +80,6 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func styleViews() {
-        gradientLayer.colors = [
-            UIColor(red: 0.453, green: 0.308, blue: 0.637, alpha: 1).cgColor,
-            UIColor(red: 0.154, green: 0.185, blue: 0.463, alpha: 1).cgColor
-        ]
-
         titleLabel.font = UIFont.systemFont(ofSize: 30, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
         titleLabel.textColor = .white
@@ -124,8 +124,7 @@ extension LoginViewController: ConstructViewsProtocol {
     }
 
     func defineLayoutForViews() {
-        gradientLayer.frame = UIScreen.main.bounds
-        gradientLayer.locations = [0, 1]
+        gradientLayer.frame = view.bounds
 
         titleLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
