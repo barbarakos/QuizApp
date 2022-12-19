@@ -67,7 +67,7 @@ class AppRouter: AppRouterProtocol {
 
     private func getPopQuizTitle() -> UILabel {
         let titleLabel = UILabel()
-        titleLabel.font = UIFont.systemFont(ofSize: 25, weight: UIFont.Weight.bold)
+        titleLabel.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.bold)
         titleLabel.text = "PopQuiz"
         titleLabel.textColor = .white
         return titleLabel
