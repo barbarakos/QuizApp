@@ -31,7 +31,7 @@ struct QuizInfoView: View {
                     }
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: 300, height: 300)
+                    .frame(width: 280, height: 300)
                     .cornerRadius(20)
                     .clipped()
 
@@ -47,7 +47,7 @@ struct QuizInfoView: View {
                 .foregroundColor(Color(red: 0.453, green: 0.308, blue: 0.637))
 
             }
-            .padding(30)
+            .padding(.horizontal, 15)
         }
     }
 

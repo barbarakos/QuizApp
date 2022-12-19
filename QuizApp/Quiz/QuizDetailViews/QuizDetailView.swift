@@ -12,27 +12,23 @@ struct QuizDetailView: View {
                     .ignoresSafeArea()
                 ScrollView {
                     VStack {
-                        Text("Pop Quiz")
-                            .font(.title)
-                            .fontWeight(.bold)
-                            .foregroundColor(.white)
-                            .padding(.top, -30)
-
                         HStack {
                             Spacer()
-                            Button(action: { viewModel.showLeaderboard() }) {
+                            Button {
+                                viewModel.showLeaderboard()
+                            } label: {
                                 Text("Leaderboard")
                                     .font(.system(size: 20))
                                     .fontWeight(.bold)
                                     .underline(color: .white)
                                     .foregroundColor(.white)
-                                    .padding(.trailing, 50)
+                                    .padding(.trailing, 40)
                             }
                         }
                         .padding(.top, 30)
 
                         QuizInfoView(quiz: viewModel.quiz)
-                            .padding(.horizontal, 50)
+                            .padding(.horizontal, 30)
                     }
                 }
             }
