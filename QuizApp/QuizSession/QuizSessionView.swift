@@ -14,52 +14,41 @@ struct QuizSessionView: View {
     }
 
     var body: some View {
-        ZStack {
-            LinearGradient
-                .quizAppGradient
-                .ignoresSafeArea()
-            ScrollView {
-                VStack {
-                    Text("Pop Quiz")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .padding(.top, -30)
+        ScrollView {
+            VStack {
+                ProgressView(
+                    progressColors: $progressColors,
+                    numberOfQuestions: viewModel.quiz.numberOfQuestions)
 
-                    ProgressView(
-                        progressColors: $progressColors,
-                        numberOfQuestions: viewModel.quiz.numberOfQuestions)
+                VStack(alignment: .leading) {
+                    if viewModel.currentQuestion != nil {
+                        Text("\(viewModel.currentQuestion.index+1)/\(viewModel.quiz.numberOfQuestions)")
+                            .padding(.leading)
+                            .font(.system(size: 18))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
 
-                    VStack(alignment: .leading) {
-                        if viewModel.currentQuestion != nil {
-                            Text("\(viewModel.currentQuestion.index+1)/\(viewModel.quiz.numberOfQuestions)")
-                                .padding(.leading)
-                                .font(.system(size: 18))
-                                .fontWeight(.bold)
-                                .foregroundColor(.white)
+                        Text(viewModel.currentQuestion.question)
+                            .font(.system(size: 24))
+                            .bold()
+                            .foregroundColor(.white)
+                            .padding()
 
-                            Text(viewModel.currentQuestion.question)
-                                .font(.system(size: 24))
-                                .bold()
-                                .foregroundColor(.white)
-                                .padding()
+                        let correctAnswerIndex = getAnswerIndex(
+                            id: viewModel.currentQuestion.correctAnswerId,
+                            answers: viewModel.currentQuestion.answers)
 
-                            let correctAnswerIndex = getAnswerIndex(
-                                id: viewModel.currentQuestion.correctAnswerId,
-                                answers: viewModel.currentQuestion.answers)
-
-                            AnswersView(
-                                correctAnswerIndex: correctAnswerIndex,
-                                nextQuestion: { nextQuestion($0, $1) },
-                                numberOfCorrectQuestions: $numberOfCorrectQuestions,
-                                answers: $viewModel.currentQuestion.answers)
-                        }
+                        AnswersView(
+                            correctAnswerIndex: correctAnswerIndex,
+                            nextQuestion: { nextQuestion($0, $1) },
+                            numberOfCorrectQuestions: $numberOfCorrectQuestions,
+                            answers: $viewModel.currentQuestion.answers)
                     }
-
                 }
-                .padding(.top)
             }
+            .padding(.top)
         }
+        .background(LinearGradient.quizAppGradient)
     }
 
     private func nextQuestion(_ numOfCorrectQuestions: Int, _ colorProgress: Color) {

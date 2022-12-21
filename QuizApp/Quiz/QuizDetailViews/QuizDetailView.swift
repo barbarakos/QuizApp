@@ -6,40 +6,30 @@ struct QuizDetailView: View {
     @ObservedObject var viewModel: QuizDetailsViewModel
 
     var body: some View {
-            ZStack {
-                LinearGradient
-                    .quizAppGradient
-                    .ignoresSafeArea()
-                ScrollView {
-                    VStack {
-                        Text("Pop Quiz")
-                            .font(.title)
+        ScrollView {
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        viewModel.showLeaderboard()
+                    } label: {
+                        Text("Leaderboard")
+                            .font(.system(size: 20))
                             .fontWeight(.bold)
+                            .underline(color: .white)
                             .foregroundColor(.white)
-                            .padding(.top, -30)
-
-                        HStack {
-                            Spacer()
-                            Button {
-                                viewModel.showLeaderboard()
-                            } label: {
-                                Text("Leaderboard")
-                                    .font(.system(size: 20))
-                                    .fontWeight(.bold)
-                                    .underline(color: .white)
-                                    .foregroundColor(.white)
-                                    .padding(.trailing, 40)
-                            }
-                        }
-                        .padding(.top, 30)
-
-                        QuizInfoView(quiz: viewModel.quiz) {
-                            viewModel.startQuiz()
-                        }
-                        .padding(.horizontal, 30)
+                            .padding(.trailing, 40)
                     }
                 }
+                .padding(.top, 30)
+
+                QuizInfoView(quiz: viewModel.quiz) {
+                    viewModel.startQuiz()
+                }
+                .padding(.horizontal, 30)
             }
+        }
+        .background(LinearGradient.quizAppGradient)
     }
 
 }
