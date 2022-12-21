@@ -5,8 +5,9 @@ struct LoginView: View {
 
     @State private var username = ""
     @State private var password = ""
-    @State private var usernameFieldBorder = 0
-    @State private var passwordFieldBorder = 0
+
+    @FocusState private var emailIsFocused: Bool
+    @FocusState private var passwordIsFocused: Bool
 
     var viewModel: LoginViewModel
 
@@ -27,27 +28,18 @@ struct LoginView: View {
                         .padding()
                         .foregroundColor(.white)
 
-                    TextField(
-                        "Email",
-                        text: $username,
-                        onEditingChanged: { (isStart) in
-                            if isStart {
-                                passwordFieldBorder = 0
-                                usernameFieldBorder = 1
-                            } else {
-                                usernameFieldBorder = 0
-                            }
-                        })
+                    TextField("Email", text: $username)
                     .padding()
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
+                    .focused($emailIsFocused)
                     .foregroundColor(.white)
                     .frame(width: 300, height: 50)
                     .background(Color.white.opacity(0.3))
                     .cornerRadius(15)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(.white, lineWidth: CGFloat(usernameFieldBorder))
+                            .stroke(.white, lineWidth: emailIsFocused ? 1 : 0)
                     )
                     .padding(.top, 60)
 
@@ -55,18 +47,15 @@ struct LoginView: View {
                         .padding()
                         .disableAutocorrection(true)
                         .autocapitalization(.none)
+                        .focused($passwordIsFocused)
                         .foregroundColor(.white)
                         .frame(width: 300, height: 50)
                         .background(Color.white.opacity(0.3))
                         .cornerRadius(15)
                         .overlay(
                             RoundedRectangle(cornerRadius: 15)
-                                .stroke(.white, lineWidth: CGFloat(passwordFieldBorder))
+                                .stroke(.white, lineWidth: passwordIsFocused ? 1 : 0)
                         )
-                        .onTapGesture {
-                            usernameFieldBorder = 0
-                            passwordFieldBorder = 1
-                        }
 
                     Button("Login") {
                         viewModel.login(username: username, password: password)
