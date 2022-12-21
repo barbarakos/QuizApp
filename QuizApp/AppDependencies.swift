@@ -61,10 +61,6 @@ extension Container {
         UserViewModel(router: appRouter(), tokenStorage: tokenStorage(), useCase: userUseCase()) as UserViewModel
     }
 
-    static let userViewController = Factory {
-        UserViewController(viewModel: userViewModel()) as UserViewController
-    }
-
     static let userView = Factory {
         UserView(viewModel: userViewModel()) as UserView
     }
@@ -88,10 +84,6 @@ extension Container {
 
     static let quizViewModel = Factory {
         QuizViewModel(router: appRouter(), useCase: quizUseCase()) as QuizViewModel
-    }
-
-    static let quizViewController = Factory {
-        QuizViewController(viewModel: quizViewModel()) as QuizViewController
     }
 
     static let quizListView = Factory {
