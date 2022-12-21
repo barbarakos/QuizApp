@@ -174,10 +174,6 @@ extension Container {
 // MARK: SearchController
 extension Container {
 
-    static let searchViewController = Factory {
-        SearchViewController(viewModel: quizViewModel()) as SearchViewController
-    }
-
     static let searchView = Factory {
         SearchView(viewModel: quizViewModel()) as SearchView
     }
