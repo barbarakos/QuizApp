@@ -13,7 +13,7 @@ struct QuizListView: View {
 
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .center, spacing: 20) {
                 Picker("", selection: $segmentationSelection) {
                     let items = ["All"] + CategorySection.allCases.map {$0.rawValue}
                     ForEach(items, id: \.self) { option in
@@ -23,22 +23,32 @@ struct QuizListView: View {
                 .onChange(of: segmentationSelection) { _ in
                     getQuizzes()
                 }
+                .padding(.vertical, 7)
                 .pickerStyle(SegmentedPickerStyle())
                 .cornerRadius(10)
+            }
 
+            if viewModel.quizError != nil {
+                let (title, description) = setErrorView(viewModel.quizError!)
+                ErrorView(title: title, description: description)
+            }
+
+            VStack(alignment: .leading) {
                 let allCategories = CategorySection.allCases.map { $0.rawValue }
                 if allCategories.contains(segmentationSelection) {
                     let section = CategorySection(rawValue: segmentationSelection)!
-                    Section(header: Text(section.rawValue)
-                        .sectionHeaderStyle(section)) {
-                            ForEach(viewModel.quizzes, id: \.self) { quiz in
-                                QuizCellView(quiz: quiz)
-                                    .onTapGesture {
-                                        viewModel.showQuizDetails(quiz: quiz)
-                                    }
+                    if !viewModel.quizzes.isEmpty {
+                        Section(header: Text(section.rawValue)
+                            .sectionHeaderStyle(section)) {
+                                ForEach(viewModel.quizzes, id: \.self) { quiz in
+                                    QuizCellView(quiz: quiz)
+                                        .onTapGesture {
+                                            viewModel.showQuizDetails(quiz: quiz)
+                                        }
+                                }
+                                .cornerRadius(30)
                             }
-                            .cornerRadius(30)
-                        }
+                    }
                 } else {
                     ForEach(CategorySection.allCases, id: \.self) { section in
                         let filteredQuizzes = viewModel
@@ -62,8 +72,8 @@ struct QuizListView: View {
             .onAppear {
                 getQuizzes()
             }
-            .padding(.horizontal, 10)
         }
+        .padding(.horizontal, 10)
         .background(LinearGradient.quizAppGradient)
     }
 
@@ -73,6 +83,15 @@ struct QuizListView: View {
             viewModel.getQuizzes(for: segmentationSelection.uppercased())
         } else {
             viewModel.getAllQuizzes()
+        }
+    }
+
+    private func setErrorView(_ error: QuizError) -> (String, String) {
+        switch error {
+        case .serverError:
+            return ("Error", "Data can't be reached. Please try again.")
+        case .empty:
+            return ("No data", "There are no available quizzes for this category.")
         }
     }
 
