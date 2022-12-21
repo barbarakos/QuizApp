@@ -37,10 +37,6 @@ extension Container {
         LoginViewModel(router: appRouter(), useCase: loginUseCase()) as LoginViewModel
     }
 
-    static let loginViewController = Factory {
-        LoginViewController(viewModel: loginViewModel()) as LoginViewController
-    }
-
     static let loginView = Factory {
         UIHostingController(rootView: LoginView(viewModel: loginViewModel())) as UIHostingController
     }
