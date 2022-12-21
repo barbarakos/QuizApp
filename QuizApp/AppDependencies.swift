@@ -155,10 +155,6 @@ extension Container {
             quiz: quiz) as QuizSessionViewModel
     }
 
-    static let quizSessionViewController = ParameterFactory<QuizModel, QuizSessionViewController> { quiz in
-        QuizSessionViewController(viewModel: quizSessionViewModel(quiz)) as QuizSessionViewController
-    }
-
     static let quizSessionView = ParameterFactory<QuizModel, UIHostingController> { quiz in
         UIHostingController(rootView: QuizSessionView(viewModel: quizSessionViewModel(quiz))) as UIHostingController
     }
