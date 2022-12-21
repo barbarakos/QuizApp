@@ -19,7 +19,6 @@
 		FB47247528F03BD20027EFC7 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47247428F03BD20027EFC7 /* UserViewController.swift */; };
 		FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5228EC0EA200842EF0 /* AppDelegate.swift */; };
 		FB567F5528EC0EA200842EF0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */; };
-		FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB567F5628EC0EA200842EF0 /* LoginViewController.swift */; };
 		FB567F5C28EC0EA400842EF0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5B28EC0EA400842EF0 /* Assets.xcassets */; };
 		FB567F5F28EC0EA400842EF0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB567F5D28EC0EA400842EF0 /* LaunchScreen.storyboard */; };
 		FB567F6828EC29FA00842EF0 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = FB567F6728EC29FA00842EF0 /* .swiftlint.yml */; };
@@ -117,7 +116,6 @@
 		FB567F4F28EC0EA200842EF0 /* QuizApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QuizApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB567F5228EC0EA200842EF0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB567F5428EC0EA200842EF0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FB567F5628EC0EA200842EF0 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		FB567F5B28EC0EA400842EF0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB567F5E28EC0EA400842EF0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FB567F6028EC0EA400842EF0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -241,7 +239,6 @@
 			isa = PBXGroup;
 			children = (
 				FBA618FF2941E64E00446905 /* LoginView.swift */,
-				FB8647F12902A821001AE89B /* ViewControllers */,
 				FB8647F02902A817001AE89B /* ViewModel */,
 				FB8647EF2902A80A001AE89B /* DataSource */,
 				FB8647EE2902A7FD001AE89B /* UseCase */,
@@ -665,14 +662,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		FB8647F12902A821001AE89B /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				FB567F5628EC0EA200842EF0 /* LoginViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		FB8647F22902A82F001AE89B /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -921,7 +910,6 @@
 				FB5A07AF29128DAD00FDD937 /* QuizUseCaseModel.swift in Sources */,
 				FB5A07CB2913B72700FDD937 /* AnswerResponseModel.swift in Sources */,
 				FB8647C228F807E9001AE89B /* QuizViewModel.swift in Sources */,
-				FB567F5728EC0EA200842EF0 /* LoginViewController.swift in Sources */,
 				FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */,
 				FB5A07FE29153A8E00FDD937 /* DifficultyResponseModel.swift in Sources */,
 				FB5A07D82913BCEC00FDD937 /* AnswerUseCaseModel.swift in Sources */,
