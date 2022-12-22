@@ -8,7 +8,7 @@ enum CategorySection: String, CaseIterable {
     case music = "Music"
     case sport = "Sport"
 
-    var color: UIColor {
+    var colorUIKit: UIColor {
         switch self {
         case .geography:
             return  UIColor.systemGreen
@@ -21,7 +21,7 @@ enum CategorySection: String, CaseIterable {
         }
     }
 
-    var colorSwiftUI: Color {
+    var color: Color {
         switch self {
         case .geography:
             return Color.green

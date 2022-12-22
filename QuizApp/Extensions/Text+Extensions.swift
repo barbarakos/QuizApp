@@ -8,7 +8,7 @@ extension Text {
             .fontWeight(.bold)
             .textCase(nil)
             .padding(.leading, 20)
-            .foregroundColor(section.colorSwiftUI)
+            .foregroundColor(section.color)
     }
 
 }
