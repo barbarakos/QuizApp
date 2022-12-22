@@ -17,7 +17,7 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showLogIn() {
-        navigationController.setViewControllers([Container.loginViewController()], animated: true)
+        navigationController.setViewControllers([Container.loginView()], animated: true)
     }
 
     func showTabBarControllers() {
