@@ -11,7 +11,7 @@ struct QuizResultView: View {
                 .ignoresSafeArea()
             VStack {
                 Spacer()
-                Text("\(viewModel.numberOfCorrectQuestions)/\(viewModel.numberOfQuestions)")
+                Text(viewModel.result)
                     .foregroundColor(.white)
                     .font(.system(size: 100))
                     .bold()
