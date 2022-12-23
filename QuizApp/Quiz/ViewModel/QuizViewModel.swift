@@ -51,6 +51,10 @@ class QuizViewModel: ObservableObject {
         router.showQuizDetails(quiz: quiz)
     }
 
+    func filteredQuizzes(_ section: CategorySection) -> [QuizModel] {
+        return quizzes.filter { $0.category == section.rawValue.uppercased() }
+    }
+
     private func subscriptions() {
         $segmentationSelection
             .sink { [weak self] selection in
