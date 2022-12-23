@@ -2,8 +2,8 @@ import SwiftUI
 
 struct ErrorView: View {
 
-    @State var title: String
-    @State var description: String
+    let title: String
+    let description: String
 
     var body: some View {
         VStack(alignment: .center, spacing: 6) {

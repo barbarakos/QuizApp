@@ -1,6 +1,10 @@
 import Foundation
 
-class LoginViewModel {
+class LoginViewModel: ObservableObject {
+
+    @Published var username: String = ""
+    @Published var password: String = ""
+    @Published var loginFieldsValid: Bool = false
 
     private var useCase: LoginUseCaseProtocol
     private var router: AppRouterProtocol
@@ -10,7 +14,7 @@ class LoginViewModel {
         self.useCase = useCase
     }
 
-    func login(username: String, password: String) {
+    func login() {
         Task {
             do {
                 try await useCase.login(username: username, password: password)
