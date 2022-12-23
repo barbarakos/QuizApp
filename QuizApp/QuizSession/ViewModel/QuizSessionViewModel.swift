@@ -5,11 +5,14 @@ import UIKit
 class QuizSessionViewModel: ObservableObject {
 
     @Published var currentQuestion: QuestionModel!
+    @Published var questionNumberLabel: String = ""
     var quiz: QuizModel
     var questions: [QuestionModel] = []
 
     private let router: AppRouterProtocol
     private let useCase: QuizSessionUseCaseProtocol
+
+    private var cancellables = Set<AnyCancellable>()
 
     private var sessionId: String!
 
@@ -18,6 +21,7 @@ class QuizSessionViewModel: ObservableObject {
         self.useCase = quizSessionUseCase
         self.quiz = quiz
         fetchQuestions()
+        subscriptions()
     }
 
     func fetchQuestions() {
@@ -67,6 +71,17 @@ class QuizSessionViewModel: ObservableObject {
     func goToQuizResult(numOfCorrectQuestions: Int) {
         router.showQuizResult(
             result: Result(numOfCorrectQuestions: numOfCorrectQuestions, numOfQuestions: questions.count))
+    }
+
+    private func subscriptions() {
+        $currentQuestion
+            .compactMap { $0 }
+            .sink { [weak self] currentQuestion in
+                guard let self = self else { return }
+
+                self.questionNumberLabel = "\(currentQuestion.index+1)/\(self.quiz.numberOfQuestions)"
+            }
+            .store(in: &cancellables)
     }
 
 }
