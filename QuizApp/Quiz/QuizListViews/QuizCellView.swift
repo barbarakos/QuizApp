@@ -3,11 +3,7 @@ import Kingfisher
 
 struct QuizCellView: View {
 
-    private var quiz: QuizModel!
-
-    init(quiz: QuizModel) {
-        self.quiz = quiz
-    }
+    var quiz: QuizModel
 
     var body: some View {
         HStack {
@@ -50,6 +46,7 @@ struct QuizCellView: View {
             Spacer()
         }
         .background(Color.white.opacity(0.3))
+        .cornerRadius(30)
     }
 
 }
