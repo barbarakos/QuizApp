@@ -51,6 +51,10 @@ class QuizViewModel: ObservableObject {
         router.showQuizDetails(quiz: quiz)
     }
 
+    func filteredQuizzes(_ section: CategorySection) -> [QuizModel] {
+        return quizzes.filter { $0.category == section.rawValue.uppercased() }
+    }
+
     private func subscriptions() {
         $segmentationSelection
             .sink { [weak self] selection in
@@ -62,12 +66,12 @@ class QuizViewModel: ObservableObject {
     private func onSelectionChange(selection: String) {
         let allCategories = CategorySection.allCases.map { $0.rawValue }
         if allCategories.contains(selection) {
-            DispatchQueue.main.async {
-                self.getQuizzes(for: selection.uppercased())
+            DispatchQueue.main.async { [weak self] in
+                self?.getQuizzes(for: selection.uppercased())
             }
         } else {
-            DispatchQueue.main.async {
-                self.getAllQuizzes()
+            DispatchQueue.main.async { [weak self] in
+                self?.getAllQuizzes()
             }
         }
     }

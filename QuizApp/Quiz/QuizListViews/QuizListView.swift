@@ -22,10 +22,9 @@ struct QuizListView: View {
                 .cornerRadius(10)
 
                 ForEach(CategorySection.allCases, id: \.self) { section in
-                    let filteredQuizzes = viewModel.quizzes.filter { $0.category == section.rawValue.uppercased() }
-                    if !filteredQuizzes.isEmpty {
+                    if !viewModel.filteredQuizzes(section).isEmpty {
                         Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
-                            ForEach(filteredQuizzes, id: \.self) { quiz in
+                            ForEach(viewModel.filteredQuizzes(section), id: \.self) { quiz in
                                 QuizCellView(quiz: quiz)
                                     .onTapGesture {
                                         viewModel.showQuizDetails(quiz: quiz)
