@@ -37,14 +37,16 @@ struct QuizDetailView: View {
 struct QuizDetailView_Previews: PreviewProvider {
 
     static var previews: some View {
-        QuizDetailView(viewModel: Container.quizDetailsViewModel(QuizModel(id: 0,
-                                                                           category: "SPORT",
-                                                                           description:
-                                                                            "Description of the selected quiz.",
-                                                                           difficulty: DifficultyModel.normal,
-                                                                           imageUrl: "",
-                                                                           name: "Football",
-                                                                           numberOfQuestions: 5)))
+        QuizDetailView(
+            viewModel: Container.quizDetailsViewModel(
+                QuizModel(
+                    id: 0,
+                    category: "SPORT",
+                    description: "Description of the selected quiz.",
+                    difficulty: DifficultyModel.normal,
+                    imageUrl: "",
+                    name: "Football",
+                    numberOfQuestions: 5)))
     }
 
 }

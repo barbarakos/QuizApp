@@ -22,7 +22,7 @@ struct QuizSessionView: View {
 
                 VStack(alignment: .leading) {
                     if viewModel.currentQuestion != nil {
-                        Text("\(viewModel.currentQuestion.index+1)/\(viewModel.quiz.numberOfQuestions)")
+                        Text(viewModel.questionNumberLabel)
                             .padding(.leading)
                             .font(.system(size: 18))
                             .fontWeight(.bold)
@@ -65,14 +65,16 @@ struct QuizSessionView: View {
 struct QuizSessionView_Previews: PreviewProvider {
 
     static var previews: some View {
-        QuizSessionView(viewModel: Container.quizSessionViewModel(QuizModel(id: 0,
-                                                                            category: "SPORT",
-                                                                            description:
-                                                                                "Description of the selected quiz.",
-                                                                            difficulty: DifficultyModel.normal,
-                                                                            imageUrl: "",
-                                                                            name: "Football",
-                                                                            numberOfQuestions: 5)))
+        QuizSessionView(
+            viewModel: Container.quizSessionViewModel(
+                QuizModel(
+                    id: 0,
+                    category: "SPORT",
+                    description: "Description of the selected quiz.",
+                    difficulty: DifficultyModel.normal,
+                    imageUrl: "",
+                    name: "Football",
+                    numberOfQuestions: 5)))
     }
 
 }

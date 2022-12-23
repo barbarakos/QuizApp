@@ -13,13 +13,9 @@ struct AnswersView: View {
             ForEach(answers) { answer in
                 Button {
                     if answer.index == correctAnswerIndex {
-                        numberOfCorrectQuestions += 1
-                        answers[answer.index].color = .green
-                        nextQuestion(numberOfCorrectQuestions, .green)
+                        correctAnswerSelected(answer)
                     } else {
-                        answers[answer.index].color = .red
-                        answers[correctAnswerIndex].color = .green
-                        nextQuestion(numberOfCorrectQuestions, .red)
+                        incorrectAnswerSelected(answer)
                     }
                 } label: {
                     Text(answer.answer)
@@ -33,6 +29,18 @@ struct AnswersView: View {
                 .padding(.horizontal)
             }
         }
+    }
+
+    private func correctAnswerSelected(_ answer: AnswerModel) {
+        numberOfCorrectQuestions += 1
+        answers[answer.index].color = Color.correct
+        nextQuestion(numberOfCorrectQuestions, Color.correct)
+    }
+
+    private func incorrectAnswerSelected(_ answer: AnswerModel) {
+        answers[answer.index].color = Color.incorrect
+        answers[correctAnswerIndex].color = Color.correct
+        nextQuestion(numberOfCorrectQuestions, Color.incorrect)
     }
 
 }

@@ -64,7 +64,8 @@ struct QuizInfoView_Previews: PreviewProvider {
             difficulty: DifficultyModel.normal,
             imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Football_Pallo_valmiina-cropped.jpg",
             name: "Football",
-            numberOfQuestions: 5), startQuiz: {})
+            numberOfQuestions: 5),
+            startQuiz: {})
     }
 
 }
