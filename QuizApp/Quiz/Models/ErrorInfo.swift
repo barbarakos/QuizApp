@@ -1,8 +1,6 @@
-//
-//  ErrorInfo.swift
-//  QuizApp
-//
-//  Created by Barbara Kos on 23.12.2022..
-//
+struct ErrorInfo {
 
-import Foundation
+    let title: String
+    let description: String
+
+}

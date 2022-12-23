@@ -12,6 +12,7 @@
 		FB1D31232954983100C77B90 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31222954983100C77B90 /* Color+Extensions.swift */; };
 		FB1D31252955A5C100C77B90 /* QuizListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31242955A5C100C77B90 /* QuizListView.swift */; };
 		FB1D31272955A5EF00C77B90 /* QuizCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31262955A5EF00C77B90 /* QuizCellView.swift */; };
+		FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31332955C97900C77B90 /* ErrorInfo.swift */; };
 		FB2D54F5290A75BB0071162A /* QuizDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */; };
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
@@ -117,6 +118,7 @@
 		FB1D31222954983100C77B90 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FB1D31242955A5C100C77B90 /* QuizListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizListView.swift; sourceTree = "<group>"; };
 		FB1D31262955A5EF00C77B90 /* QuizCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizCellView.swift; sourceTree = "<group>"; };
+		FB1D31332955C97900C77B90 /* ErrorInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
 		FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDetailsView.swift; sourceTree = "<group>"; };
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 			children = (
 				FB5A0789290C06FB00FDD937 /* CategorySection.swift */,
 				FBC8063D290BE962007E717B /* QuizError.swift */,
+				FB1D31332955C97900C77B90 /* ErrorInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -983,6 +986,7 @@
 				FB8648162906793B001AE89B /* LoginDataSource.swift in Sources */,
 				FB1D31252955A5C100C77B90 /* QuizListView.swift in Sources */,
 				FB5A07DE2913BDF300FDD937 /* QuestionModel.swift in Sources */,
+				FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */,
 				FBC65C2F28F56F360045F87B /* UserUseCase.swift in Sources */,
 				FB5A079629125FC400FDD937 /* LeaderboardDataSource.swift in Sources */,
 				FBF1551D29190DEB00E721A6 /* QuizSessionViewController.swift in Sources */,
@@ -1005,7 +1009,6 @@
 				FB5A080229153AB800FDD937 /* DifficultyUseCaseModel.swift in Sources */,
 				FB2D54F5290A75BB0071162A /* QuizDetailsView.swift in Sources */,
 				FB5A07B52912919100FDD937 /* UserModel.swift in Sources */,
-				FB1D30F52950568C00C77B90 /* (null) in Sources */,
 				FB5A07A0291264BD00FDD937 /* LeaderboardResponseModel.swift in Sources */,
 				FBC65C2D28F55BDF0045F87B /* UserViewModel.swift in Sources */,
 				FBB21ACB2949E17B0089197B /* BackgroundGradient.swift in Sources */,

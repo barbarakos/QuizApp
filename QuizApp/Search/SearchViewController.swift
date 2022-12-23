@@ -84,9 +84,8 @@ class SearchViewController: UIViewController {
     func bindViewModel() {
         quizViewModel
             .$quizError
-            .compactMap { $0 }
             .sink { [weak self] quizError in
-                self?.handleNoQuizzesAvailable(error: quizError)
+//                self?.handleNoQuizzesAvailable(error: quizError)
             }
             .store(in: &cancellables)
 

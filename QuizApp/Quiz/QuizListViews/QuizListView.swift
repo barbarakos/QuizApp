@@ -23,9 +23,8 @@ struct QuizListView: View {
                 .cornerRadius(10)
             }
 
-            if viewModel.quizError != nil {
-                let (title, description) = setErrorView(viewModel.quizError!)
-                ErrorView(title: title, description: description)
+            if let err = viewModel.quizError {
+                ErrorView(title: err.title, description: err.description)
             }
 
             VStack(alignment: .leading) {
@@ -46,15 +45,6 @@ struct QuizListView: View {
         }
         .padding(.horizontal, 10)
         .background(LinearGradient.quizAppGradient)
-    }
-
-    private func setErrorView(_ error: QuizError) -> (String, String) {
-        switch error {
-        case .serverError:
-            return ("Error", "Data can't be reached. Please try again.")
-        case .empty:
-            return ("No data", "There are no available quizzes for this category.")
-        }
     }
 
     private func setSegmentedControlAppearance() {
