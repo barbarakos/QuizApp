@@ -228,7 +228,7 @@ extension SearchViewController: UICollectionViewDelegate {
             else { return nil }
 
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            view.setTitle(title: section.rawValue, color: section.color)
+            view.setTitle(title: section.rawValue, color: section.colorUIKit)
             return view
         }
 

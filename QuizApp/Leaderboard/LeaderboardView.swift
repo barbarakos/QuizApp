@@ -26,7 +26,7 @@ struct LeaderboardView: View {
                 ForEach(viewModel.leaderboard, id: \.index) { model in
                     VStack {
                         HStack {
-                            Text("\(model.index+1)")
+                            Text("\(model.index + 1)")
                                 .foregroundColor(.white)
                                 .font(.system(size: 20))
                                 .fontWeight(.heavy)
