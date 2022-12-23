@@ -36,7 +36,6 @@ struct QuizInfoView: View {
                     .clipped()
 
                 Button("Start Quiz") {
-                    print("Tapped start button!")
                 }
                 .frame(width: 300, height: 50)
                 .background(.white)
