@@ -16,6 +16,10 @@
 		FB1D31272955A5EF00C77B90 /* QuizCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31262955A5EF00C77B90 /* QuizCellView.swift */; };
 		FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31332955C97900C77B90 /* ErrorInfo.swift */; };
 		FB2D54F5290A75BB0071162A /* QuizDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */; };
+		FB1D3112295318F900C77B90 /* QuizDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D3111295318F900C77B90 /* QuizDataObject.swift */; };
+		FB1D3119295319FF00C77B90 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D3118295319FF00C77B90 /* RealmManager.swift */; };
+		FB1D311C295329C200C77B90 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FB1D311B295329C200C77B90 /* Realm */; };
+		FB1D311E295329C200C77B90 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FB1D311D295329C200C77B90 /* RealmSwift */; };
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
 		FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245828EEB8540027EFC7 /* AppRouter.swift */; };
@@ -118,6 +122,8 @@
 		FB1D31262955A5EF00C77B90 /* QuizCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuizCellView.swift; sourceTree = "<group>"; };
 		FB1D31332955C97900C77B90 /* ErrorInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
 		FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDetailsView.swift; sourceTree = "<group>"; };
+		FB1D3111295318F900C77B90 /* QuizDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataObject.swift; sourceTree = "<group>"; };
+		FB1D3118295319FF00C77B90 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
 		FB47245828EEB8540027EFC7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -213,16 +219,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1D311E295329C200C77B90 /* RealmSwift in Frameworks */,
 				FB5A0786290C063900FDD937 /* Factory in Frameworks */,
 				FB8647CF28F829EE001AE89B /* Kingfisher in Frameworks */,
 				FB47247128F0350A0027EFC7 /* Keychain in Frameworks */,
 				FBC5AB1328EC3D5800CBC98A /* SnapKit in Frameworks */,
+				FB1D311C295329C200C77B90 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB1D3110295318E700C77B90 /* Realm */ = {
+			isa = PBXGroup;
+			children = (
+				FB1D3111295318F900C77B90 /* QuizDataObject.swift */,
+				FB1D3118295319FF00C77B90 /* RealmManager.swift */,
+			);
+			path = Realm;
+			sourceTree = "<group>";
+		};
 		FB47245228EEB6190027EFC7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +318,7 @@
 			children = (
 				FBC65C3D28F6F3130045F87B /* ApiClient.swift */,
 				FB8647D228F98E69001AE89B /* AppDependencies.swift */,
+				FB1D3110295318E700C77B90 /* Realm */,
 				FBC65C3428F6D1880045F87B /* Enums */,
 				FB47245528EEB7EA0027EFC7 /* AppRouter */,
 				FB47245A28EECFAD0027EFC7 /* Login */,
@@ -811,6 +829,8 @@
 				FB47247028F0350A0027EFC7 /* Keychain */,
 				FB8647CE28F829EE001AE89B /* Kingfisher */,
 				FB86481E29068A58001AE89B /* Factory */,
+				FB1D311B295329C200C77B90 /* Realm */,
+				FB1D311D295329C200C77B90 /* RealmSwift */,
 			);
 			productName = QuizApp;
 			productReference = FB567F4F28EC0EA200842EF0 /* QuizApp.app */;
@@ -845,6 +865,7 @@
 				FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */,
 				FB8647CD28F829EE001AE89B /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				FB86481D29068A58001AE89B /* XCRemoteSwiftPackageReference "Factory" */,
+				FB1D311A295329C200C77B90 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = FB567F5028EC0EA200842EF0 /* Products */;
 			projectDirPath = "";
@@ -941,6 +962,7 @@
 				FB5A07AB29128D5900FDD937 /* QuizResponseModel.swift in Sources */,
 				FBA619142947116D00446905 /* QuizInfoView.swift in Sources */,
 				FB8647D928FE9B02001AE89B /* QuizClient.swift in Sources */,
+				FB1D3119295319FF00C77B90 /* RealmManager.swift in Sources */,
 				FBF15540291BB03B00E721A6 /* QuizResultViewModel.swift in Sources */,
 				FB5A07A329126EF700FDD937 /* LeaderboardTableViewCell.swift in Sources */,
 				FB5A080029153AA700FDD937 /* DifficultyDataModel.swift in Sources */,
@@ -972,6 +994,7 @@
 				FBF155192918FD1200E721A6 /* QuestionView.swift in Sources */,
 				FB86481829067974001AE89B /* QuizDataSource.swift in Sources */,
 				FB5A07B72912933F00FDD937 /* LoginDataModel.swift in Sources */,
+				FB1D3112295318F900C77B90 /* QuizDataObject.swift in Sources */,
 				FB1D310D2953090100C77B90 /* SearchBar.swift in Sources */,
 				FB5A080229153AB800FDD937 /* DifficultyUseCaseModel.swift in Sources */,
 				FB5A07B52912919100FDD937 /* UserModel.swift in Sources */,
@@ -1191,6 +1214,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		FB1D311A295329C200C77B90 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.15.1;
+			};
+		};
 		FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/GroupeMINASTE/Keychain.swift.git";
@@ -1226,6 +1257,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		FB1D311B295329C200C77B90 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB1D311A295329C200C77B90 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		FB1D311D295329C200C77B90 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FB1D311A295329C200C77B90 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
 		FB47247028F0350A0027EFC7 /* Keychain */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FB47246F28F0350A0027EFC7 /* XCRemoteSwiftPackageReference "Keychain.swift" */;

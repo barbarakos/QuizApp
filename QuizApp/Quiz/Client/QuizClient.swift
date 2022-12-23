@@ -27,7 +27,6 @@ class QuizClient: QuizClientProtocol {
 
     func getAllQuizzes() async throws -> [QuizResponseModel] {
         let path = "\(baseURL)\(quizzesPath)"
-
         return try await apiClient.get(path: path, query: nil)
     }
 

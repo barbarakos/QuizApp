@@ -1,4 +1,7 @@
-enum DifficultyDataModel {
+import RealmSwift
+import Foundation
+
+enum DifficultyDataModel: String, PersistableEnum {
 
     case easy
     case normal
