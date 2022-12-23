@@ -10,38 +10,24 @@ struct SearchView: View {
     var body: some View {
         ScrollView {
             SearchBar(searchText: $searchText)
+
             VStack(alignment: .leading) {
                 ForEach(CategorySection.allCases, id: \.self) { section in
-                    let filteredQuizzes = searchResults
-                        .filter { $0.category == section.rawValue.uppercased() }
-                    if !filteredQuizzes.isEmpty {
-                        Section(header: Text(section.rawValue)
-                            .sectionHeaderStyle(section)) {
-                                ForEach(filteredQuizzes, id: \.self) { quiz in
-                                    QuizCellView(quiz: quiz)
-                                        .onTapGesture {
-                                            viewModel.showQuizDetails(quiz: quiz)
-                                        }
-                                }
-                                .cornerRadius(30)
+                    if !viewModel.searchAndFilteredQuizzes(searchText, section).isEmpty {
+                        Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
+                            ForEach(viewModel.searchAndFilteredQuizzes(searchText, section), id: \.self) { quiz in
+                                QuizCellView(quiz: quiz)
+                                    .onTapGesture {
+                                        viewModel.showQuizDetails(quiz: quiz)
+                                    }
                             }
+                        }
                     }
                 }
-            }
-            .onAppear {
-                viewModel.getAllQuizzes()
             }
         }
         .padding(.horizontal, 10)
         .background(LinearGradient.quizAppGradient)
-    }
-
-    var searchResults: [QuizModel] {
-        if searchText.isEmpty {
-            return viewModel.quizzes
-        } else {
-            return viewModel.quizzes.filter { $0.name.lowercased().contains(searchText.lowercased()) }
-        }
     }
 
 }
