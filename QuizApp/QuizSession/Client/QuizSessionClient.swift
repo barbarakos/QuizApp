@@ -10,7 +10,7 @@ protocol QuizSessionClientProtocol {
 
 class QuizSessionClient: QuizSessionClientProtocol {
 
-    let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
+    let baseURL = "https://five-ios-api.herokuapp.com/"
     let quizPath = "api/v1/quiz/"
 
     private let apiClient: ApiClientProtocol
