@@ -8,7 +8,7 @@ protocol LeaderboardClientProtocol {
 
 class LeaderboardClient: LeaderboardClientProtocol {
 
-    let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
+    let baseURL = "https://five-ios-api.herokuapp.com/"
     let leaderboardPath = "api/v1/quiz/leaderboard"
 
     private let apiClient: ApiClientProtocol

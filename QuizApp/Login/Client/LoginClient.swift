@@ -10,7 +10,7 @@ protocol LoginClientProtocol {
 
 class LoginClient: LoginClientProtocol {
 
-    let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
+    let baseURL = "https://five-ios-api.herokuapp.com/"
     let loginPath = "api/v1/login"
     let checkPath = "api/v1/check"
 
