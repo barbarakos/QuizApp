@@ -1,6 +1,6 @@
 import Combine
 
-class QuizDetailsViewModel {
+class QuizDetailsViewModel: ObservableObject {
 
     @Published var quiz: QuizModel
 

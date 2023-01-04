@@ -29,8 +29,8 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showQuizDetails(quiz: QuizModel) {
-        let vc = Container.quizDetailsViewController(quiz)
-
+        let vc = Container.quizDetailView(quiz)
+        vc.navigationItem.titleView = getPopQuizTitle()
         navigationController.pushViewController(vc, animated: false)
     }
 
