@@ -21,7 +21,7 @@ struct QuizListView: View {
             .cornerRadius(10)
 
             ScrollView {
-                VStack(alignment: .leading, spacing: 20) {
+                LazyVStack(alignment: .leading, spacing: 20) {
                     ForEach(CategorySection.allCases, id: \.self) { section in
                         if !viewModel.filteredQuizzes(section).isEmpty {
                             Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {

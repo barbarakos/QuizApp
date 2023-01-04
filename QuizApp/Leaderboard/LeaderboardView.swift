@@ -23,8 +23,8 @@ struct LeaderboardView: View {
             }
 
             ScrollView {
-                ForEach(viewModel.leaderboard, id: \.index) { model in
-                    VStack {
+                LazyVStack {
+                    ForEach(viewModel.leaderboard, id: \.index) { model in
                         HStack {
                             Text("\(model.index + 1)")
                                 .foregroundColor(.white)
