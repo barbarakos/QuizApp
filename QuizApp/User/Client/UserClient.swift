@@ -10,7 +10,7 @@ protocol UserClientProtocol {
 
 class UserClient: UserClientProtocol {
 
-    let baseURL = "https://five-ios-quiz-app.herokuapp.com/"
+    let baseURL = "https://five-ios-api.herokuapp.com/"
     let userPath = "api/v1/account"
 
     private let apiClient: ApiClientProtocol

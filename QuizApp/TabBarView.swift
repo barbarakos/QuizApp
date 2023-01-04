@@ -5,17 +5,17 @@ struct TabBarView: View {
 
     @State private var selection = 0
 
-    private var quizView: QuizView!
+    private var quizListView: QuizListView!
     private var userView: UserView!
 
-    init(quizView: QuizView, userView: UserView) {
-        self.quizView = quizView
+    init(quizListView: QuizListView, userView: UserView) {
+        self.quizListView = quizListView
         self.userView = userView
     }
 
     var body: some View {
         TabView(selection: $selection) {
-            quizView
+            quizListView
                 .tabItem {
                     Image(systemName: "stopwatch")
                     Text("Quiz")
@@ -41,7 +41,7 @@ struct TabBarView: View {
 struct TabBarView_Previews: PreviewProvider {
 
     static var previews: some View {
-        TabBarView(quizView: Container.quizView(), userView: Container.userView())
+        TabBarView(quizListView: Container.quizListView(), userView: Container.userView())
     }
 
 }

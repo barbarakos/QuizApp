@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 
 enum CategorySection: String, CaseIterable {
@@ -7,7 +8,7 @@ enum CategorySection: String, CaseIterable {
     case music = "Music"
     case sport = "Sport"
 
-    var color: UIColor {
+    var colorUIKit: UIColor {
         switch self {
         case .geography:
             return  UIColor.systemGreen
@@ -17,6 +18,19 @@ enum CategorySection: String, CaseIterable {
             return UIColor.systemRed
         case .sport:
             return UIColor.systemBlue
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .geography:
+            return Color.green
+        case .movies:
+            return Color.yellow
+        case .music:
+            return Color.red
+        case .sport:
+            return Color.blue
         }
     }
 

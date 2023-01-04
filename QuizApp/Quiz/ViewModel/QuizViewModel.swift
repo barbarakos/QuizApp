@@ -1,9 +1,14 @@
 import Combine
+import SwiftUI
 
-class QuizViewModel {
+class QuizViewModel: ObservableObject {
 
     @Published var quizError: QuizError?
     @Published var quizzes: [QuizModel] = []
+    @Published var segmentationSelection: String = "All"
+    @Published var categories = ["All"] + CategorySection.allCases.map {$0.rawValue}
+
+    private var cancellables = Set<AnyCancellable>()
 
     private var router: AppRouterProtocol
     private var useCase: QuizUseCaseProtocol
@@ -11,6 +16,7 @@ class QuizViewModel {
     init(router: AppRouterProtocol, useCase: QuizUseCaseProtocol) {
         self.router = router
         self.useCase = useCase
+        subscriptions()
     }
 
     @MainActor
@@ -43,6 +49,31 @@ class QuizViewModel {
 
     func showQuizDetails(quiz: QuizModel) {
         router.showQuizDetails(quiz: quiz)
+    }
+
+    func filteredQuizzes(_ section: CategorySection) -> [QuizModel] {
+        return quizzes.filter { $0.category == section.rawValue.uppercased() }
+    }
+
+    private func subscriptions() {
+        $segmentationSelection
+            .sink { [weak self] selection in
+                self?.onSelectionChange(selection: selection)
+            }
+            .store(in: &cancellables)
+    }
+
+    private func onSelectionChange(selection: String) {
+        let allCategories = CategorySection.allCases.map { $0.rawValue }
+        if allCategories.contains(selection) {
+            DispatchQueue.main.async { [weak self] in
+                self?.getQuizzes(for: selection.uppercased())
+            }
+        } else {
+            DispatchQueue.main.async { [weak self] in
+                self?.getAllQuizzes()
+            }
+        }
     }
 
 }

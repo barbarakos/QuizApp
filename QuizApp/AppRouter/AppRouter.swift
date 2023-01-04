@@ -22,8 +22,9 @@ class AppRouter: AppRouterProtocol {
 
     func showTabBarControllers() {
         let vc = UIHostingController(rootView: TabBarView(
-            quizView: Container.quizView(),
+            quizListView: Container.quizListView(),
             userView: Container.userView()))
+        vc.navigationItem.titleView = getPopQuizTitle()
         navigationController.setViewControllers([vc], animated: true)
     }
 
@@ -49,6 +50,12 @@ class AppRouter: AppRouterProtocol {
         navigationController.pushViewController(vc, animated: false)
     }
 
+    func showQuizResult(result: Result) {
+        let vc = Container.quizResultViewController(result)
+
+        navigationController.setViewControllers([vc], animated: false)
+    }
+
     private func editNavBar() {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithTransparentBackground()
@@ -58,10 +65,12 @@ class AppRouter: AppRouterProtocol {
         navigationController.navigationBar.tintColor = .white
     }
 
-    func showQuizResult(result: Result) {
-        let vc = Container.quizResultViewController(result)
-
-        navigationController.setViewControllers([vc], animated: false)
+    private func getPopQuizTitle() -> UILabel {
+        let titleLabel = UILabel()
+        titleLabel.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.bold)
+        titleLabel.text = "PopQuiz"
+        titleLabel.textColor = .white
+        return titleLabel
     }
 
 }

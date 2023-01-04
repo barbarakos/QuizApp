@@ -87,12 +87,8 @@ extension Container {
         QuizViewModel(router: appRouter(), useCase: quizUseCase()) as QuizViewModel
     }
 
-    static let quizViewController = Factory {
-        QuizViewController(viewModel: quizViewModel()) as QuizViewController
-    }
-
-    static let quizView = Factory {
-        QuizView(viewModel: quizViewModel()) as QuizView
+    static let quizListView = Factory {
+        QuizListView(viewModel: quizViewModel()) as QuizListView
     }
 
 }
