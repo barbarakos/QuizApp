@@ -126,8 +126,8 @@ extension Container {
         LeaderboardViewModel(router: appRouter(), leaderboardUseCase: leaderboardUseCase(), quizId: quizId)
     }
 
-    static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
-        LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
+    static let leaderboardView = ParameterFactory<Int, UIHostingController> { quizId in
+        UIHostingController(rootView: LeaderboardView(viewModel: leaderboardViewModel(quizId))) as UIHostingController
     }
 
 }

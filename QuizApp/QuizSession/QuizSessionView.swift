@@ -21,28 +21,28 @@ struct QuizSessionView: View {
                     numberOfQuestions: viewModel.quiz.numberOfQuestions)
 
                 VStack(alignment: .leading) {
-                    if viewModel.currentQuestion != nil {
+                    if let currQuestion = Binding<QuestionModel>($viewModel.currentQuestion) {
                         Text(viewModel.questionNumberLabel)
                             .padding(.leading)
                             .font(.system(size: 18))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
 
-                        Text(viewModel.currentQuestion.question)
+                        Text(currQuestion.wrappedValue.question)
                             .font(.system(size: 24))
                             .bold()
                             .foregroundColor(.white)
                             .padding()
 
                         let correctAnswerIndex = getAnswerIndex(
-                            id: viewModel.currentQuestion.correctAnswerId,
-                            answers: viewModel.currentQuestion.answers)
+                            id: currQuestion.wrappedValue.correctAnswerId,
+                            answers: currQuestion.wrappedValue.answers)
 
                         AnswersView(
                             correctAnswerIndex: correctAnswerIndex,
                             nextQuestion: { nextQuestion($0, $1) },
                             numberOfCorrectQuestions: $numberOfCorrectQuestions,
-                            answers: $viewModel.currentQuestion.answers)
+                            answers: currQuestion.answers)
                     }
                 }
             }
@@ -52,7 +52,9 @@ struct QuizSessionView: View {
     }
 
     private func nextQuestion(_ numOfCorrectQuestions: Int, _ colorProgress: Color) {
-        progressColors[viewModel.currentQuestion.index] = colorProgress
+        guard let currQuestion = viewModel.currentQuestion else { return }
+
+        progressColors[currQuestion.index] = colorProgress
         viewModel.nextQuestion(numOfCorrectQuestions: numOfCorrectQuestions)
     }
 
