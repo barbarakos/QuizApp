@@ -1,5 +1,6 @@
-struct LeaderboardModel {
+struct LeaderboardModel: Hashable {
 
+    let index: Int
     let name: String
     let points: Int
 
@@ -7,7 +8,8 @@ struct LeaderboardModel {
 
 extension LeaderboardModel {
 
-    init(from model: LeaderboardUseCaseModel) {
+    init(from model: LeaderboardUseCaseModel, index: Int) {
+        self.index = index
         name = model.name
         points = model.points
     }

@@ -11,6 +11,7 @@ struct TabBarView: View {
     init(quizListView: QuizListView, userView: UserView) {
         self.quizListView = quizListView
         self.userView = userView
+        UITabBar.appearance().backgroundColor = UIColor.white
     }
 
     var body: some View {
