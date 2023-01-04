@@ -11,31 +11,33 @@ struct QuizListView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Picker("", selection: $viewModel.segmentationSelection) {
-                    ForEach(viewModel.categories, id: \.self) { option in
-                        Text(option)
-                    }
+        VStack {
+            Picker("", selection: $viewModel.segmentationSelection) {
+                ForEach(viewModel.categories, id: \.self) { option in
+                    Text(option)
                 }
-                .pickerStyle(SegmentedPickerStyle())
-                .cornerRadius(10)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .cornerRadius(10)
 
-                ForEach(CategorySection.allCases, id: \.self) { section in
-                    if !viewModel.filteredQuizzes(section).isEmpty {
-                        Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
-                            ForEach(viewModel.filteredQuizzes(section), id: \.self) { quiz in
-                                QuizCellView(quiz: quiz)
-                                    .onTapGesture {
-                                        viewModel.showQuizDetails(quiz: quiz)
-                                    }
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 20) {
+                    ForEach(CategorySection.allCases, id: \.self) { section in
+                        if !viewModel.filteredQuizzes(section).isEmpty {
+                            Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
+                                ForEach(viewModel.filteredQuizzes(section), id: \.self) { quiz in
+                                    QuizCellView(quiz: quiz)
+                                        .onTapGesture {
+                                            viewModel.showQuizDetails(quiz: quiz)
+                                        }
+                                }
                             }
                         }
                     }
                 }
             }
-            .padding(.horizontal, 10)
         }
+        .padding(.horizontal, 10)
         .background(LinearGradient.quizAppGradient)
     }
 

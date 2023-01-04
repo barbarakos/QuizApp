@@ -6,23 +6,23 @@ struct QuizDetailView: View {
     @ObservedObject var viewModel: QuizDetailsViewModel
 
     var body: some View {
-        ScrollView {
-            VStack {
-                HStack {
-                    Spacer()
-                    Button {
-                        viewModel.showLeaderboard()
-                    } label: {
-                        Text("Leaderboard")
-                            .font(.system(size: 20))
-                            .fontWeight(.bold)
-                            .underline(color: .white)
-                            .foregroundColor(.white)
-                            .padding(.trailing, 40)
-                    }
+        VStack {
+            HStack {
+                Spacer()
+                Button {
+                    viewModel.showLeaderboard()
+                } label: {
+                    Text("Leaderboard")
+                        .font(.system(size: 20))
+                        .fontWeight(.bold)
+                        .underline(color: .white)
+                        .foregroundColor(.white)
+                        .padding(.trailing, 40)
                 }
-                .padding(.top, 30)
+            }
+            .padding(.top, 30)
 
+            ScrollView {
                 QuizInfoView(quiz: viewModel.quiz) {
                     viewModel.startQuiz()
                 }
