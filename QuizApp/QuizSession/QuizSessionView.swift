@@ -21,27 +21,21 @@ struct QuizSessionView: View {
                     numberOfQuestions: viewModel.quiz.numberOfQuestions)
 
                 VStack(alignment: .leading) {
-                    if let currQuestion = Binding<QuestionModel>($viewModel.currentQuestion) {
+                    if let currQuestion = viewModel.currentQuestion {
                         Text(viewModel.questionNumberLabel)
                             .padding(.leading)
                             .font(.system(size: 18))
                             .fontWeight(.bold)
                             .foregroundColor(.white)
 
-                        Text(currQuestion.wrappedValue.question)
+                        Text(currQuestion.question)
                             .font(.system(size: 24))
                             .bold()
                             .foregroundColor(.white)
                             .padding()
 
-                        let correctAnswerIndex = getAnswerIndex(
-                            id: currQuestion.wrappedValue.correctAnswerId,
-                            answers: currQuestion.wrappedValue.answers)
-
                         AnswersView(
-                            correctAnswerIndex: correctAnswerIndex,
-                            nextQuestion: { nextQuestion($0, $1) },
-                            numberOfCorrectQuestions: $numberOfCorrectQuestions,
+                            nextQuestion: { nextQuestion($0) },
                             answers: currQuestion.answers)
                     }
                 }
@@ -51,11 +45,24 @@ struct QuizSessionView: View {
         .background(LinearGradient.quizAppGradient)
     }
 
-    private func nextQuestion(_ numOfCorrectQuestions: Int, _ colorProgress: Color) {
-        guard let currQuestion = viewModel.currentQuestion else { return }
+    private func nextQuestion(_ index: Int) {
+        guard var currQuestion = viewModel.currentQuestion else { return }
 
-        progressColors[currQuestion.index] = colorProgress
-        viewModel.nextQuestion(numOfCorrectQuestions: numOfCorrectQuestions)
+        let correctAnswerIndex = getAnswerIndex(
+            id: currQuestion.correctAnswerId,
+            answers: currQuestion.answers)
+
+        if index == correctAnswerIndex {
+            viewModel.currentQuestion?.answers[index].color = Color.correct
+            progressColors[currQuestion.index] = Color.correct
+            numberOfCorrectQuestions += 1
+        } else {
+            viewModel.currentQuestion?.answers[correctAnswerIndex].color = Color.correct
+            viewModel.currentQuestion?.answers[index].color = Color.incorrect
+            progressColors[currQuestion.index] = Color.incorrect
+        }
+
+        viewModel.nextQuestion(numOfCorrectQuestions: numberOfCorrectQuestions)
     }
 
     private func getAnswerIndex(id: Int, answers: [AnswerModel]) -> Int {

@@ -46,7 +46,7 @@ class AppRouter: AppRouterProtocol {
 
     func showQuizSession(quiz: QuizModel) {
         let vc = Container.quizSessionView(quiz)
-        vc.navigationItem.titleView = getPopQuizTitle()
+        vc.navigationItem.titleView = getTitleLabel("Pop Quiz")
         navigationController.pushViewController(vc, animated: false)
     }
 
