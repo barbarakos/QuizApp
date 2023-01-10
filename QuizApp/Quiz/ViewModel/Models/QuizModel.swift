@@ -1,4 +1,4 @@
-struct QuizModel {
+struct QuizModel: Identifiable {
 
     let id: Int
     let category: String
