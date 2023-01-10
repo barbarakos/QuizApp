@@ -10,6 +10,7 @@
 		FB1D30E4294B3FCB00C77B90 /* QuizSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30E3294B3FCB00C77B90 /* QuizSessionView.swift */; };
 		FB1D30E9294C820C00C77B90 /* AnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30E8294C820C00C77B90 /* AnswersView.swift */; };
 		FB1D30EB294CA89500C77B90 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30EA294CA89500C77B90 /* ProgressView.swift */; };
+		FB1D310529506F6000C77B90 /* QuizResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D310429506F6000C77B90 /* QuizResultView.swift */; };
 		FB1D31232954983100C77B90 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31222954983100C77B90 /* Color+Extensions.swift */; };
 		FB2D54F5290A75BB0071162A /* QuizDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */; };
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
@@ -106,7 +107,6 @@
 		FBF1551B291904C900E721A6 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */; };
 		FBF1551F29190EE800E721A6 /* QuizSessionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1551E29190EE800E721A6 /* QuizSessionViewModel.swift */; };
 		FBF15522291A728C00E721A6 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF15521291A728C00E721A6 /* UIColor+Extensions.swift */; };
-		FBF1553E291BA67700E721A6 /* QuizResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1553D291BA67700E721A6 /* QuizResultViewController.swift */; };
 		FBF15540291BB03B00E721A6 /* QuizResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1553F291BB03B00E721A6 /* QuizResultViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +114,7 @@
 		FB1D30E3294B3FCB00C77B90 /* QuizSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionView.swift; sourceTree = "<group>"; };
 		FB1D30E8294C820C00C77B90 /* AnswersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersView.swift; sourceTree = "<group>"; };
 		FB1D30EA294CA89500C77B90 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
+		FB1D310429506F6000C77B90 /* QuizResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultView.swift; sourceTree = "<group>"; };
 		FB1D31222954983100C77B90 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FB2D54F4290A75BB0071162A /* QuizDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDetailsView.swift; sourceTree = "<group>"; };
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
@@ -208,7 +209,6 @@
 		FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		FBF1551E29190EE800E721A6 /* QuizSessionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionViewModel.swift; sourceTree = "<group>"; };
 		FBF15521291A728C00E721A6 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
-		FBF1553D291BA67700E721A6 /* QuizResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultViewController.swift; sourceTree = "<group>"; };
 		FBF1553F291BB03B00E721A6 /* QuizResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizResultViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -379,9 +379,9 @@
 			isa = PBXGroup;
 			children = (
 				FB1D30E8294C820C00C77B90 /* AnswersView.swift */,
+				FB1D310429506F6000C77B90 /* QuizResultView.swift */,
 				FB1D30E3294B3FCB00C77B90 /* QuizSessionView.swift */,
 				FB1D30EA294CA89500C77B90 /* ProgressView.swift */,
-				FB5A07C52913B59100FDD937 /* ViewControllers */,
 				FB5A07C42913B58400FDD937 /* ViewModel */,
 				FB5A07C32913B57E00FDD937 /* UseCase */,
 				FB5A07C22913B57700FDD937 /* DataSource */,
@@ -425,14 +425,6 @@
 				FBF1553F291BB03B00E721A6 /* QuizResultViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		FB5A07C52913B59100FDD937 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				FBF1553D291BA67700E721A6 /* QuizResultViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		FB5A07E52913DF1D00FDD937 /* Search */ = {
@@ -920,7 +912,6 @@
 				FB8647DB29000D01001AE89B /* DifficultyView.swift in Sources */,
 				FB5A078A290C06FB00FDD937 /* CategorySection.swift in Sources */,
 				FB5A07A929127E9C00FDD937 /* LeaderboardModel.swift in Sources */,
-				FBF1553E291BA67700E721A6 /* QuizResultViewController.swift in Sources */,
 				FBF1551B291904C900E721A6 /* UIButton+Extensions.swift in Sources */,
 				FB567F5328EC0EA200842EF0 /* AppDelegate.swift in Sources */,
 				FB5A079A2912604400FDD937 /* LeaderboardUseCase.swift in Sources */,
@@ -946,6 +937,7 @@
 				FB1D30E4294B3FCB00C77B90 /* QuizSessionView.swift in Sources */,
 				FB8647D928FE9B02001AE89B /* QuizClient.swift in Sources */,
 				FBF15540291BB03B00E721A6 /* QuizResultViewModel.swift in Sources */,
+				FB1D310529506F6000C77B90 /* QuizResultView.swift in Sources */,
 				FB5A080029153AA700FDD937 /* DifficultyDataModel.swift in Sources */,
 				FBC65C2728F5582C0045F87B /* TabBarController.swift in Sources */,
 				FB8647D328F98E69001AE89B /* AppDependencies.swift in Sources */,
