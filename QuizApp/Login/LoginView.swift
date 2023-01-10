@@ -10,13 +10,9 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(gradient:
-                            Gradient(colors:
-                                        [Color(red: 0.453, green: 0.308, blue: 0.637),
-                                         Color(red: 0.154, green: 0.185, blue: 0.463)]),
-                           startPoint: .top,
-                           endPoint: .bottom)
-            .ignoresSafeArea()
+            LinearGradient
+                .quizAppGradient
+                .ignoresSafeArea()
             ScrollView(.vertical) {
                 VStack {
                     Text("Pop Quiz")
@@ -76,6 +72,7 @@ struct LoginView: View {
                 .padding(.bottom, 60)
             }
         }
+        .errorAlert(error: $viewModel.err)
     }
 
 }
