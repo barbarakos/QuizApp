@@ -126,8 +126,8 @@ extension Container {
         LeaderboardViewModel(router: appRouter(), leaderboardUseCase: leaderboardUseCase(), quizId: quizId)
     }
 
-    static let leaderboardViewController = ParameterFactory<Int, LeaderboardViewController> { quizId in
-        LeaderboardViewController(viewModel: leaderboardViewModel(quizId))
+    static let leaderboardView = ParameterFactory<Int, UIHostingController> { quizId in
+        UIHostingController(rootView: LeaderboardView(viewModel: leaderboardViewModel(quizId))) as UIHostingController
     }
 
 }
@@ -155,8 +155,8 @@ extension Container {
             quiz: quiz) as QuizSessionViewModel
     }
 
-    static let quizSessionViewController = ParameterFactory<QuizModel, QuizSessionViewController> { quiz in
-        QuizSessionViewController(viewModel: quizSessionViewModel(quiz)) as QuizSessionViewController
+    static let quizSessionView = ParameterFactory<QuizModel, UIHostingController> { quiz in
+        UIHostingController(rootView: QuizSessionView(viewModel: quizSessionViewModel(quiz))) as UIHostingController
     }
 
     static let quizResultViewModel = ParameterFactory<Result, QuizResultViewModel> { result in
@@ -164,9 +164,8 @@ extension Container {
                             result: result) as QuizResultViewModel
     }
 
-    static let quizResultViewController = ParameterFactory<Result, QuizResultViewController> { result in
-        QuizResultViewController(
-            viewModel: quizResultViewModel(result)) as QuizResultViewController
+    static let quizResultView = ParameterFactory<Result, UIHostingController> { result in
+        UIHostingController(rootView: QuizResultView(viewModel: quizResultViewModel(result))) as UIHostingController
     }
 
 }
