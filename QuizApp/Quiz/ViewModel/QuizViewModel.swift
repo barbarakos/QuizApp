@@ -3,7 +3,7 @@ import SwiftUI
 
 class QuizViewModel: ObservableObject {
 
-    @Published var quizError: QuizError?
+    @Published var quizError: ErrorInfo?
     @Published var quizzes: [QuizModel] = []
     @Published var segmentationSelection: String = "All"
     @Published var categories = ["All"] + CategorySection.allCases.map {$0.rawValue}
@@ -24,11 +24,11 @@ class QuizViewModel: ObservableObject {
         Task {
             do {
                 let fetchedQuizzes = try await useCase.getAllQuizzes()
-                quizError = fetchedQuizzes.isEmpty ? .empty : nil
+                quizError = fetchedQuizzes.isEmpty ? QuizError.empty.info : nil
                 quizzes = fetchedQuizzes.map { QuizModel(from: $0) }
             } catch {
                 quizzes.removeAll()
-                quizError = QuizError.serverError
+                quizError = QuizError.serverError.info
             }
         }
     }
@@ -38,11 +38,11 @@ class QuizViewModel: ObservableObject {
         Task {
             do {
                 let fetchedQuizzes = try await useCase.getQuizzes(for: category)
-                quizError = fetchedQuizzes.isEmpty ? .empty : nil
+                quizError = fetchedQuizzes.isEmpty ? QuizError.empty.info : nil
                 quizzes = fetchedQuizzes.map { QuizModel(from: $0) }
             } catch {
                 quizzes.removeAll()
-                quizError = QuizError.serverError
+                quizError = QuizError.serverError.info
             }
         }
     }

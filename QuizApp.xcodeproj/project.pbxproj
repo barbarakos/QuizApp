@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB1D31072952F28F00C77B90 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31062952F28F00C77B90 /* ErrorView.swift */; };
+		FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31332955C97900C77B90 /* ErrorInfo.swift */; };
 		FB1D30E4294B3FCB00C77B90 /* QuizSessionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30E3294B3FCB00C77B90 /* QuizSessionView.swift */; };
 		FB1D30E9294C820C00C77B90 /* AnswersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30E8294C820C00C77B90 /* AnswersView.swift */; };
 		FB1D30EB294CA89500C77B90 /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D30EA294CA89500C77B90 /* ProgressView.swift */; };
@@ -111,6 +113,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB1D31062952F28F00C77B90 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		FB1D31332955C97900C77B90 /* ErrorInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
 		FB1D30E3294B3FCB00C77B90 /* QuizSessionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSessionView.swift; sourceTree = "<group>"; };
 		FB1D30E8294C820C00C77B90 /* AnswersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswersView.swift; sourceTree = "<group>"; };
 		FB1D30EA294CA89500C77B90 /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
@@ -661,6 +665,7 @@
 			children = (
 				FB5A0789290C06FB00FDD937 /* CategorySection.swift */,
 				FBC8063D290BE962007E717B /* QuizError.swift */,
+				FB1D31332955C97900C77B90 /* ErrorInfo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -741,6 +746,7 @@
 		FBA619112947101C00446905 /* QuizListViews */ = {
 			isa = PBXGroup;
 			children = (
+				FB1D31062952F28F00C77B90 /* ErrorView.swift */,
 				FBA619052941EC0C00446905 /* QuizListView.swift */,
 				FBA619072942169B00446905 /* DifficultyViews.swift */,
 				FBA61909294216FC00446905 /* QuizCellView.swift */,
@@ -887,6 +893,7 @@
 				FB8647CC28F82156001AE89B /* QuizListCollectionViewCell.swift in Sources */,
 				FBF155152918F78400E721A6 /* Gesture+Extensions.swift in Sources */,
 				FBC8063C290BE382007E717B /* QuizDetailsViewModel.swift in Sources */,
+				FB1D31072952F28F00C77B90 /* ErrorView.swift in Sources */,
 				FB47246E28F034C90027EFC7 /* SecureStorage.swift in Sources */,
 				FB5A07A729127E7700FDD937 /* LeaderboardDataModel.swift in Sources */,
 				FB5A07B12912916800FDD937 /* UserDataModel.swift in Sources */,
@@ -950,6 +957,7 @@
 				FB8648162906793B001AE89B /* LoginDataSource.swift in Sources */,
 				FB1D31252955A5C100C77B90 /* QuizListView.swift in Sources */,
 				FB5A07DE2913BDF300FDD937 /* QuestionModel.swift in Sources */,
+				FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */,
 				FBC65C2F28F56F360045F87B /* UserUseCase.swift in Sources */,
 				FB5A079629125FC400FDD937 /* LeaderboardDataSource.swift in Sources */,
 				FB5A07EA291517F700FDD937 /* SearchBarView.swift in Sources */,

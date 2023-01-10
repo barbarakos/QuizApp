@@ -18,7 +18,12 @@ struct QuizListView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
+            .padding(.vertical, 7)
             .cornerRadius(10)
+
+            if let err = viewModel.quizError {
+                ErrorView(title: err.title, description: err.description)
+            }
 
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 20) {
