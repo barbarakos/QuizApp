@@ -23,8 +23,10 @@ struct QuizDetailView: View {
             .padding(.top, 30)
 
             ScrollView {
-                QuizInfoView(quiz: viewModel.quiz)
-                    .padding(.horizontal, 30)
+                QuizInfoView(quiz: viewModel.quiz) {
+                    viewModel.startQuiz()
+                }
+                .padding(.horizontal, 30)
             }
         }
         .background(LinearGradient.quizAppGradient)
