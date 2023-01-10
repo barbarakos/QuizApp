@@ -11,7 +11,7 @@ struct SearchView: View {
         ScrollView {
             SearchBar(searchText: $searchText)
 
-            VStack(alignment: .leading) {
+            LazyVStack(alignment: .leading) {
                 ForEach(CategorySection.allCases, id: \.self) { section in
                     if !viewModel.searchAndFilteredQuizzes(searchText, section).isEmpty {
                         Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {

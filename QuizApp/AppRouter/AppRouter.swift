@@ -25,19 +25,19 @@ class AppRouter: AppRouterProtocol {
             quizListView: Container.quizListView(),
             searchView: Container.searchView(),
             userView: Container.userView()))
-        vc.navigationItem.titleView = getPopQuizTitle()
+        vc.navigationItem.titleView = getTitleLabel("Pop Quiz")
         navigationController.setViewControllers([vc], animated: true)
     }
 
     func showQuizDetails(quiz: QuizModel) {
         let vc = Container.quizDetailView(quiz)
-        vc.navigationItem.titleView = getPopQuizTitle()
+        vc.navigationItem.titleView = getTitleLabel("Pop Quiz")
         navigationController.pushViewController(vc, animated: false)
     }
 
     func showLeaderboard(quizId: Int) {
-        let vc = Container.leaderboardViewController(quizId)
-
+        let vc = Container.leaderboardView(quizId)
+        vc.navigationItem.titleView = getTitleLabel("Leaderboard")
         navigationController.pushViewController(vc, animated: true)
     }
 
@@ -46,13 +46,13 @@ class AppRouter: AppRouterProtocol {
     }
 
     func showQuizSession(quiz: QuizModel) {
-        let vc = Container.quizSessionViewController(quiz)
-
+        let vc = Container.quizSessionView(quiz)
+        vc.navigationItem.titleView = getTitleLabel("Pop Quiz")
         navigationController.pushViewController(vc, animated: false)
     }
 
     func showQuizResult(result: Result) {
-        let vc = Container.quizResultViewController(result)
+        let vc = Container.quizResultView(result)
 
         navigationController.setViewControllers([vc], animated: false)
     }
@@ -66,10 +66,10 @@ class AppRouter: AppRouterProtocol {
         navigationController.navigationBar.tintColor = .white
     }
 
-    private func getPopQuizTitle() -> UILabel {
+    private func getTitleLabel(_ text: String) -> UILabel {
         let titleLabel = UILabel()
         titleLabel.font = UIFont.systemFont(ofSize: 26, weight: UIFont.Weight.bold)
-        titleLabel.text = "PopQuiz"
+        titleLabel.text = text
         titleLabel.textColor = .white
         return titleLabel
     }

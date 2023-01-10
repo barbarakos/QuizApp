@@ -11,31 +11,31 @@ struct QuizListView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 20) {
-                Picker("", selection: $viewModel.segmentationSelection) {
-                    ForEach(viewModel.categories, id: \.self) { option in
-                        Text(option)
-                    }
+        VStack {
+            Picker("", selection: $viewModel.segmentationSelection) {
+                ForEach(viewModel.categories, id: \.self) { option in
+                    Text(option)
                 }
-                .padding(.vertical, 7)
-                .pickerStyle(SegmentedPickerStyle())
-                .cornerRadius(10)
             }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding(.vertical, 7)
+            .cornerRadius(10)
 
             if let err = viewModel.quizError {
                 ErrorView(title: err.title, description: err.description)
             }
 
-            VStack(alignment: .leading) {
-                ForEach(CategorySection.allCases, id: \.self) { section in
-                    if !viewModel.filteredQuizzes(section).isEmpty {
-                        Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
-                            ForEach(viewModel.filteredQuizzes(section), id: \.self) { quiz in
-                                QuizCellView(quiz: quiz)
-                                    .onTapGesture {
-                                        viewModel.showQuizDetails(quiz: quiz)
-                                    }
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 20) {
+                    ForEach(CategorySection.allCases, id: \.self) { section in
+                        if !viewModel.filteredQuizzes(section).isEmpty {
+                            Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
+                                ForEach(viewModel.filteredQuizzes(section), id: \.self) { quiz in
+                                    QuizCellView(quiz: quiz)
+                                        .onTapGesture {
+                                            viewModel.showQuizDetails(quiz: quiz)
+                                        }
+                                }
                             }
                         }
                     }
