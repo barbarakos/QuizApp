@@ -4,6 +4,7 @@ enum ValidationError {
 
     case noAccount
     case emptyUsername
+    case serverError
 
     var errorTitle: String {
         switch self {
@@ -11,6 +12,8 @@ enum ValidationError {
             return "Incorrect email/password"
         case .emptyUsername:
             return "Name cannot be empty!"
+        case .serverError:
+            return "Server error!"
         }
     }
 
@@ -20,6 +23,8 @@ enum ValidationError {
             return "Try again."
         case .emptyUsername:
             return "Please enter a valid name."
+        case .serverError:
+            return "There was a problem connecting to server."
         }
     }
 

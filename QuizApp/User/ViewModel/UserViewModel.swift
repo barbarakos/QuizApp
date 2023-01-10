@@ -30,7 +30,7 @@ class UserViewModel: ObservableObject {
                     self.name = user.name
                 }
             } catch {
-                print(error)
+                err = ValidationError.serverError
             }
         }
     }
@@ -46,7 +46,7 @@ class UserViewModel: ObservableObject {
             do {
                 try await useCase.changeName(name: name)
             } catch {
-                print(error)
+                err = ValidationError.serverError
             }
         }
     }
