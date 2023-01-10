@@ -4,6 +4,7 @@ import Kingfisher
 struct QuizInfoView: View {
 
     let quiz: QuizModel!
+    let startQuiz: () -> Void
 
     var body: some View {
         ZStack {
@@ -36,6 +37,7 @@ struct QuizInfoView: View {
                     .clipped()
 
                 Button("Start Quiz") {
+                    startQuiz()
                 }
                 .frame(width: 300, height: 50)
                 .background(.white)
@@ -62,7 +64,8 @@ struct QuizInfoView_Previews: PreviewProvider {
             difficulty: DifficultyModel.normal,
             imageUrl: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Football_Pallo_valmiina-cropped.jpg",
             name: "Football",
-        numberOfQuestions: 5))
+            numberOfQuestions: 5),
+            startQuiz: {})
     }
 
 }

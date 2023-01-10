@@ -1,14 +1,18 @@
 import Combine
+import SwiftUI
 import UIKit
 
-class QuizSessionViewModel {
+class QuizSessionViewModel: ObservableObject {
 
-    @Published var currentQuestion: QuestionModel!
+    @Published var currentQuestion: QuestionModel?
+    var questionNumberLabel: String = ""
     var quiz: QuizModel
-    var questions: [QuestionModel] = []
 
     private let router: AppRouterProtocol
     private let useCase: QuizSessionUseCaseProtocol
+
+    private var cancellables = Set<AnyCancellable>()
+    private var questions: [QuestionModel] = []
 
     private var sessionId: String!
 
@@ -17,6 +21,7 @@ class QuizSessionViewModel {
         self.useCase = quizSessionUseCase
         self.quiz = quiz
         fetchQuestions()
+        setBindings()
     }
 
     func fetchQuestions() {
@@ -36,12 +41,14 @@ class QuizSessionViewModel {
     }
 
     func nextQuestion(numOfCorrectQuestions: Int) {
-        if currentQuestion.index+1 < questions.count {
+        guard let currQuestion = currentQuestion else { return }
+
+        if currQuestion.index+1 < questions.count {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 guard let self = self else { return }
 
-                self.currentQuestion = self.questions[self.currentQuestion.index+1]
+                self.currentQuestion = self.questions[currQuestion.index+1]
             }
         } else {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -66,6 +73,17 @@ class QuizSessionViewModel {
     func goToQuizResult(numOfCorrectQuestions: Int) {
         router.showQuizResult(
             result: Result(numOfCorrectQuestions: numOfCorrectQuestions, numOfQuestions: questions.count))
+    }
+
+    private func setBindings() {
+        $currentQuestion
+            .compactMap { $0 }
+            .sink { [weak self] currentQuestion in
+                guard let self = self else { return }
+
+                self.questionNumberLabel = "\(currentQuestion.index + 1)/\(self.quiz.numberOfQuestions)"
+            }
+            .store(in: &cancellables)
     }
 
 }

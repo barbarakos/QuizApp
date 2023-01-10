@@ -1,14 +1,14 @@
-class QuizResultViewModel {
+import SwiftUI
 
-    let numberOfCorrectQuestions: Int
-    let numberOfQuestions: Int
+class QuizResultViewModel: ObservableObject {
+
+    @Published var result: String
 
     private let router: AppRouterProtocol
 
     init(router: AppRouterProtocol, result: Result) {
         self.router = router
-        self.numberOfCorrectQuestions = result.numOfCorrectQuestions
-        self.numberOfQuestions = result.numOfQuestions
+        self.result = "\(result.numOfCorrectQuestions)/\(result.numOfQuestions)"
     }
 
     func finishQuiz() {
