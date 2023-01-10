@@ -46,7 +46,7 @@ struct QuizSessionView: View {
     }
 
     private func nextQuestion(_ index: Int) {
-        guard var currQuestion = viewModel.currentQuestion else { return }
+        guard let currQuestion = viewModel.currentQuestion else { return }
 
         let correctAnswerIndex = getAnswerIndex(
             id: currQuestion.correctAnswerId,

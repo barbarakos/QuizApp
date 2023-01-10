@@ -23,6 +23,7 @@ class AppRouter: AppRouterProtocol {
     func showTabBarControllers() {
         let vc = UIHostingController(rootView: TabBarView(
             quizListView: Container.quizListView(),
+            searchView: Container.searchView(),
             userView: Container.userView()))
         vc.navigationItem.titleView = getTitleLabel("Pop Quiz")
         navigationController.setViewControllers([vc], animated: true)

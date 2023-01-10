@@ -63,6 +63,15 @@ class QuizViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    func searchAndFilteredQuizzes(_ searchText: String, _ section: CategorySection) -> [QuizModel] {
+        if searchText.isEmpty {
+            return filteredQuizzes(section)
+        } else {
+            let searchedQuizzes = quizzes.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+            return searchedQuizzes.filter { $0.category == section.rawValue.uppercased() }
+        }
+    }
+
     private func onSelectionChange(selection: String) {
         let allCategories = CategorySection.allCases.map { $0.rawValue }
         if allCategories.contains(selection) {
