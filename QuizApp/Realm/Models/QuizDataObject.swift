@@ -6,7 +6,7 @@ class QuizDataObject: Object {
     @Persisted(primaryKey: true) var id: Int
     @Persisted var category: String
     @Persisted var quizDescription: String
-    @Persisted var difficulty: DifficultyDataModel
+    @Persisted var difficulty: DifficultyDataObject
     @Persisted var imageUrl: String
     @Persisted var name: String
     @Persisted var numberOfQuestions: Int
@@ -15,13 +15,13 @@ class QuizDataObject: Object {
 
 extension QuizDataObject {
 
-    convenience init(from quiz: QuizDataModel) {
+    convenience init(from quiz: QuizRepoModel) {
         self.init()
 
         id = quiz.id
         category = quiz.category
         quizDescription = quiz.description
-        difficulty = quiz.difficulty
+        difficulty = DifficultyDataObject(from: quiz.difficulty)
         imageUrl = quiz.imageUrl
         name = quiz.name
         numberOfQuestions = quiz.numberOfQuestions

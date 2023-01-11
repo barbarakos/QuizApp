@@ -8,7 +8,7 @@ enum DifficultyUseCaseModel {
 
 extension DifficultyUseCaseModel {
 
-    init(from model: DifficultyDataModel) {
+    init(from model: DifficultyRepoModel) {
         switch model {
         case .easy:
             self = .easy

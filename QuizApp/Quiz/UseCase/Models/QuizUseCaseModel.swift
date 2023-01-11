@@ -12,7 +12,7 @@ struct QuizUseCaseModel {
 
 extension QuizUseCaseModel {
 
-    init(from model: QuizDataModel) {
+    init(from model: QuizRepoModel) {
         id = model.id
         category = model.category
         description = model.description

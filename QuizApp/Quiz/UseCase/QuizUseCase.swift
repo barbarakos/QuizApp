@@ -1,27 +1,26 @@
 protocol QuizUseCaseProtocol {
 
     func getQuizzes(for category: String) async throws -> [QuizUseCaseModel]
+
     func getAllQuizzes() async throws -> [QuizUseCaseModel]
 
 }
 
 class QuizUseCase: QuizUseCaseProtocol {
 
-    private var dataSource: QuizRepositoryProtocol
+    private var repository: QuizRepositoryProtocol
 
-    init(dataSource: QuizRepositoryProtocol) {
-        self.dataSource = dataSource
+    init(repository: QuizRepositoryProtocol) {
+        self.repository = repository
     }
 
-    @MainActor
     func getQuizzes(for category: String) async throws -> [QuizUseCaseModel] {
-        return try await dataSource.getQuizzes(for: category)
+        return try await repository.getQuizzes(for: category)
             .map { QuizUseCaseModel(from: $0) }
     }
 
-    @MainActor
     func getAllQuizzes() async throws -> [QuizUseCaseModel] {
-        return try await dataSource.getAllQuizzes()
+        return try await repository.getAllQuizzes()
             .map { QuizUseCaseModel(from: $0) }
     }
 

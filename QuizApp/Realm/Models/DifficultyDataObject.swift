@@ -1,6 +1,7 @@
 import Foundation
+import RealmSwift
 
-enum DifficultyDataModel {
+enum DifficultyDataObject: String, PersistableEnum {
 
     case easy
     case normal
@@ -8,9 +9,9 @@ enum DifficultyDataModel {
 
 }
 
-extension DifficultyDataModel {
+extension DifficultyDataObject {
 
-    init(from model: DifficultyResponseModel) {
+    init(from model: DifficultyRepoModel) {
         switch model {
         case .easy:
             self = .easy

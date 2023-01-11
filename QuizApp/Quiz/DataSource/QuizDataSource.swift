@@ -14,24 +14,13 @@ class QuizDataSource: QuizDataSourceProtocol {
         self.quizClient = quizClient
     }
 
-    @MainActor
     func getQuizzes(for category: String) async throws -> [QuizDataModel] {
-        do {
-            let quizzes = try await quizClient.getQuizzes(for: category).map { QuizDataModel(from: $0) }
-            return quizzes
-        } catch let error {
-            throw error
-        }
+        return try await quizClient.getQuizzes(for: category).map { QuizDataModel(from: $0) }
+
     }
 
-    @MainActor
     func getAllQuizzes() async throws -> [QuizDataModel] {
-        do {
-            let quizzes = try await quizClient.getAllQuizzes().map { QuizDataModel(from: $0) }
-            return quizzes
-        } catch let error {
-            throw error
-        }
+        return try await quizClient.getAllQuizzes().map { QuizDataModel(from: $0) }
     }
 
 }

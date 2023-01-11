@@ -22,14 +22,4 @@ extension QuizDataModel {
         numberOfQuestions = model.numberOfQuestions
     }
 
-    init(from model: QuizDataObject) {
-        id = model.id
-        category = model.category
-        description = model.quizDescription
-        difficulty = model.difficulty
-        imageUrl = model.imageUrl
-        name = model.name
-        numberOfQuestions = model.numberOfQuestions
-    }
-
 }
