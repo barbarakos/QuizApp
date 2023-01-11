@@ -4,8 +4,8 @@ import UIKit
 
 extension Container {
 
-    static let realmManager = Factory(scope: .singleton) {
-        RealmManager() as RealmManagerProtocol
+    static let realmDataSource = Factory(scope: .singleton) {
+        RealmDataSource() as RealmDataSourceProtocol
     }
 
     static let appRouter = Factory(scope: .singleton) {
@@ -80,11 +80,15 @@ extension Container {
     }
 
     static let quizDataSource = Factory(scope: .singleton) {
-        QuizDataSource(quizClient: quizClient(), databaseManager: realmManager()) as QuizDataSourceProtocol
+        QuizDataSource(quizClient: quizClient()) as QuizDataSourceProtocol
+    }
+
+    static let quizRepository = Factory(scope: .singleton) {
+        QuizRepository(localDataSource: realmDataSource(), remoteDataSource: quizDataSource()) as QuizRepositoryProtocol
     }
 
     static let quizUseCase = Factory(scope: .singleton) {
-        QuizUseCase(dataSource: quizDataSource()) as QuizUseCaseProtocol
+        QuizUseCase(dataSource: quizRepository()) as QuizUseCaseProtocol
     }
 
     static let quizViewModel = Factory {

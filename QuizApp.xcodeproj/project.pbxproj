@@ -14,12 +14,12 @@
 		FB1D31072952F28F00C77B90 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31062952F28F00C77B90 /* ErrorView.swift */; };
 		FB1D310B2953027900C77B90 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D310A2953027900C77B90 /* SearchView.swift */; };
 		FB1D310D2953090100C77B90 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D310C2953090100C77B90 /* SearchBar.swift */; };
-		FB1D31232954983100C77B90 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31222954983100C77B90 /* Color+Extensions.swift */; };
-		FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31332955C97900C77B90 /* ErrorInfo.swift */; };
 		FB1D3112295318F900C77B90 /* QuizDataObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D3111295318F900C77B90 /* QuizDataObject.swift */; };
-		FB1D3119295319FF00C77B90 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D3118295319FF00C77B90 /* RealmManager.swift */; };
+		FB1D3119295319FF00C77B90 /* RealmDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D3118295319FF00C77B90 /* RealmDataSource.swift */; };
 		FB1D311C295329C200C77B90 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FB1D311B295329C200C77B90 /* Realm */; };
 		FB1D311E295329C200C77B90 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FB1D311D295329C200C77B90 /* RealmSwift */; };
+		FB1D31232954983100C77B90 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31222954983100C77B90 /* Color+Extensions.swift */; };
+		FB1D31342955C97900C77B90 /* ErrorInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB1D31332955C97900C77B90 /* ErrorInfo.swift */; };
 		FB47245428EEB6440027EFC7 /* ConstructViewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */; };
 		FB47245728EEB8000027EFC7 /* AppRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */; };
 		FB47245928EEB8540027EFC7 /* AppRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB47245828EEB8540027EFC7 /* AppRouter.swift */; };
@@ -103,6 +103,7 @@
 		FBC65C3C28F6F12A0045F87B /* UserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C3B28F6F12A0045F87B /* UserResponseModel.swift */; };
 		FBC65C3E28F6F3130045F87B /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC65C3D28F6F3130045F87B /* ApiClient.swift */; };
 		FBC8063E290BE962007E717B /* QuizError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8063D290BE962007E717B /* QuizError.swift */; };
+		FBE1278F296EA51800421C2B /* QuizRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE1278E296EA51800421C2B /* QuizRepository.swift */; };
 		FBF155152918F78400E721A6 /* Gesture+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF155142918F78400E721A6 /* Gesture+Extensions.swift */; };
 		FBF155172918F8BC00E721A6 /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF155162918F8BC00E721A6 /* UIControl+Extensions.swift */; };
 		FBF1551B291904C900E721A6 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */; };
@@ -119,10 +120,10 @@
 		FB1D31062952F28F00C77B90 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		FB1D310A2953027900C77B90 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		FB1D310C2953090100C77B90 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		FB1D3111295318F900C77B90 /* QuizDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataObject.swift; sourceTree = "<group>"; };
+		FB1D3118295319FF00C77B90 /* RealmDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDataSource.swift; sourceTree = "<group>"; };
 		FB1D31222954983100C77B90 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		FB1D31332955C97900C77B90 /* ErrorInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfo.swift; sourceTree = "<group>"; };
-		FB1D3111295318F900C77B90 /* QuizDataObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizDataObject.swift; sourceTree = "<group>"; };
-		FB1D3118295319FF00C77B90 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		FB47245328EEB6440027EFC7 /* ConstructViewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstructViewsProtocol.swift; sourceTree = "<group>"; };
 		FB47245628EEB8000027EFC7 /* AppRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouterProtocol.swift; sourceTree = "<group>"; };
 		FB47245828EEB8540027EFC7 /* AppRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouter.swift; sourceTree = "<group>"; };
@@ -204,6 +205,7 @@
 		FBC65C3B28F6F12A0045F87B /* UserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponseModel.swift; sourceTree = "<group>"; };
 		FBC65C3D28F6F3130045F87B /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
 		FBC8063D290BE962007E717B /* QuizError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizError.swift; sourceTree = "<group>"; };
+		FBE1278E296EA51800421C2B /* QuizRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizRepository.swift; sourceTree = "<group>"; };
 		FBF155142918F78400E721A6 /* Gesture+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gesture+Extensions.swift"; sourceTree = "<group>"; };
 		FBF155162918F8BC00E721A6 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
@@ -233,7 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				FB1D3111295318F900C77B90 /* QuizDataObject.swift */,
-				FB1D3118295319FF00C77B90 /* RealmManager.swift */,
+				FB1D3118295319FF00C77B90 /* RealmDataSource.swift */,
 			);
 			path = Realm;
 			sourceTree = "<group>";
@@ -663,6 +665,7 @@
 			children = (
 				FB5A07EF291536BB00FDD937 /* Models */,
 				FB86481729067974001AE89B /* QuizDataSource.swift */,
+				FBE1278E296EA51800421C2B /* QuizRepository.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -930,7 +933,7 @@
 				FBA619142947116D00446905 /* QuizInfoView.swift in Sources */,
 				FB1D30E4294B3FCB00C77B90 /* QuizSessionView.swift in Sources */,
 				FB8647D928FE9B02001AE89B /* QuizClient.swift in Sources */,
-				FB1D3119295319FF00C77B90 /* RealmManager.swift in Sources */,
+				FB1D3119295319FF00C77B90 /* RealmDataSource.swift in Sources */,
 				FBF15540291BB03B00E721A6 /* QuizResultViewModel.swift in Sources */,
 				FB1D310529506F6000C77B90 /* QuizResultView.swift in Sources */,
 				FB5A080029153AA700FDD937 /* DifficultyDataModel.swift in Sources */,
@@ -967,6 +970,7 @@
 				FB1D30E9294C820C00C77B90 /* AnswersView.swift in Sources */,
 				FB5A07B52912919100FDD937 /* UserModel.swift in Sources */,
 				FB5A07A0291264BD00FDD937 /* LeaderboardResponseModel.swift in Sources */,
+				FBE1278F296EA51800421C2B /* QuizRepository.swift in Sources */,
 				FBC65C2D28F55BDF0045F87B /* UserViewModel.swift in Sources */,
 				FBB21ACB2949E17B0089197B /* BackgroundGradient.swift in Sources */,
 				FB47246828EF35B70027EFC7 /* LoginViewModel.swift in Sources */,

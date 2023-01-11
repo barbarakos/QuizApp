@@ -7,9 +7,9 @@ protocol QuizUseCaseProtocol {
 
 class QuizUseCase: QuizUseCaseProtocol {
 
-    private var dataSource: QuizDataSourceProtocol
+    private var dataSource: QuizRepositoryProtocol
 
-    init(dataSource: QuizDataSourceProtocol) {
+    init(dataSource: QuizRepositoryProtocol) {
         self.dataSource = dataSource
     }
 

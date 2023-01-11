@@ -1,5 +1,5 @@
-import RealmSwift
 import Foundation
+import RealmSwift
 
 enum DifficultyDataModel: String, PersistableEnum {
 
