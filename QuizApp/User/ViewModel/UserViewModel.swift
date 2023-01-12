@@ -36,7 +36,7 @@ class UserViewModel: ObservableObject {
     }
 
     func changeName() {
-        if name.trimmingCharacters(in: .whitespaces).isEmpty {
+        guard !name.trimmingCharacters(in: .whitespaces).isEmpty else {
             err = ValidationError.emptyUsername
             getUser()
             return
