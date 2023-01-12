@@ -237,15 +237,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FB1D3110295318E700C77B90 /* Realm */ = {
-			isa = PBXGroup;
-			children = (
-				FBE1279D296EEC5200421C2B /* Models */,
-				FB1D3118295319FF00C77B90 /* QuizDatabaseDataSource.swift */,
-			);
-			path = Realm;
-			sourceTree = "<group>";
-		};
 		FB47245228EEB6190027EFC7 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,7 +315,6 @@
 			children = (
 				FBC65C3D28F6F3130045F87B /* ApiClient.swift */,
 				FB8647D228F98E69001AE89B /* AppDependencies.swift */,
-				FB1D3110295318E700C77B90 /* Realm */,
 				FBC65C3428F6D1880045F87B /* Enums */,
 				FB47245528EEB7EA0027EFC7 /* AppRouter */,
 				FB47245A28EECFAD0027EFC7 /* Login */,
@@ -669,8 +659,8 @@
 		FB8647F62902A894001AE89B /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				FB5A07EF291536BB00FDD937 /* Models */,
-				FB86481729067974001AE89B /* QuizDataSource.swift */,
+				FBE1279F296FF03C00421C2B /* Local */,
+				FBE1279E296FF02F00421C2B /* Network */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -775,20 +765,20 @@
 				FB8647F72902A8C5001AE89B /* ViewModel */,
 				FB8647F82902A8CE001AE89B /* Client */,
 				FB8647FA2902A910001AE89B /* UseCase */,
-				FBE12795296EDC6700421C2B /* QuizRepository */,
+				FBE12795296EDC6700421C2B /* Repository */,
 				FB8647F62902A894001AE89B /* DataSource */,
 				FB8647F52902A87F001AE89B /* Models */,
 			);
 			path = Quiz;
 			sourceTree = "<group>";
 		};
-		FBE12795296EDC6700421C2B /* QuizRepository */ = {
+		FBE12795296EDC6700421C2B /* Repository */ = {
 			isa = PBXGroup;
 			children = (
 				FBE12796296EE77600421C2B /* Models */,
 				FBE1278E296EA51800421C2B /* QuizRepository.swift */,
 			);
-			path = QuizRepository;
+			path = Repository;
 			sourceTree = "<group>";
 		};
 		FBE12796296EE77600421C2B /* Models */ = {
@@ -807,6 +797,24 @@
 				FBE1279B296EEC4B00421C2B /* DifficultyDataObject.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		FBE1279E296FF02F00421C2B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				FB5A07EF291536BB00FDD937 /* Models */,
+				FB86481729067974001AE89B /* QuizDataSource.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		FBE1279F296FF03C00421C2B /* Local */ = {
+			isa = PBXGroup;
+			children = (
+				FBE1279D296EEC5200421C2B /* Models */,
+				FB1D3118295319FF00C77B90 /* QuizDatabaseDataSource.swift */,
+			);
+			path = Local;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
