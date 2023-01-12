@@ -3,6 +3,7 @@ import Factory
 
 struct UserView: View {
 
+    @ObservedObject var network: Network
     @ObservedObject var viewModel: UserViewModel
 
     var body: some View {
@@ -47,8 +48,9 @@ struct UserView: View {
                 Spacer()
             }
         }
-        .padding(.top, 30)
+        .padding(.top, 10)
         .background(LinearGradient.quizAppGradient)
+        .popup(isPresented: $network.isDisconnected)
     }
 
 }
@@ -56,7 +58,7 @@ struct UserView: View {
 struct UserView_Previews: PreviewProvider {
 
     static var previews: some View {
-        UserView(viewModel: Container.userViewModel())
+        UserView(network: Container.network(), viewModel: Container.userViewModel())
     }
 
 }

@@ -3,12 +3,14 @@ import Factory
 
 struct QuizSessionView: View {
 
-    @ObservedObject var viewModel: QuizSessionViewModel
+    @ObservedObject private var network: Network
+    @ObservedObject private var viewModel: QuizSessionViewModel
 
     @State private var numberOfCorrectQuestions = 0
     @State private var progressColors: [Color]
 
-    init(viewModel: QuizSessionViewModel) {
+    init(network: Network, viewModel: QuizSessionViewModel) {
+        self.network = network
         self.viewModel = viewModel
         progressColors = [Color](repeating: Color.white.opacity(0.3), count: viewModel.quiz.numberOfQuestions)
     }
@@ -43,6 +45,7 @@ struct QuizSessionView: View {
             .padding(.top)
         }
         .background(LinearGradient.quizAppGradient)
+        .popup(isPresented: $network.isDisconnected)
     }
 
     private func nextQuestion(_ index: Int) {
@@ -75,6 +78,7 @@ struct QuizSessionView_Previews: PreviewProvider {
 
     static var previews: some View {
         QuizSessionView(
+            network: Container.network(),
             viewModel: Container.quizSessionViewModel(
                 QuizModel(
                     id: 0,

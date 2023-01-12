@@ -3,9 +3,11 @@ import Factory
 
 struct QuizListView: View {
 
+    @ObservedObject private var network: Network
     @ObservedObject private var viewModel: QuizViewModel
 
-    init(viewModel: QuizViewModel) {
+    init(network: Network, viewModel: QuizViewModel) {
+        self.network = network
         self.viewModel = viewModel
         setSegmentedControlAppearance()
     }
@@ -18,7 +20,7 @@ struct QuizListView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding(.vertical, 7)
+            .padding([.top, .horizontal], 7)
             .cornerRadius(10)
 
             if let err = viewModel.quizError {
@@ -41,9 +43,11 @@ struct QuizListView: View {
                     }
                 }
             }
+            .padding([.top, .horizontal], 10)
         }
-        .padding(.horizontal, 10)
+        .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
+        .popup(isPresented: $network.isDisconnected)
     }
 
     private func setSegmentedControlAppearance() {
@@ -60,7 +64,7 @@ struct QuizListView: View {
 struct QuizListView_Previews: PreviewProvider {
 
     static var previews: some View {
-        QuizListView(viewModel: Container.quizViewModel())
+        QuizListView(network: Container.network(), viewModel: Container.quizViewModel())
     }
 
 }

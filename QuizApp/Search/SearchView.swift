@@ -3,31 +3,37 @@ import Factory
 
 struct SearchView: View {
 
+    @ObservedObject var network: Network
     @ObservedObject var viewModel: QuizViewModel
 
     @State private var searchText = ""
 
     var body: some View {
-        ScrollView {
+        VStack {
             SearchBar(searchText: $searchText)
+                .padding(.horizontal, 10)
 
-            LazyVStack(alignment: .leading) {
-                ForEach(CategorySection.allCases, id: \.self) { section in
-                    if !viewModel.searchAndFilteredQuizzes(searchText, section).isEmpty {
-                        Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
-                            ForEach(viewModel.searchAndFilteredQuizzes(searchText, section), id: \.self) { quiz in
-                                QuizCellView(quiz: quiz)
-                                    .onTapGesture {
-                                        viewModel.showQuizDetails(quiz: quiz)
-                                    }
+            ScrollView {
+                LazyVStack(alignment: .leading) {
+                    ForEach(CategorySection.allCases, id: \.self) { section in
+                        if !viewModel.searchAndFilteredQuizzes(searchText, section).isEmpty {
+                            Section(header: Text(section.rawValue).sectionHeaderStyle(section)) {
+                                ForEach(viewModel.searchAndFilteredQuizzes(searchText, section), id: \.self) { quiz in
+                                    QuizCellView(quiz: quiz)
+                                        .onTapGesture {
+                                            viewModel.showQuizDetails(quiz: quiz)
+                                        }
+                                }
                             }
                         }
                     }
                 }
+                .padding(.horizontal, 10)
             }
         }
-        .padding(.horizontal, 10)
+        .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
+        .popup(isPresented: $network.isDisconnected)
     }
 
 }
@@ -35,7 +41,7 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
 
     static var previews: some View {
-        SearchView(viewModel: Container.quizViewModel())
+        SearchView(network: Container.network(), viewModel: Container.quizViewModel())
     }
 
 }

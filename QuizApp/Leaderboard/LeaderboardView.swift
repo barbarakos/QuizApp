@@ -3,6 +3,7 @@ import Factory
 
 struct LeaderboardView: View {
 
+    @ObservedObject var network: Network
     @ObservedObject var viewModel: LeaderboardViewModel
 
     var body: some View {
@@ -53,6 +54,7 @@ struct LeaderboardView: View {
         .background(LinearGradient.quizAppGradient)
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
+        .popup(isPresented: $network.isDisconnected)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack(alignment: .center) {
@@ -72,7 +74,7 @@ struct LeaderboardView: View {
 struct LeaderboardView_Previews: PreviewProvider {
 
     static var previews: some View {
-        LeaderboardView(viewModel: Container.leaderboardViewModel(5))
+        LeaderboardView(network: Container.network(), viewModel: Container.leaderboardViewModel(5))
     }
 
 }

@@ -3,6 +3,7 @@ import Factory
 
 struct QuizDetailView: View {
 
+    @ObservedObject var network: Network
     @ObservedObject var viewModel: QuizDetailsViewModel
 
     var body: some View {
@@ -29,24 +30,9 @@ struct QuizDetailView: View {
                 .padding(.horizontal, 30)
             }
         }
+        .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
-    }
-
-}
-
-struct QuizDetailView_Previews: PreviewProvider {
-
-    static var previews: some View {
-        QuizDetailView(
-            viewModel: Container.quizDetailsViewModel(
-                QuizModel(
-                    id: 0,
-                    category: "SPORT",
-                    description: "Description of the selected quiz.",
-                    difficulty: DifficultyModel.normal,
-                    imageUrl: "",
-                    name: "Football",
-                    numberOfQuestions: 5)))
+        .popup(isPresented: $network.isDisconnected)
     }
 
 }

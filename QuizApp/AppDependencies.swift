@@ -16,6 +16,10 @@ extension Container {
         ApiClient(storage: tokenStorage()) as ApiClientProtocol
     }
 
+    static let network = Factory {
+        Network() as Network
+    }
+
 }
 
 // MARK: Login
@@ -38,7 +42,7 @@ extension Container {
     }
 
     static let loginView = Factory {
-        UIHostingController(rootView: LoginView(viewModel: loginViewModel())) as UIHostingController
+        UIHostingController(rootView: LoginView(network: network(), viewModel: loginViewModel())) as UIHostingController
     }
 
 }
@@ -63,7 +67,7 @@ extension Container {
     }
 
     static let userView = Factory {
-        UserView(viewModel: userViewModel()) as UserView
+        UserView(network: network(), viewModel: userViewModel()) as UserView
     }
 
 }
@@ -88,7 +92,7 @@ extension Container {
     }
 
     static let quizListView = Factory {
-        QuizListView(viewModel: quizViewModel()) as QuizListView
+        QuizListView(network: network(), viewModel: quizViewModel()) as QuizListView
     }
 
 }
@@ -101,7 +105,8 @@ extension Container {
     }
 
     static let quizDetailView = ParameterFactory<QuizModel, UIHostingController> { quiz in
-        UIHostingController(rootView: QuizDetailView(viewModel: quizDetailsViewModel(quiz))) as UIHostingController
+        UIHostingController(
+            rootView: QuizDetailView(network: network(), viewModel: quizDetailsViewModel(quiz))) as UIHostingController
     }
 
 }
@@ -127,7 +132,10 @@ extension Container {
     }
 
     static let leaderboardView = ParameterFactory<Int, UIHostingController> { quizId in
-        UIHostingController(rootView: LeaderboardView(viewModel: leaderboardViewModel(quizId))) as UIHostingController
+        UIHostingController(
+            rootView: LeaderboardView(
+                network: network(),
+                viewModel: leaderboardViewModel(quizId))) as UIHostingController
     }
 
 }
@@ -156,7 +164,8 @@ extension Container {
     }
 
     static let quizSessionView = ParameterFactory<QuizModel, UIHostingController> { quiz in
-        UIHostingController(rootView: QuizSessionView(viewModel: quizSessionViewModel(quiz))) as UIHostingController
+        UIHostingController(
+            rootView: QuizSessionView(network: network(), viewModel: quizSessionViewModel(quiz))) as UIHostingController
     }
 
     static let quizResultViewModel = ParameterFactory<Result, QuizResultViewModel> { result in
@@ -165,7 +174,8 @@ extension Container {
     }
 
     static let quizResultView = ParameterFactory<Result, UIHostingController> { result in
-        UIHostingController(rootView: QuizResultView(viewModel: quizResultViewModel(result))) as UIHostingController
+        UIHostingController(
+            rootView: QuizResultView(network: network(), viewModel: quizResultViewModel(result))) as UIHostingController
     }
 
 }
@@ -174,7 +184,7 @@ extension Container {
 extension Container {
 
     static let searchView = Factory {
-        SearchView(viewModel: quizViewModel()) as SearchView
+        SearchView(network: network(), viewModel: quizViewModel()) as SearchView
     }
 
 }
