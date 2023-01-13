@@ -3,7 +3,6 @@ import Factory
 
 struct LoginView: View {
 
-    @ObservedObject var network: Network
     @ObservedObject var viewModel: LoginViewModel
 
     @FocusState private var emailIsFocused: Bool
@@ -77,7 +76,6 @@ struct LoginView: View {
                 .padding(.bottom, 60)
             }
         }
-        .popup(isPresented: $network.isDisconnected)
     }
 
 }
@@ -85,7 +83,7 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
 
     static var previews: some View {
-        LoginView(network: Container.network(), viewModel: Container.loginViewModel())
+        LoginView(viewModel: Container.loginViewModel())
     }
 
 }

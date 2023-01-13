@@ -2,7 +2,6 @@ import SwiftUI
 
 struct QuizResultView: View {
 
-    @ObservedObject var network: Network
     @ObservedObject var viewModel: QuizResultViewModel
 
     var body: some View {
@@ -29,7 +28,6 @@ struct QuizResultView: View {
             }
         }
         .background(LinearGradient.quizAppGradient)
-        .popup(isPresented: $network.isDisconnected)
     }
 
 }

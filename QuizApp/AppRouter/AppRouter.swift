@@ -1,14 +1,19 @@
+import Combine
 import SwiftUI
 import UIKit
 import Factory
+import SnapKit
 
 class AppRouter: AppRouterProtocol {
 
     private let navigationController: UINavigationController
 
+    private var cancellables = Set<AnyCancellable>()
+
     init() {
         navigationController = UINavigationController()
         editNavBar()
+        setNetworkView()
     }
 
     func start(in window: UIWindow?) {
@@ -72,6 +77,29 @@ class AppRouter: AppRouterProtocol {
         titleLabel.text = text
         titleLabel.textColor = .white
         return titleLabel
+    }
+
+    private func setNetworkView() {
+        Container.network()
+            .$isConnected
+            .sink { [weak self] isConnected in
+                guard let self = self, !isConnected else { return }
+
+                let hostingController = UIHostingController(rootView: NoInternetView())
+                self.navigationController.view.addSubview(hostingController.view)
+
+                hostingController.view.layer.cornerRadius = 30
+                hostingController.view.backgroundColor = UIColor.white.withAlphaComponent(0.7)
+                hostingController.view.snp.makeConstraints {
+                    $0.centerX.equalToSuperview()
+                    $0.bottom.equalToSuperview().inset(100)
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    hostingController.view.removeFromSuperview()
+                }
+            }
+            .store(in: &cancellables)
     }
 
 }

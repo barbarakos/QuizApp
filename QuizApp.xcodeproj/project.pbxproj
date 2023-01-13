@@ -101,7 +101,6 @@
 		FBC8063E290BE962007E717B /* QuizError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC8063D290BE962007E717B /* QuizError.swift */; };
 		FBE1278D296DA87800421C2B /* NoInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE1278C296DA87800421C2B /* NoInternetView.swift */; };
 		FBE12793296EB35600421C2B /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE12792296EB35600421C2B /* Network.swift */; };
-		FBE127A12970015600421C2B /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE127A02970015600421C2B /* View+Extensions.swift */; };
 		FBF155152918F78400E721A6 /* Gesture+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF155142918F78400E721A6 /* Gesture+Extensions.swift */; };
 		FBF155172918F8BC00E721A6 /* UIControl+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF155162918F8BC00E721A6 /* UIControl+Extensions.swift */; };
 		FBF1551B291904C900E721A6 /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */; };
@@ -203,7 +202,6 @@
 		FBC8063D290BE962007E717B /* QuizError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizError.swift; sourceTree = "<group>"; };
 		FBE1278C296DA87800421C2B /* NoInternetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoInternetView.swift; sourceTree = "<group>"; };
 		FBE12792296EB35600421C2B /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		FBE127A02970015600421C2B /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		FBF155142918F78400E721A6 /* Gesture+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Gesture+Extensions.swift"; sourceTree = "<group>"; };
 		FBF155162918F8BC00E721A6 /* UIControl+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extensions.swift"; sourceTree = "<group>"; };
 		FBF1551A291904C900E721A6 /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
@@ -239,7 +237,6 @@
 				FBA6190D2943544500446905 /* Text+Extensions.swift */,
 				FBA6190F294357F800446905 /* LinearGradient.swift */,
 				FB1D31222954983100C77B90 /* Color+Extensions.swift */,
-				FBE127A02970015600421C2B /* View+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -963,7 +960,6 @@
 				FB1D30E9294C820C00C77B90 /* AnswersView.swift in Sources */,
 				FB5A07B52912919100FDD937 /* UserModel.swift in Sources */,
 				FB5A07A0291264BD00FDD937 /* LeaderboardResponseModel.swift in Sources */,
-				FBE127A12970015600421C2B /* View+Extensions.swift in Sources */,
 				FBC65C2D28F55BDF0045F87B /* UserViewModel.swift in Sources */,
 				FBB21ACB2949E17B0089197B /* BackgroundGradient.swift in Sources */,
 				FB47246828EF35B70027EFC7 /* LoginViewModel.swift in Sources */,

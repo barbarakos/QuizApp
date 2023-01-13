@@ -3,7 +3,6 @@ import Factory
 
 struct QuizDetailView: View {
 
-    @ObservedObject var network: Network
     @ObservedObject var viewModel: QuizDetailsViewModel
 
     var body: some View {
@@ -32,7 +31,6 @@ struct QuizDetailView: View {
         }
         .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
-        .popup(isPresented: $network.isDisconnected)
     }
 
 }

@@ -3,7 +3,6 @@ import Factory
 
 struct SearchView: View {
 
-    @ObservedObject var network: Network
     @ObservedObject var viewModel: QuizViewModel
 
     @State private var searchText = ""
@@ -33,7 +32,6 @@ struct SearchView: View {
         }
         .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
-        .popup(isPresented: $network.isDisconnected)
     }
 
 }
@@ -41,7 +39,7 @@ struct SearchView: View {
 struct SearchView_Previews: PreviewProvider {
 
     static var previews: some View {
-        SearchView(network: Container.network(), viewModel: Container.quizViewModel())
+        SearchView(viewModel: Container.quizViewModel())
     }
 
 }

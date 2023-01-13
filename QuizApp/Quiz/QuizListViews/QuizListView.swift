@@ -3,11 +3,9 @@ import Factory
 
 struct QuizListView: View {
 
-    @ObservedObject private var network: Network
     @ObservedObject private var viewModel: QuizViewModel
 
-    init(network: Network, viewModel: QuizViewModel) {
-        self.network = network
+    init(viewModel: QuizViewModel) {
         self.viewModel = viewModel
         setSegmentedControlAppearance()
     }
@@ -47,7 +45,6 @@ struct QuizListView: View {
         }
         .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
-        .popup(isPresented: $network.isDisconnected)
     }
 
     private func setSegmentedControlAppearance() {
@@ -64,7 +61,7 @@ struct QuizListView: View {
 struct QuizListView_Previews: PreviewProvider {
 
     static var previews: some View {
-        QuizListView(network: Container.network(), viewModel: Container.quizViewModel())
+        QuizListView(viewModel: Container.quizViewModel())
     }
 
 }
