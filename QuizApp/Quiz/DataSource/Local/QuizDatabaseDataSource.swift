@@ -13,6 +13,8 @@ protocol QuizDatabaseDataSourceProtocol {
 
 class QuizDatabaseDataSource: QuizDatabaseDataSourceProtocol {
 
+    private let realmQueue = DispatchQueue(label: "thread.realm")
+
     private var realm: Realm?
 
     init() {
@@ -34,22 +36,28 @@ class QuizDatabaseDataSource: QuizDatabaseDataSourceProtocol {
     func saveQuizzes(quizzes: [QuizDataObject]) {
         guard let realm = realm else { return }
 
-        do {
-            try realm.write {
-                for quiz in quizzes {
-                    realm.add(quiz, update: .modified)
+        realmQueue.async {
+            print(Thread.current)
+            do {
+                try realm.write {
+                    for quiz in quizzes {
+                        realm.add(quiz, update: .modified)
+                    }
                 }
+            } catch {
+                print("Error adding quiz to Realm ", error)
             }
-        } catch {
-            print("Error adding quiz to Realm ", error)
         }
     }
 
     private func instantiateRealm() {
-        do {
-            realm = try Realm()
-        } catch {
-            print("Error opening Realm: ", error)
+        realmQueue.async {
+            do {
+                print(Thread.current)
+                self.realm = try Realm(queue: self.realmQueue)
+            } catch {
+                print("Error opening Realm: ", error)
+            }
         }
     }
 

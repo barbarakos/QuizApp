@@ -18,7 +18,6 @@ class QuizRepository: QuizRepositoryProtocol {
         self.remoteDataSource = remoteDataSource
     }
 
-    @MainActor
     func getQuizzes(for category: String) async throws -> [QuizRepoModel] {
         do {
             let quizzes = try await remoteDataSource.getQuizzes(for: category).map { QuizRepoModel(from: $0) }
@@ -31,7 +30,6 @@ class QuizRepository: QuizRepositoryProtocol {
         }
     }
 
-    @MainActor
     func getAllQuizzes() async throws -> [QuizRepoModel] {
         do {
             let quizzes = try await remoteDataSource.getAllQuizzes().map { QuizRepoModel(from: $0) }
