@@ -3,7 +3,7 @@ import Factory
 
 struct QuizSessionView: View {
 
-    @ObservedObject var viewModel: QuizSessionViewModel
+    @ObservedObject private var viewModel: QuizSessionViewModel
 
     @State private var numberOfCorrectQuestions = 0
     @State private var progressColors: [Color]

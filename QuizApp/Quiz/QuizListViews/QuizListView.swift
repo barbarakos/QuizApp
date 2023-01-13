@@ -18,7 +18,7 @@ struct QuizListView: View {
                 }
             }
             .pickerStyle(SegmentedPickerStyle())
-            .padding(.vertical, 7)
+            .padding([.top, .horizontal], 7)
             .cornerRadius(10)
 
             if let err = viewModel.quizError {
@@ -41,8 +41,9 @@ struct QuizListView: View {
                     }
                 }
             }
+            .padding([.top, .horizontal], 10)
         }
-        .padding(.horizontal, 10)
+        .padding(.top, 5)
         .background(LinearGradient.quizAppGradient)
     }
 
