@@ -47,6 +47,7 @@ struct UserView: View {
                 Spacer()
             }
         }
+        .errorAlert(error: $viewModel.err)
         .padding(.top, 30)
         .background(LinearGradient.quizAppGradient)
     }

@@ -6,6 +6,7 @@ class UserViewModel: ObservableObject {
 
     @Published var username: String = ""
     @Published var name: String = ""
+    @Published var err: ValidationError?
 
     private var useCase: UserUseCaseProtocol
     private var router: AppRouterProtocol
@@ -29,17 +30,23 @@ class UserViewModel: ObservableObject {
                     self.name = user.name
                 }
             } catch {
-                print(error)
+                err = ValidationError.serverError
             }
         }
     }
 
     func changeName() {
+        guard !name.trimmingCharacters(in: .whitespaces).isEmpty else {
+            err = ValidationError.emptyUsername
+            getUser()
+            return
+        }
+
         Task {
             do {
                 try await useCase.changeName(name: name)
             } catch {
-                print(error)
+                err = ValidationError.serverError
             }
         }
     }
