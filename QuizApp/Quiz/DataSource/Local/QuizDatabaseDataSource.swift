@@ -37,7 +37,6 @@ class QuizDatabaseDataSource: QuizDatabaseDataSourceProtocol {
         guard let realm = realm else { return }
 
         realmQueue.async {
-            print(Thread.current)
             do {
                 try realm.write {
                     for quiz in quizzes {
@@ -53,7 +52,6 @@ class QuizDatabaseDataSource: QuizDatabaseDataSourceProtocol {
     private func instantiateRealm() {
         realmQueue.async {
             do {
-                print(Thread.current)
                 self.realm = try Realm(queue: self.realmQueue)
             } catch {
                 print("Error opening Realm: ", error)
