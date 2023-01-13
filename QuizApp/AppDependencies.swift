@@ -4,6 +4,10 @@ import UIKit
 
 extension Container {
 
+    static let quizDatabaseDataSource = Factory(scope: .singleton) {
+        QuizDatabaseDataSource() as QuizDatabaseDataSourceProtocol
+    }
+
     static let appRouter = Factory(scope: .singleton) {
         AppRouter() as AppRouterProtocol
     }
@@ -79,8 +83,14 @@ extension Container {
         QuizDataSource(quizClient: quizClient()) as QuizDataSourceProtocol
     }
 
+    static let quizRepository = Factory(scope: .singleton) {
+        QuizRepository(
+            localDataSource: quizDatabaseDataSource(),
+            remoteDataSource: quizDataSource()) as QuizRepositoryProtocol
+    }
+
     static let quizUseCase = Factory(scope: .singleton) {
-        QuizUseCase(dataSource: quizDataSource()) as QuizUseCaseProtocol
+        QuizUseCase(repository: quizRepository()) as QuizUseCaseProtocol
     }
 
     static let quizViewModel = Factory {

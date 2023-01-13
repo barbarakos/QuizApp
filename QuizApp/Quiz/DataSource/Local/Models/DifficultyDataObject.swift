@@ -1,4 +1,7 @@
-enum DifficultyUseCaseModel {
+import Foundation
+import RealmSwift
+
+enum DifficultyDataObject: String, PersistableEnum {
 
     case easy
     case normal
@@ -6,7 +9,7 @@ enum DifficultyUseCaseModel {
 
 }
 
-extension DifficultyUseCaseModel {
+extension DifficultyDataObject {
 
     init(from model: DifficultyRepoModel) {
         switch model {
